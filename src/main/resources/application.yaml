@@ -1,0 +1,3 @@
+spring:
+  application:
+    name: o2o-server
