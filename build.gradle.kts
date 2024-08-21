@@ -13,9 +13,7 @@ group = "org.inner.circle"
 version = "0.0.1-SNAPSHOT"
 
 java {
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(21)
-    }
+    sourceCompatibility = JavaVersion.VERSION_21
 }
 
 repositories {
@@ -25,10 +23,19 @@ repositories {
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
+//    implementation("org.springframework.boot:spring-boot-starter-data-redis")
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.5.0")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
+    implementation("org.springframework.boot:spring-boot-starter-actuator")
+//    나중에 설정 후 적용 예정
+//    implementation("org.springframework.boot:spring-boot-starter-security")
+//    implementation("io.jsonwebtoken:jjwt:0.9.1")
+
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+//    testImplementation("org.springframework.security:spring-security-test")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }

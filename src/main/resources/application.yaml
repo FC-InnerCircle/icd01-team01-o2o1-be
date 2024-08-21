@@ -1,3 +1,7 @@
 spring:
   application:
     name: o2o-server
+  data:
+    mongodb:
+      uri: mongodb+srv://o2o:innercircle@o2o.vbztozb.mongodb.net/?retryWrites=true&w=majority&appName=o2o
+      database: o2o
