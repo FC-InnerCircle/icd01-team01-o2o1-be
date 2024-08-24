@@ -1,4 +1,4 @@
-package org.inner.circle.o2oserver.member.adapter.`in`.api
+package org.inner.circle.o2oserver.member.presentation.api
 
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
