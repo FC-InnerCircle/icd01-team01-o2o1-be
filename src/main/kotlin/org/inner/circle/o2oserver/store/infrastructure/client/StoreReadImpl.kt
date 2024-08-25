@@ -2,10 +2,11 @@ package org.inner.circle.o2oserver.store.infrastructure.client
 
 import org.inner.circle.o2oserver.store.domain.store.Store
 import org.inner.circle.o2oserver.store.domain.store.StoreReader
+import org.inner.circle.o2oserver.store.domain.store.command.StoreListCommand
 import org.springframework.stereotype.Component
 
 @Component
-class StoreReadImpl : StoreReader {
+class StoreReadImpl(private val storeApiClient: StoreApiClient) : StoreReader {
     override fun getStoreDetail(storeId: Long): Store {
         // ## TODO 추후 API 로 구현 예정
         return Store(
@@ -25,6 +26,14 @@ class StoreReadImpl : StoreReader {
             reviewCount = 10,
             reviewRate = 4.5,
             thumbnails = listOf("www.google.com"),
+        )
+    }
+
+    override fun getStoreList(command: StoreListCommand): Pair<List<Store>, Int> {
+        val response = storeApiClient.getStoreList()
+        return Pair(
+            response.stores.map { it.toDomain() },
+            response.totalCount,
         )
     }
 }

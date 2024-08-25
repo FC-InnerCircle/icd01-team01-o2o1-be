@@ -20,14 +20,15 @@ data class Address(
 )
 
 data class StoreListResponse(
-    val stores: List<StoreInfo>,
+    val stores: List<BriefStoreInfo>,
     val totalCount: Int,
     val page: Int,
     val size: Int,
     val statusCode: Int,
+    val msg: String,
 )
 
-data class StoreInfo(
+data class BriefStoreInfo(
     val storeId: Long,
     val storeName: String,
     val minimumPrice: Int,
@@ -36,7 +37,19 @@ data class StoreInfo(
     val reviewRate: Double,
     val thumbnailUrl: String,
     val category: String,
-)
+) {
+    fun toDomain(): Store {
+        return Store(
+            storeId = storeId,
+            storeName = storeName,
+            minimumPrice = minimumPrice,
+            deliveryPrice = deliveryPrice,
+            reviewCount = reviewCount,
+            thumbnails = listOf(thumbnailUrl),
+            category = category,
+        )
+    }
+}
 
 // ## TODO API 구현 시 해당 내용 사용 예정, 현재는 MOCKING
 data class StoreResponse(

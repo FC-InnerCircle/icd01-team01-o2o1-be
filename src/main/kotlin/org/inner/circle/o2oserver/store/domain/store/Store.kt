@@ -13,6 +13,7 @@ class Store(
     val closeTime: String? = null,
     val category: String? = null,
     val deliveryArea: String? = null,
+    val deliveryPrice: Int? = null,
     val minimumPrice: Int? = null,
     val reviewCount: Int? = null,
     val reviewRate: Double? = null,
