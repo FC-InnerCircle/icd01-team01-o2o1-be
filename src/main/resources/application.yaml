@@ -1,7 +1,45 @@
 spring:
   application:
     name: o2o-server
+
+#  security:
+#    oauth2.client:
+#      registration:
+#        kakao:
+#          clientId: 63100883d4c2aa16bdeb5d5d945235ac   # REST API 키
+#          clientSecret: DKw9oUffwibgDnJqNWIahlYYz6mPSBO1  # REST API 시크릿
+#          redirectUri: http://localhost:8080/login/oauth2/code/kakao # url 수정하기 <<
+#          clientAuthenticationMethod: client_secret_post
+#          authorizationGrantType: authorization_code
+#          scope: profile_nickname, profile_image, account_email # 동의 항목
+#          clientName: kakao
+
+
   data:
-    mongodb:
-      uri: mongodb+srv://o2o:innercircle@o2o.vbztozb.mongodb.net/?retryWrites=true&w=majority&appName=o2o
-      database: o2o
+    redis:
+      host: 127.0.0.1
+      port: 6379
+      timeout: 6000
+
+logging:
+  level:
+    org:
+      springframework:
+        security: debug
+
+jwt:
+  key: o2o-secret-key
+
+springdoc:
+  packagesToScan: com.forall.active.wavemate
+  default-consumes-media-type: application/json
+  default-produces-media-type: application/json
+  swagger-ui:
+    path: api-docs
+    disable-swagger-default-url: true
+    display-request-duration: true
+    operations-sorter: alpha
+
+server:
+  port: 8080
+  address: 0.0.0.0
