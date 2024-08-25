@@ -2,24 +2,25 @@ spring:
   application:
     name: o2o-server
 
-  security:
-    oauth2.client:
-      registration:
-        kakao:
-          clientId: 63100883d4c2aa16bdeb5d5d945235ac   # REST API 키
-          clientSecret: DKw9oUffwibgDnJqNWIahlYYz6mPSBO1  # REST API 시크릿
-          redirectUri: http://localhost:8080/login/oauth2/code/kakao # url 수정하기 <<
-          clientAuthenticationMethod: client_secret_post
-          authorizationGrantType: authorization_code
-          scope: profile_nickname, profile_image, account_email # 동의 항목
-          clientName: kakao
+#  security:
+#    oauth2.client:
+#      registration:
+#        kakao:
+#          clientId: 63100883d4c2aa16bdeb5d5d945235ac   # REST API 키
+#          clientSecret: DKw9oUffwibgDnJqNWIahlYYz6mPSBO1  # REST API 시크릿
+#          redirectUri: http://localhost:8080/login/oauth2/code/kakao # url 수정하기 <<
+#          clientAuthenticationMethod: client_secret_post
+#          authorizationGrantType: authorization_code
+#          scope: profile_nickname, profile_image, account_email # 동의 항목
+#          clientName: kakao
 
 
-#  data:
-#    redis:
-#      host: 127.0.0.1
-#      port: 6379
-#      timeout: 6000
+  data:
+    redis:
+      host: 127.0.0.1
+      port: 6379
+      timeout: 6000
+
 logging:
   level:
     org:

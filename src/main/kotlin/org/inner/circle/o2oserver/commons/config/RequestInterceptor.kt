@@ -14,7 +14,6 @@ class RequestInterceptor(
     private val tokenProvider: TokenProvider
 ) : HandlerInterceptor {
     private val log = KotlinLogging.logger {}
-    private val authorization = "Authorization"
 
     override fun preHandle(
         request: HttpServletRequest,
