@@ -1,10 +1,10 @@
 package org.inner.circle.o2oserver.commons.config
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import org.inner.circle.o2oserver.commons.security.TokenProvider
-import io.github.oshai.kotlinlogging.KotlinLogging
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
+import org.inner.circle.o2oserver.commons.security.TokenProvider
+import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 import org.springframework.web.servlet.HandlerInterceptor
 
@@ -13,14 +13,14 @@ class RequestInterceptor(
     private val objectMapper: ObjectMapper,
     private val tokenProvider: TokenProvider
 ) : HandlerInterceptor {
-    private val log = KotlinLogging.logger {}
+    private val log = LoggerFactory.getLogger(this::class.java)
 
     override fun preHandle(
         request: HttpServletRequest,
         response: HttpServletResponse,
         handler: Any
     ): Boolean {
-        log.info { "Method: ${request.method}, URI : ${request.requestURL}" }
+        log.info("Method: ${request.method}, URI : ${request.requestURL}")
         return true
     }
 
@@ -30,6 +30,6 @@ class RequestInterceptor(
         handler: Any,
         ex: Exception?
     ) {
-        log.info { "Method: ${request.method}, URI : ${request.requestURL}, Response Status : ${response.status}" }
+        log.info("Method: ${request.method}, URI : ${request.requestURL}, Response Status : ${response.status}")
     }
 }

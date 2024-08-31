@@ -1,11 +1,12 @@
 package org.inner.circle.o2oserver.commons.security
 
-import io.github.oshai.kotlinlogging.KotlinLogging
 import io.jsonwebtoken.ExpiredJwtException
 import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
 import org.inner.circle.o2oserver.commons.exception.CustomAuthenticationException
+import org.inner.circle.o2oserver.commons.security.AuthFilter.Companion.REFRESH_TOKEN
+import org.slf4j.LoggerFactory
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Component
 import org.springframework.web.filter.OncePerRequestFilter
@@ -14,7 +15,7 @@ import org.springframework.web.filter.OncePerRequestFilter
 class AuthFilter(
     private val jwtTokenProvider: TokenProvider
 ) : OncePerRequestFilter() {
-    private val log = KotlinLogging.logger {}
+    private val log = LoggerFactory.getLogger(this::class.java)
 
     /**
      * 헤더에 들어갈 키값
@@ -39,11 +40,10 @@ class AuthFilter(
                 SecurityContextHolder.getContext().authentication = authentication
             }
         } catch (e: ExpiredJwtException) {
-            log.debug { "액세스 토큰이 만료되어 재발급을 진행합니다. " }
+            log.debug("액세스 토큰이 만료되어 재발급을 진행합니다.")
             handleExpiredToken(request, response)
         } catch (e: Exception) {
-            val responseMessage = "토큰 검증 실패"
-            log.error { responseMessage }
+            log.error("토큰 검증 실패")
         }
 
         filterChain.doFilter(request, response)
@@ -67,8 +67,7 @@ class AuthFilter(
                 SecurityContextHolder.getContext().authentication = authentication
             }
         } catch (e: Exception) {
-            val responseMessage = "토큰 재발급 실패. 다시 로그인해 주세요."
-            log.error { responseMessage }
+            log.error("토큰 재발급 실패. 다시 로그인해 주세요.")
         }
     }
 }

@@ -4,7 +4,7 @@ class Menu(
     val menuId: Long,
     val name: String? = "",
     val price: Long? = 0L,
+    val count: Long? = 0L,
     val description: String? = "",
-    val menuOptions: List<MenuOptionGroup>,
-) {
-}
+    val menuOptions: List<MenuOptionGroup>
+)

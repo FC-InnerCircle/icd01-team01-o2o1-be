@@ -4,6 +4,5 @@ class MenuOptionGroup(
     val menuOptionGroupId: Long,
     val name: String? = "",
     val required: Boolean? = false,
-    val menuOptions: List<MenuOption>,
-) {
-}
+    val menuOptions: List<MenuOption>
+)

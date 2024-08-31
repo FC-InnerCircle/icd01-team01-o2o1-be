@@ -1,10 +1,15 @@
 package org.inner.circle.o2oserver.commons.security
 
-import io.github.oshai.kotlinlogging.KotlinLogging
-import io.jsonwebtoken.*
+import io.jsonwebtoken.Claims
+import io.jsonwebtoken.ExpiredJwtException
+import io.jsonwebtoken.Jws
+import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.Jwts.SIG.HS256
+import io.jsonwebtoken.MalformedJwtException
+import io.jsonwebtoken.UnsupportedJwtException
 import jakarta.servlet.http.HttpServletRequest
 import org.inner.circle.o2oserver.commons.exception.Exceptions
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.data.redis.core.RedisTemplate
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
@@ -25,7 +30,7 @@ class TokenProvider(
     private lateinit var secretKey: String
 
     companion object {
-        private val log = KotlinLogging.logger {}
+        private val log = LoggerFactory.getLogger(this::class.java)
         const val ACCESS_EXPIRES: Long = 30 * 60 * 1000 // 30분을 밀리초로
         const val REFRESH_EXPIRES: Long = 7 * 24 * 60 * 60 * 1000 // 1주일을 밀리초로
     }
@@ -76,7 +81,7 @@ class TokenProvider(
         authentication.name?.let { authName ->
             redisTemplate.opsForValue().get(refreshToken)?.let { name ->
                 redisTemplate.opsForValue().set(refreshToken, name)
-            }?: redisTemplate.opsForValue().set(refreshToken, authName)
+            } ?: redisTemplate.opsForValue().set(refreshToken, authName)
         }
     }
 
@@ -102,28 +107,28 @@ class TokenProvider(
     fun validateToken(token: String): Boolean {
         return try {
             val auth = getAuthentication(token)
-            log.info { "Token validate :  ${auth.principal}" }
+            log.info("Token validate :  ${auth.principal}")
             auth.isAuthenticated
         } catch (e: SecurityException) {
-            log.info { "잘못된 JWT 서명입니다." }
+            log.info("잘못된 JWT 서명입니다.")
             throw e
         } catch (e: MalformedJwtException) {
-            log.info { "잘못된 JWT 서명입니다." }
+            log.info("잘못된 JWT 서명입니다.")
             throw e
         } catch (e: ExpiredJwtException) {
-            log.info { "만료된 JWT 토큰입니다." }
+            log.info("만료된 JWT 토큰입니다.")
             throw e
         } catch (e: UnsupportedJwtException) {
-            log.info { "지원되지 않는 JWT 토큰입니다." }
+            log.info("지원되지 않는 JWT 토큰입니다.")
             throw e
         } catch (e: IllegalArgumentException) {
-            log.info { "JWT 토큰이 잘못되었습니다." }
+            log.info("JWT 토큰이 잘못되었습니다.")
             throw e
         } catch (e: NullPointerException) {
-            log.info { "JWT 토큰이 없습니다." }
+            log.info("JWT 토큰이 없습니다.")
             throw e
         } catch (e: Exception) {
-            log.error { "토큰 검증 실패 : ${e.message}" }
+            log.error("토큰 검증 실패 : ${e.message}")
             throw e
         }
     }

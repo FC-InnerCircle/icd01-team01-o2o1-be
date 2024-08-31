@@ -3,15 +3,12 @@ package org.inner.circle.o2oserver.order.presentation.dto
 import org.inner.circle.o2oserver.order.domain.Order
 
 class OrderCreateResponse {
-
     data class OrderCreateResult(
         private val orderId: Long,
-        private val storeId: Long,
+        private val storeId: Long
     ) {
         companion object {
-            fun toDto(
-                order: Order
-            ): OrderCreateResult {
+            fun toResponse(order: Order): OrderCreateResult {
                 return OrderCreateResult(
                     orderId = order.orderId ?: 0,
                     storeId = order.storeId ?: 0

@@ -6,7 +6,6 @@ import org.inner.circle.o2oserver.order.domain.MenuOptionGroup
 import org.inner.circle.o2oserver.order.domain.Order
 
 class OrderCreateRequest {
-
     data class OrderCreate(
         val storeId: Long,
         val menus: List<MenuCreate>,
@@ -15,9 +14,7 @@ class OrderCreateRequest {
         val addressId: Long
     ) {
         companion object {
-            fun toOrder(
-                orderCreate: OrderCreate
-            ): Order {
+            fun toOrder(orderCreate: OrderCreate): Order {
                 return Order(
                     storeId = orderCreate.storeId,
                     menus = MenuCreate.toMenus(orderCreate.menus),
@@ -27,7 +24,6 @@ class OrderCreateRequest {
                 )
             }
         }
-
     }
 
     data class MenuCreate(
@@ -36,15 +32,14 @@ class OrderCreateRequest {
         val options: List<OptionCreate>
     ) {
         companion object {
-            fun toMenus(
-                menuCreates: List<MenuCreate>
-            ): List<Menu> {
+            fun toMenus(menuCreates: List<MenuCreate>): List<Menu> {
                 return menuCreates.map { menuCreate ->
                     Menu(
                         menuId = menuCreate.menuId,
-                        menuOptions = menuCreate.options.map { menuOption ->
-                            OptionCreate.toMenuOption(menuOption)
-                        }
+                        menuOptions =
+                            menuCreate.options.map { menuOption ->
+                                OptionCreate.toMenuOption(menuOption)
+                            }
                     )
                 }
             }
@@ -56,14 +51,13 @@ class OrderCreateRequest {
         val optionId: List<Long>
     ) {
         companion object {
-            fun toMenuOption(
-                optionCreate: OptionCreate
-            ): MenuOptionGroup {
+            fun toMenuOption(optionCreate: OptionCreate): MenuOptionGroup {
                 return MenuOptionGroup(
                     menuOptionGroupId = optionCreate.optionGroupId,
-                    menuOptions = optionCreate.optionId.map {
-                        MenuOption(menuId = it)
-                    }
+                    menuOptions =
+                        optionCreate.optionId.map {
+                            MenuOption(menuId = it)
+                        }
                 )
             }
         }
