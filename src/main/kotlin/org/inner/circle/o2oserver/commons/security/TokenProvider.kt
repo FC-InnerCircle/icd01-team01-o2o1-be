@@ -20,7 +20,7 @@ import org.springframework.stereotype.Component
 import org.springframework.util.StringUtils
 import java.time.ZoneId
 import java.time.ZonedDateTime
-import java.util.*
+import java.util.Date
 
 @Component
 class TokenProvider(
