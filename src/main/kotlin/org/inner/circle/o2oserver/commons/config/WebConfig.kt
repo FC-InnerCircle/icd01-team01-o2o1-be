@@ -1,6 +1,5 @@
 package org.inner.circle.o2oserver.commons.config
 
-import org.inner.circle.o2oserver.commons.config.RequestInterceptor
 import org.springframework.context.annotation.Configuration
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer

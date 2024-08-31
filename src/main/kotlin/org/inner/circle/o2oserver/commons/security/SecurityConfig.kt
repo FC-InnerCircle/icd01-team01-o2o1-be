@@ -21,7 +21,6 @@ class SecurityConfig(
     private val entryPoint: CustomAuthenticationEntryPoint,
     private val customAccessDemniedHandler: CustomAccessDemniedHandler
 ) {
-
     @Bean
     fun filterChain(http: HttpSecurity): SecurityFilterChain {
         return http
@@ -94,5 +93,4 @@ class SecurityConfig(
 
     @Bean
     fun passwordEncoder() = BCryptPasswordEncoder()
-
 }
