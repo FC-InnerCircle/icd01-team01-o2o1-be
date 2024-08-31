@@ -44,7 +44,8 @@ class SecurityConfig(
                         "/oauth/**",
                         "/actuator/**",
                         "/error",
-                        "/notification/**"
+                        "/notification/**",
+                        "/api/v1/login",
                     ).permitAll()
                     .requestMatchers(
                         HttpMethod.GET,

@@ -8,7 +8,7 @@ class MemberInfoService {
     fun getMemberInfo(
         memberId: String,
         memberName: String
-    ): Member {
-        return Member()
+    ): Member? {
+        return null
     }
 }

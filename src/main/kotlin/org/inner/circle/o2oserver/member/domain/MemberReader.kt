@@ -1,4 +1,5 @@
 package org.inner.circle.o2oserver.member.domain
 
-class MemberReader {
+interface MemberReader {
+    fun getMember(): Optional<Member>
 }
