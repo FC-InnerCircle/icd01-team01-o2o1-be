@@ -16,26 +16,30 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 @SpringBootTest
 @AutoConfigureMockMvc(addFilters = false)
 class OrderCommandControllerTest {
-    @Autowired lateinit var mockMvc: MockMvc
 
+    @Autowired lateinit var mockMvc: MockMvc
     @Autowired lateinit var objectMapper: ObjectMapper
 
     lateinit var orderCreate: OrderCreateRequest.OrderCreate
     lateinit var menuCreate: OrderCreateRequest.MenuCreate
+    lateinit var optionGroupCreate: OrderCreateRequest.OptionGroupCreate
     lateinit var optionCreate: OrderCreateRequest.OptionCreate
 
     @BeforeEach
     fun setUp() {
         optionCreate =
             OrderCreateRequest.OptionCreate(
-                optionGroupId = 1L,
-                optionId = listOf(1L, 2L)
+                optionId = 1L
             )
+        optionGroupCreate = OrderCreateRequest.OptionGroupCreate(
+            optionGroupId = 1L,
+            options = listOf(optionCreate)
+        )
         menuCreate =
             OrderCreateRequest.MenuCreate(
                 menuId = 1L,
-                menuCount = 2L,
-                options = listOf(optionCreate)
+                menuCount = 2,
+                optionGroups = listOf(optionGroupCreate)
             )
         orderCreate =
             OrderCreateRequest.OrderCreate(

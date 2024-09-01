@@ -4,4 +4,6 @@ interface OrderUseCase {
     fun createOrder(order: Order): Order
 
     fun getOrderDetail(orderId: Long): Order
+
+    fun getOrderList(memberId: Long): List<Order>
 }

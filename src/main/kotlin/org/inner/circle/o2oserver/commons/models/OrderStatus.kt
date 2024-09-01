@@ -1,4 +1,4 @@
-package org.inner.circle.o2oserver.order.domain
+package org.inner.circle.o2oserver.commons.models
 
 enum class OrderStatus {
     PENDING,
