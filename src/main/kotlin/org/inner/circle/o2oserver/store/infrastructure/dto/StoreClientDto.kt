@@ -8,7 +8,7 @@ data class StoreRequest(
     val category: String?,
     val page: Int?,
     val size: Int?,
-    val keyword: String?,
+    val keyword: String?
 )
 
 data class Address(
@@ -16,7 +16,7 @@ data class Address(
     val longitude: Double,
     val address: String,
     val addressDetail: String?,
-    val zipCode: String,
+    val zipCode: String
 )
 
 data class StoreListResponse(
@@ -25,7 +25,7 @@ data class StoreListResponse(
     val page: Int,
     val size: Int,
     val statusCode: Int,
-    val msg: String,
+    val msg: String
 )
 
 data class BriefStoreInfo(
@@ -36,7 +36,7 @@ data class BriefStoreInfo(
     val reviewCount: Int,
     val reviewRate: Double,
     val thumbnailUrl: String,
-    val category: String,
+    val category: String
 ) {
     fun toDomain(): Store {
         return Store(
@@ -46,7 +46,7 @@ data class BriefStoreInfo(
             deliveryPrice = deliveryPrice,
             reviewCount = reviewCount,
             thumbnails = listOf(thumbnailUrl),
-            category = category,
+            category = category
         )
     }
 }
@@ -68,7 +68,7 @@ data class StoreResponse(
     val minimumPrice: Int,
     val reviewCount: Int,
     val reviewRate: Double,
-    val thumbnails: List<String>,
+    val thumbnails: List<String>
 ) {
     fun toDomain(): Store {
         return Store(
@@ -87,7 +87,7 @@ data class StoreResponse(
             minimumPrice = minimumPrice,
             reviewCount = reviewCount,
             reviewRate = reviewRate,
-            thumbnails = thumbnails,
+            thumbnails = thumbnails
         )
     }
 }

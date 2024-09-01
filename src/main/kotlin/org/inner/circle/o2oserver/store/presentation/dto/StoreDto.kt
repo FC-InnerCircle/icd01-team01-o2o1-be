@@ -1,11 +1,12 @@
 package org.inner.circle.o2oserver.store.presentation.dto
 
 import org.inner.circle.o2oserver.store.domain.address.Address
+import org.inner.circle.o2oserver.store.domain.review.ReviewInfo
 
 data class CommonResponse<T>(
     val response: T,
     val statusCode: Int,
-    val msg: String,
+    val msg: String
 )
 
 data class CommonListResponse<T>(
@@ -14,7 +15,7 @@ data class CommonListResponse<T>(
     val size: Int,
     val response: T,
     val statusCode: Int,
-    val msg: String,
+    val msg: String
 )
 
 data class StoreListRequest(
@@ -22,7 +23,7 @@ data class StoreListRequest(
     val category: String?,
     val page: Int? = 1,
     val size: Int? = 10,
-    val keyword: String?,
+    val keyword: String?
 )
 
 data class AddressDTO(
@@ -30,7 +31,7 @@ data class AddressDTO(
     val longitude: Double,
     val address: String,
     val addressDetail: String?,
-    val zipCode: String,
+    val zipCode: String
 ) {
     fun toDomain(): Address {
         return Address(latitude, longitude, address, addressDetail, zipCode)
@@ -43,7 +44,7 @@ data class StoreResponse(
     val page: Int,
     val size: Int,
     val statusCode: Int,
-    val msg: String,
+    val msg: String
 )
 
 data class StoreInfo(
@@ -54,5 +55,17 @@ data class StoreInfo(
     val reviewCount: Int,
     val reviewRate: Double,
     val thumbnailUrl: String,
-    val category: String,
+    val category: String
+)
+
+data class Review(
+    val reviewId: Int,
+    val contents: String,
+    val rating: Int,
+    val reviewImage: List<String>
+)
+
+data class StoreReviewDTO(
+    val storeName: String,
+    val reviews: List<ReviewInfo>
 )

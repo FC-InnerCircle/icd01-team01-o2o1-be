@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service
 
 @Service
 class StoreServiceImpl(
-    val storeReader: StoreReader,
+    val storeReader: StoreReader
 ) : StoreService {
     override fun getStoreDetail(storeId: Long): Store {
         return storeReader.getStoreDetail(storeId)
@@ -13,7 +13,7 @@ class StoreServiceImpl(
 
     override fun getStoreList(command: StoreListCommand): Pair<List<Store>, Int> {
         return storeReader.getStoreList(
-            command,
+            command
         )
     }
 }

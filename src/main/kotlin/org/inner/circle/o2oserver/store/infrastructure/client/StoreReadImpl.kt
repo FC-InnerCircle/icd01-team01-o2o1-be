@@ -25,7 +25,7 @@ class StoreReadImpl(private val storeApiClient: StoreApiClient) : StoreReader {
             minimumPrice = 15000,
             reviewCount = 10,
             reviewRate = 4.5,
-            thumbnails = listOf("www.google.com"),
+            thumbnails = listOf("www.google.com")
         )
     }
 
@@ -33,7 +33,7 @@ class StoreReadImpl(private val storeApiClient: StoreApiClient) : StoreReader {
         val response = storeApiClient.getStoreList()
         return Pair(
             response.stores.map { it.toDomain() },
-            response.totalCount,
+            response.totalCount
         )
     }
 }
