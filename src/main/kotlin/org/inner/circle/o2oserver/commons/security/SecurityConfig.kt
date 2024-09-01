@@ -19,7 +19,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 class SecurityConfig(
     private val authFilter: AuthFilter,
     private val entryPoint: CustomAuthenticationEntryPoint,
-    private val customAccessDemniedHandler: CustomAccessDemniedHandler
+    private val customAccessDemniedHandler: CustomAccessDemniedHandler,
 ) {
     @Bean
     fun filterChain(http: HttpSecurity): SecurityFilterChain {
@@ -49,7 +49,7 @@ class SecurityConfig(
                     .requestMatchers(
                         HttpMethod.GET,
                         "/post/**",
-                        "/mate/**"
+                        "/mate/**",
                     ).permitAll()
                     .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
                     .anyRequest().authenticated()
@@ -81,7 +81,7 @@ class SecurityConfig(
                         "Access-Control-Request-Method",
                         "Access-Control-Request-Headers",
                         "Authorization",
-                        "Set-Cookie"
+                        "Set-Cookie",
                     )
                 exposedHeaders = listOf("Authorization", "Set-Cookie")
                 allowedOriginPatterns = listOf("http://localhost:3000")

@@ -3,7 +3,7 @@ package org.inner.circle.o2oserver.commons.response
 data class ApiResponse<T> private constructor(
     val data: T?,
     val message: String?,
-    val status: String
+    val status: String,
 ) {
     companion object {
         fun <T> success(data: T): ApiResponse<T> {

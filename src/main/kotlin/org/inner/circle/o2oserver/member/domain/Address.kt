@@ -11,5 +11,5 @@ data class Address(
     val detail: String,
     val latitude: Double,
     val longitude: Double,
-    val isDefault: Boolean
+    val isDefault: Boolean,
 )

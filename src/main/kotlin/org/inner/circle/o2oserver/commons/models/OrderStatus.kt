@@ -6,5 +6,5 @@ enum class OrderStatus {
     PREPARING,
     DELIVERING,
     DELIVERED,
-    CANCELED
+    CANCELED,
 }

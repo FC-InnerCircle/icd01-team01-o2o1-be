@@ -27,8 +27,8 @@ class CustomExceptionHandler {
             BaseResponse(
                 response = e.message,
                 statusCode = e.status,
-                msg = "fail"
-            )
+                msg = "fail",
+            ),
         )
     }
 
@@ -40,8 +40,8 @@ class CustomExceptionHandler {
             BaseResponse(
                 response = e.message,
                 statusCode = e.status,
-                msg = "fail"
-            )
+                msg = "fail",
+            ),
         )
     }
 
@@ -53,8 +53,8 @@ class CustomExceptionHandler {
             BaseResponse(
                 response = e.message,
                 statusCode = e.status,
-                msg = "fail"
-            )
+                msg = "fail",
+            ),
         )
     }
 
@@ -66,8 +66,8 @@ class CustomExceptionHandler {
             BaseResponse(
                 response = e.message,
                 statusCode = e.status,
-                msg = "fail"
-            )
+                msg = "fail",
+            ),
         )
     }
 
@@ -79,8 +79,8 @@ class CustomExceptionHandler {
             BaseResponse(
                 response = e.message,
                 statusCode = e.status,
-                msg = "fail"
-            )
+                msg = "fail",
+            ),
         )
     }
 
@@ -92,8 +92,8 @@ class CustomExceptionHandler {
             BaseResponse(
                 response = e.message,
                 statusCode = e.status,
-                msg = "fail"
-            )
+                msg = "fail",
+            ),
         )
     }
 
@@ -105,8 +105,8 @@ class CustomExceptionHandler {
             BaseResponse(
                 response = e.message,
                 statusCode = e.status,
-                msg = "fail"
-            )
+                msg = "fail",
+            ),
         )
     }
 
@@ -118,8 +118,8 @@ class CustomExceptionHandler {
             BaseResponse(
                 response = e.message,
                 statusCode = e.status,
-                msg = "fail"
-            )
+                msg = "fail",
+            ),
         )
     }
 
@@ -131,8 +131,8 @@ class CustomExceptionHandler {
             BaseResponse(
                 response = e.message,
                 statusCode = e.status,
-                msg = "fail"
-            )
+                msg = "fail",
+            ),
         )
     }
 
@@ -144,8 +144,8 @@ class CustomExceptionHandler {
             BaseResponse(
                 response = e.message,
                 statusCode = e.status,
-                msg = "fail"
-            )
+                msg = "fail",
+            ),
         )
     }
 
@@ -159,8 +159,8 @@ class CustomExceptionHandler {
             BaseResponse(
                 response = e.message ?: message,
                 statusCode = 401,
-                msg = "fail"
-            )
+                msg = "fail",
+            ),
         )
     }
 
@@ -173,8 +173,8 @@ class CustomExceptionHandler {
             BaseResponse(
                 response = e.message ?: message,
                 statusCode = 401,
-                msg = "fail"
-            )
+                msg = "fail",
+            ),
         )
     }
 
@@ -187,8 +187,8 @@ class CustomExceptionHandler {
             BaseResponse(
                 response = e.message ?: message,
                 statusCode = 401,
-                msg = "fail"
-            )
+                msg = "fail",
+            ),
         )
     }
 
@@ -200,8 +200,8 @@ class CustomExceptionHandler {
             BaseResponse(
                 response = e.message ?: "인증에 실패했습니다. 다시 로그인해 주세요",
                 statusCode = 401,
-                msg = "fail"
-            )
+                msg = "fail",
+            ),
         )
     }
 
@@ -214,8 +214,8 @@ class CustomExceptionHandler {
             BaseResponse(
                 response = e.message ?: message,
                 statusCode = 500,
-                msg = "fail"
-            )
+                msg = "fail",
+            ),
         )
     }
 
@@ -228,8 +228,8 @@ class CustomExceptionHandler {
             BaseResponse(
                 response = e.message ?: message,
                 statusCode = 415,
-                msg = "fail"
-            )
+                msg = "fail",
+            ),
         )
     }
 
@@ -242,8 +242,8 @@ class CustomExceptionHandler {
             BaseResponse(
                 response = e.message ?: message,
                 statusCode = 400,
-                msg = "fail"
-            )
+                msg = "fail",
+            ),
         )
     }
 
@@ -256,8 +256,8 @@ class CustomExceptionHandler {
             BaseResponse(
                 response = e.message ?: message,
                 statusCode = 400,
-                msg = "fail"
-            )
+                msg = "fail",
+            ),
         )
     }
 
@@ -270,8 +270,8 @@ class CustomExceptionHandler {
             BaseResponse(
                 response = e.message ?: message,
                 statusCode = 400,
-                msg = "fail"
-            )
+                msg = "fail",
+            ),
         )
     }
 
@@ -283,8 +283,8 @@ class CustomExceptionHandler {
             BaseResponse(
                 response = e.message ?: "지원하지 않는 미디어 타입입니다.",
                 statusCode = 400,
-                msg = "fail"
-            )
+                msg = "fail",
+            ),
         )
     }
 
@@ -296,8 +296,8 @@ class CustomExceptionHandler {
             BaseResponse(
                 response = e.message ?: "클라이언트 연결이 끊겼습니다.",
                 statusCode = 400,
-                msg = "fail"
-            )
+                msg = "fail",
+            ),
         )
     }
 
@@ -309,8 +309,8 @@ class CustomExceptionHandler {
             BaseResponse(
                 response = e.message ?: "요청 시간이 초과되었습니다.",
                 statusCode = 400,
-                msg = "fail"
-            )
+                msg = "fail",
+            ),
         )
     }
 
@@ -322,8 +322,8 @@ class CustomExceptionHandler {
             BaseResponse(
                 response = e.message ?: "데이터가 유효하지 않습니다.",
                 statusCode = 400,
-                msg = "fail"
-            )
+                msg = "fail",
+            ),
         )
     }
 }

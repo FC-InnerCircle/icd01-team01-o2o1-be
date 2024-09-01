@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service
 @Service
 class ReviewFacade(
     private val reviewService: ReviewService,
-    private val storeService: ReviewService
+    private val storeService: ReviewService,
 ) {
     fun getStoreReviewList(queryObject: ReviewQueryObject) {
         val reviewList = reviewService.getStoreReviewList(queryObject)

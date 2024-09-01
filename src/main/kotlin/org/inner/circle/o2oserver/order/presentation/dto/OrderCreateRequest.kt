@@ -8,7 +8,7 @@ class OrderCreateRequest {
         val menus: List<MenuCreate>,
         val orderPrice: Long,
         val payment: String,
-        val addressId: Long
+        val addressId: Long,
     ) {
         companion object {
             fun toOrder(orderCreate: OrderCreate, memberId: Long, store: Order.Store): Order {
@@ -24,18 +24,18 @@ class OrderCreateRequest {
                                     menuOptionGroupId = optionGroup.optionGroupId,
                                     menuOptions = optionGroup.options.map { option ->
                                         Order.MenuOption(
-                                            optionId = option.optionId
+                                            optionId = option.optionId,
                                         )
-                                    }
+                                    },
                                 )
-                            }
+                            },
                         )
                     },
                     orderPrice = orderCreate.orderPrice,
                     payment = orderCreate.payment,
                     orderAddress = Order.Address(
-                        addressId = orderCreate.addressId
-                    )
+                        addressId = orderCreate.addressId,
+                    ),
                 )
             }
         }
@@ -44,12 +44,12 @@ class OrderCreateRequest {
     data class MenuCreate(
         val menuId: Long,
         val menuCount: Int,
-        val optionGroups: List<OptionGroupCreate>
+        val optionGroups: List<OptionGroupCreate>,
     )
 
     data class OptionGroupCreate(
         val optionGroupId: Long,
-        val options: List<OptionCreate>
+        val options: List<OptionCreate>,
     )
 
     data class OptionCreate(

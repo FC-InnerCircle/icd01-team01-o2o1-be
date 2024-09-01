@@ -12,30 +12,30 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/api/v1/order")
 class OrderQueryController(
-    private val orderQueryFacade: OrderQueryFacade
+    private val orderQueryFacade: OrderQueryFacade,
 ) {
     @GetMapping
     fun getOrders(
-        @AuthenticationPrincipal userDetails: UserDetails
+        @AuthenticationPrincipal userDetails: UserDetails,
     ): BaseResponse {
         val orderList = orderQueryFacade.getOrderList(userDetails.username)
         return BaseResponse(
             response = orderList,
             statusCode = 200,
-            msg = "success"
+            msg = "success",
         )
     }
 
     @GetMapping("/{orderId}")
     fun getOrder(
         @PathVariable orderId: Long,
-        @AuthenticationPrincipal userDetails: UserDetails
+        @AuthenticationPrincipal userDetails: UserDetails,
     ): BaseResponse {
-        val orderDetail = orderQueryFacade.getOrderDetail(orderId)
+        val orderDetail = orderQueryFacade.getOrderDetail(orderId, userDetails.username)
         return BaseResponse(
             response = orderDetail,
             statusCode = 200,
-            msg = "success"
+            msg = "success",
         )
     }
 }

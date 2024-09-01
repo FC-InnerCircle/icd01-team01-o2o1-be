@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service
 class OrderService(
     private val orderStore: OrderStore,
     private val orderReader: OrderReader,
-    private val orderCaller: OrderCaller
+    private val orderCaller: OrderCaller,
 ) : OrderUseCase {
     override fun createOrder(order: Order): Order {
         orderCaller.saveOrderCall(order)

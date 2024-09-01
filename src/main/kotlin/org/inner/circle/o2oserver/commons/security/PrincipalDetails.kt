@@ -8,7 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails
 class PrincipalDetails(
     private val member: Member,
     private val attributes: MutableMap<String, Any>,
-    private val memberCheck: Boolean
+    private val memberCheck: Boolean,
 ) : UserDetails {
     fun getName(): String {
         return attributes["email"] as String

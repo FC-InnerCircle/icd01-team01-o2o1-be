@@ -17,5 +17,5 @@ class Store(
     val minimumPrice: Int? = null,
     val reviewCount: Int? = null,
     val reviewRate: Double? = null,
-    val thumbnails: List<String>? = null
+    val thumbnails: List<String>? = null,
 )

@@ -12,15 +12,11 @@ import org.springframework.web.servlet.HandlerExceptionResolver
 @Component
 class CustomAuthenticationEntryPoint(
     @Qualifier("handlerExceptionResolver")
-    private val resolver: HandlerExceptionResolver
+    private val resolver: HandlerExceptionResolver,
 ) : AuthenticationEntryPoint {
     private val log = LoggerFactory.getLogger(this::class.java)
 
-    override fun commence(
-        request: HttpServletRequest?,
-        response: HttpServletResponse?,
-        authException: AuthenticationException?
-    ) {
+    override fun commence(request: HttpServletRequest?, response: HttpServletResponse?, authException: AuthenticationException?) {
         log.error("AuthEntryPoint : ${authException?.message}")
         resolver.resolveException(request!!, response!!, null, authException!!)
     }

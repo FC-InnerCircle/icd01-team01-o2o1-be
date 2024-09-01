@@ -10,12 +10,10 @@ class OrderDetailResponse {
         private val orderPrice: Long,
         private val store: StoreInfo,
         private val menus: List<MenuInfo>,
-        private val orderAddress: AddressInfo
+        private val orderAddress: AddressInfo,
     ) {
         companion object {
-            fun toResponse(
-                order: Order
-            ): OrderInfoDetail {
+            fun toResponse(order: Order): OrderInfoDetail {
                 return OrderInfoDetail(
                     orderId = order.orderId ?: 0,
                     orderTime = order.orderTime.toString(),
@@ -25,7 +23,7 @@ class OrderDetailResponse {
                     menus = order.menus.map { menu ->
                         MenuInfo.toResponse(menu)
                     },
-                    orderAddress = AddressInfo.toResponse(order.orderAddress)
+                    orderAddress = AddressInfo.toResponse(order.orderAddress),
                 )
             }
         }
@@ -34,14 +32,14 @@ class OrderDetailResponse {
     data class StoreInfo(
         private val storeId: Long,
         private val storeName: String,
-        private val storeAddress: AddressInfo
+        private val storeAddress: AddressInfo,
     ) {
         companion object {
             fun toResponse(store: Order.Store): StoreInfo {
                 return StoreInfo(
                     storeId = store.storeId,
                     storeName = store.storeName,
-                    storeAddress = AddressInfo.toResponse(store.storeAddress)
+                    storeAddress = AddressInfo.toResponse(store.storeAddress),
                 )
             }
         }
@@ -53,7 +51,7 @@ class OrderDetailResponse {
         private val longitude: String,
         private val address: String,
         private val addressDetail: String,
-        private val zipCode: String
+        private val zipCode: String,
     ) {
         companion object {
             fun toResponse(address: Order.Address): AddressInfo {
@@ -63,7 +61,7 @@ class OrderDetailResponse {
                     longitude = address.longitude.toString(),
                     address = address.address ?: "",
                     addressDetail = address.detail ?: "",
-                    zipCode = address.zipCode ?: ""
+                    zipCode = address.zipCode ?: "",
                 )
             }
         }
@@ -73,7 +71,7 @@ class OrderDetailResponse {
         private val menuId: Long,
         private val menuName: String,
         private val menuCount: Int,
-        private val optionGroup: List<OptionGroupInfo>
+        private val optionGroup: List<OptionGroupInfo>,
     ) {
         companion object {
             fun toResponse(menu: Order.Menu): MenuInfo {
@@ -83,7 +81,7 @@ class OrderDetailResponse {
                     menuCount = menu.menuCount ?: 0,
                     optionGroup = menu.menuOptionGroups.map { menuOptionGroup ->
                         OptionGroupInfo.toResponse(menuOptionGroup)
-                    }
+                    },
                 )
             }
         }
@@ -92,7 +90,7 @@ class OrderDetailResponse {
     data class OptionGroupInfo(
         private val optionGroupId: Long,
         private val optionGroupName: String,
-        private val option: List<OptionInfo>
+        private val option: List<OptionInfo>,
     ) {
         companion object {
             fun toResponse(menuOptionGroup: Order.MenuOptionGroup): OptionGroupInfo {
@@ -101,7 +99,7 @@ class OrderDetailResponse {
                     optionGroupName = menuOptionGroup.menuOptionName ?: "",
                     option = menuOptionGroup.menuOptions.map { menuOption ->
                         OptionInfo.toResponse(menuOption)
-                    }
+                    },
                 )
             }
         }
@@ -109,13 +107,13 @@ class OrderDetailResponse {
 
     data class OptionInfo(
         private val optionId: Long,
-        private val optionName: String
+        private val optionName: String,
     ) {
         companion object {
             fun toResponse(menuOption: Order.MenuOption): OptionInfo {
                 return OptionInfo(
                     optionId = menuOption.optionId,
-                    optionName = menuOption.optionName ?: ""
+                    optionName = menuOption.optionName ?: "",
                 )
             }
         }

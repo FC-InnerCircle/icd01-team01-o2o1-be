@@ -5,10 +5,7 @@ import org.springframework.stereotype.Service
 
 @Service
 class MemberInfoService {
-    fun getMemberInfo(
-        memberId: String,
-        memberName: String
-    ): Member? {
+    fun getMemberInfo(memberId: String, memberName: String): Member? {
         return null
     }
 }

@@ -4,7 +4,7 @@ import org.inner.circle.o2oserver.order.domain.Order
 
 class OrderListResponse {
     data class OrderListResponse(
-        val orders: List<OrderInfo>
+        val orders: List<OrderInfo>,
     ) {
         companion object {
             fun toResponse(orders: List<Order>): OrderListResponse {
@@ -20,22 +20,22 @@ class OrderListResponse {
                             menus = it.menus.map { menu ->
                                 MenuInfo(
                                     menuId = menu.menuId,
-                                    menuName = menu.menuName?: "",
-                                    menuCount = menu.menuCount?: 0,
+                                    menuName = menu.menuName ?: "",
+                                    menuCount = menu.menuCount ?: 0,
                                     optionGroup = menu.menuOptionGroups.map { menuGroup ->
                                         MenuOptionGroupInfo(
                                             optionGroupId = menuGroup.menuOptionGroupId,
                                             option = menuGroup.menuOptions.map { menuOption ->
                                                 MenuOptionInfo(
                                                     optionId = menuOption.optionId,
-                                                    optionName = menuOption.optionName?: ""
+                                                    optionName = menuOption.optionName ?: "",
                                                 )
-                                            }
+                                            },
                                         )
-                                    }
+                                    },
                                 )
                             },
-                            isReviewed = false
+                            isReviewed = false,
                         )
                     },
                 )
@@ -51,27 +51,23 @@ class OrderListResponse {
         val storeId: Long,
         val storeName: String,
         val menus: List<MenuInfo>,
-        val isReviewed: Boolean = false
+        val isReviewed: Boolean = false,
     )
 
     data class MenuInfo(
         val menuId: Long,
         val menuName: String,
         val menuCount: Int,
-        val optionGroup: List<MenuOptionGroupInfo>
+        val optionGroup: List<MenuOptionGroupInfo>,
     )
 
     data class MenuOptionGroupInfo(
         val optionGroupId: Long,
-        val option: List<MenuOptionInfo>
+        val option: List<MenuOptionInfo>,
     )
 
     data class MenuOptionInfo(
         val optionId: Long,
-        val optionName: String
+        val optionName: String,
     )
 }
-
-
-
-

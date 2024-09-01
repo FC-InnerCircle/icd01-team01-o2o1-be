@@ -12,7 +12,7 @@ class Order(
     val store: Store,
     val menus: List<Menu>,
     val payment: String = "CARD",
-    val orderAddress: Address
+    val orderAddress: Address,
 ) {
     class Address(
         val addressId: Long,
@@ -29,18 +29,18 @@ class Order(
         val menuPrice: Long? = 0,
         val menuCount: Int? = 0,
         val description: String? = "",
-        val menuOptionGroups: List<MenuOptionGroup>
+        val menuOptionGroups: List<MenuOptionGroup>,
     )
 
     class MenuOptionGroup(
         val menuOptionGroupId: Long,
         val menuOptionName: String? = "",
-        val menuOptions: List<MenuOption>
+        val menuOptions: List<MenuOption>,
     )
 
     class MenuOption(
         val optionId: Long,
-        val optionName: String? = ""
+        val optionName: String? = "",
     )
 
     class Store(

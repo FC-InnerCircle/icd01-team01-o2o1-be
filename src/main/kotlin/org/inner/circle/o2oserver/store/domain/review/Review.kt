@@ -7,5 +7,5 @@ class Review(
     val contents: String?,
     val rating: Int?,
     val reviewImages: List<String>?,
-    val reviewDate: LocalDateTime
+    val reviewDate: LocalDateTime,
 )

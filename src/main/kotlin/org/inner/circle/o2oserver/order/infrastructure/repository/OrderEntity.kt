@@ -21,7 +21,7 @@ class OrderEntity(
     val menus: List<MenuField>,
     val payment: String = "CARD",
     val address: AddressField,
-    val createdAt: LocalDateTime = LocalDateTime.now(ZoneId.of("Asia/Seoul"))
+    val createdAt: LocalDateTime = LocalDateTime.now(ZoneId.of("Asia/Seoul")),
 ) {
     companion object {
         fun toDomain(orderEntity: OrderEntity): Order {
@@ -57,11 +57,11 @@ class OrderEntity(
                                 menuOptions = group.menuOptions.map { option ->
                                     Order.MenuOption(
                                         optionId = option.menuOptionId ?: 0,
-                                        optionName = option.name ?: ""
+                                        optionName = option.name ?: "",
                                     )
-                                }
+                                },
                             )
-                        }
+                        },
                     )
                 },
                 orderAddress = Order.Address(
@@ -77,9 +77,9 @@ class OrderEntity(
 
         fun toEntity(order: Order): OrderEntity {
             return OrderEntity(
-                orderId = order.orderId?: 0,
-                orderTime = order.orderTime?: LocalDateTime.now(),
-                orderStatus = order.orderStatus?: OrderStatus.PENDING,
+                orderId = order.orderId ?: 0,
+                orderTime = order.orderTime ?: LocalDateTime.now(),
+                orderStatus = order.orderStatus ?: OrderStatus.PENDING,
                 orderPrice = order.orderPrice,
                 memberId = order.memberId,
                 store = StoreField(
@@ -88,13 +88,13 @@ class OrderEntity(
                     storeAddress = order.store.storeAddress.let { address ->
                         AddressField(
                             addressId = address.addressId,
-                            latitude = address.latitude?: 0.0,
-                            longitude = address.longitude?: 0.0,
-                            address = address.address?: "",
+                            latitude = address.latitude ?: 0.0,
+                            longitude = address.longitude ?: 0.0,
+                            address = address.address ?: "",
                             addressDetail = address.detail,
-                            zipCode = address.zipCode?: ""
+                            zipCode = address.zipCode ?: "",
                         )
-                    }
+                    },
                 ),
                 menus = order.menus.map {
                     MenuField(
@@ -109,21 +109,21 @@ class OrderEntity(
                                 menuOptions = group.menuOptions.map { option ->
                                     MenuOptionField(
                                         menuOptionId = option.optionId,
-                                        name = option.optionName
+                                        name = option.optionName,
                                     )
-                                }
+                                },
                             )
-                        }
+                        },
                     )
                 },
                 address = AddressField(
                     addressId = order.orderAddress.addressId,
-                    latitude = order.orderAddress.latitude?: 0.0,
-                    longitude = order.orderAddress.longitude?: 0.0,
-                    address = order.orderAddress.address?: "",
+                    latitude = order.orderAddress.latitude ?: 0.0,
+                    longitude = order.orderAddress.longitude ?: 0.0,
+                    address = order.orderAddress.address ?: "",
                     addressDetail = order.orderAddress.detail,
-                    zipCode = order.orderAddress.zipCode?: "",
-                )
+                    zipCode = order.orderAddress.zipCode ?: "",
+                ),
             )
         }
     }
@@ -134,7 +134,7 @@ class OrderEntity(
         val longitude: Double,
         val address: String,
         val addressDetail: String? = "",
-        val zipCode: String
+        val zipCode: String,
     )
 
     data class MenuField(
@@ -149,7 +149,7 @@ class OrderEntity(
         val menuGroupId: Long? = 0,
         val name: String? = "",
         val isRequired: Boolean? = false,
-        val menuOptions: List<MenuOptionField>
+        val menuOptions: List<MenuOptionField>,
     )
 
     data class MenuOptionField(
@@ -162,7 +162,4 @@ class OrderEntity(
         val storeName: String? = "",
         val storeAddress: AddressField,
     )
-
 }
-
-

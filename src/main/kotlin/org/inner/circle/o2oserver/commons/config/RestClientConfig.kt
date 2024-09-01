@@ -17,7 +17,6 @@ import javax.net.ssl.X509TrustManager
 
 @Configuration
 class RestClientConfig {
-
     @Bean
     fun createWebClient(): RestClient {
         return RestClient.create(createRestTemplate())
@@ -51,10 +50,7 @@ class RestClientConfig {
     }
 
     class CustomClientHttpRequestFactory(private val sslContext: SSLContext) : SimpleClientHttpRequestFactory() {
-        override fun prepareConnection(
-            connection: HttpURLConnection,
-            httpMethod: String
-        ) {
+        override fun prepareConnection(connection: HttpURLConnection, httpMethod: String) {
             if (connection is HttpsURLConnection) {
                 connection.sslSocketFactory = sslContext.socketFactory
             }
@@ -65,14 +61,8 @@ class RestClientConfig {
     class TrustAllManager : X509TrustManager {
         override fun getAcceptedIssuers(): Array<X509Certificate> = emptyArray()
 
-        override fun checkClientTrusted(
-            certs: Array<X509Certificate>,
-            authType: String
-        ) {}
+        override fun checkClientTrusted(certs: Array<X509Certificate>, authType: String) {}
 
-        override fun checkServerTrusted(
-            certs: Array<X509Certificate>,
-            authType: String
-        ) {}
+        override fun checkServerTrusted(certs: Array<X509Certificate>, authType: String) {}
     }
 }

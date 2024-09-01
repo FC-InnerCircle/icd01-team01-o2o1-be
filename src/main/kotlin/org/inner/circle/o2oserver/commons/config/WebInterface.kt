@@ -8,8 +8,6 @@ import org.springframework.web.service.annotation.PostExchange
 @Component
 @HttpExchange
 interface WebInterface {
-
     @PostExchange("/api/v1/order")
     fun createOrder(order: Order)
-
 }

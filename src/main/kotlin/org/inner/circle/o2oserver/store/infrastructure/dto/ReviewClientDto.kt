@@ -6,7 +6,7 @@ import java.time.format.DateTimeFormatter
 
 data class ReviewImageResponseDto(
     val seq: Int,
-    val imageUrl: String
+    val imageUrl: String,
 )
 
 data class ReviewListResponseDto(
@@ -14,7 +14,7 @@ data class ReviewListResponseDto(
     val content: String,
     val grade: Int,
     val images: List<ReviewImageResponseDto>,
-    val reviewDate: String
+    val reviewDate: String,
 ) {
     fun toDomain(): Review {
         return Review(
@@ -22,12 +22,12 @@ data class ReviewListResponseDto(
             reviewImages = images.map { it.imageUrl },
             reviewDate = LocalDateTime.parse(reviewDate, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")),
             rating = grade,
-            contents = content
+            contents = content,
         )
     }
 }
 
 data class ReviewResponseDto(
     val grade: Int,
-    val reviews: List<ReviewListResponseDto>
+    val reviews: List<ReviewListResponseDto>,
 )

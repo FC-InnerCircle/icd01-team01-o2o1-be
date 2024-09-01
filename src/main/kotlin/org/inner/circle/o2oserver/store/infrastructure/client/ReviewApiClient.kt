@@ -7,11 +7,7 @@ import org.springframework.stereotype.Component
 
 @Component
 class ReviewApiClient {
-    fun getStoreReviewList(
-        storeId: Int,
-        page: Int,
-        size: Int
-    ): ReviewResponseDto {
+    fun getStoreReviewList(storeId: Int, page: Int, size: Int): ReviewResponseDto {
         val reviews =
             listOf(
                 ReviewListResponseDto(
@@ -21,9 +17,9 @@ class ReviewApiClient {
                     images =
                         listOf(
                             ReviewImageResponseDto(1, "이미지경로"),
-                            ReviewImageResponseDto(2, "이미지경로2")
+                            ReviewImageResponseDto(2, "이미지경로2"),
                         ),
-                    reviewDate = "2024-08-20 20:00:00"
+                    reviewDate = "2024-08-20 20:00:00",
                 ),
                 ReviewListResponseDto(
                     reviewId = 2,
@@ -32,15 +28,15 @@ class ReviewApiClient {
                     images =
                         listOf(
                             ReviewImageResponseDto(1, "이미지경로"),
-                            ReviewImageResponseDto(2, "이미지경로2")
+                            ReviewImageResponseDto(2, "이미지경로2"),
                         ),
-                    reviewDate = "2024-08-20 20:00:00"
-                )
+                    reviewDate = "2024-08-20 20:00:00",
+                ),
             )
 
         return ReviewResponseDto(
             grade = 3,
-            reviews
+            reviews,
         )
     }
 }
