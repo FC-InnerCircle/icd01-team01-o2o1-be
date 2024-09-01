@@ -7,13 +7,13 @@ class OrderClientResponse {
         val orderId: Long,
         val storeId: Long
     ) {
-        companion object {
-            fun toDomain(orderCreateResult: OrderCreateResult): Order {
-                return Order(
-                    orderId = orderCreateResult.orderId,
-                    storeId = orderCreateResult.storeId
-                )
-            }
-        }
+//        companion object {
+//            fun toDomain(orderCreateResult: OrderCreateResult): Order {
+//                return Order(
+//                    orderId = orderCreateResult.orderId,
+//                    storeId = orderCreateResult.storeId
+//                )
+//            }
+//        }
     }
 }

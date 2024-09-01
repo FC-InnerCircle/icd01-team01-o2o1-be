@@ -5,6 +5,8 @@ import org.springframework.context.annotation.Configuration
 import org.springframework.http.client.SimpleClientHttpRequestFactory
 import org.springframework.web.client.RestClient
 import org.springframework.web.client.RestTemplate
+import org.springframework.web.client.support.RestClientAdapter
+import org.springframework.web.service.invoker.HttpServiceProxyFactory
 import java.net.HttpURLConnection
 import java.security.SecureRandom
 import java.security.cert.X509Certificate
@@ -15,9 +17,19 @@ import javax.net.ssl.X509TrustManager
 
 @Configuration
 class RestClientConfig {
+
     @Bean
     fun createWebClient(): RestClient {
         return RestClient.create(createRestTemplate())
+    }
+
+    @Bean
+    fun createWebInterface(): WebInterface {
+        // 2팀 url이 정해지면 넣어야합니다
+        val createWebClient = RestClient.builder().baseUrl("http://localhost:8080").build()
+        val adapter = RestClientAdapter.create(createWebClient)
+        val factory = HttpServiceProxyFactory.builderFor(adapter).build()
+        return factory.createClient(WebInterface::class.java)
     }
 
     fun createRestTemplate(): RestTemplate {
