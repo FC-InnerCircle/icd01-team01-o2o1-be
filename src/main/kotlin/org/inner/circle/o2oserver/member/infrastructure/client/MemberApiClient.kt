@@ -4,13 +4,10 @@ import org.inner.circle.o2oserver.member.domain.Member
 import org.inner.circle.o2oserver.member.domain.MemberOutPort
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
-import org.springframework.web.client.RestTemplate
 
 @Component
-class MemberApiClient(
-) : MemberOutPort {
+class MemberApiClient() : MemberOutPort {
     private val log = LoggerFactory.getLogger(this::class.java)
-
 
     override fun sendMemberData(member: Member): Boolean {
         // 2팀 서버에 멤버 데이터 전송 결과에 따라 롤백 처리해야 함 (통신 미구현)
