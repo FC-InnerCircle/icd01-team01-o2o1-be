@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component
 
 @Component
 class OrderClient(
-    private val webInterface: WebInterface
+    private val webInterface: WebInterface,
 ) : OrderCaller {
     override fun saveOrderCall(order: Order) {
 //        webInterface.createOrder(order)
@@ -17,5 +17,4 @@ class OrderClient(
     override fun getOrderDetailCall(orderId: Long): Order {
         TODO("Not yet implemented")
     }
-
 }

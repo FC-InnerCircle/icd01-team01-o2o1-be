@@ -16,8 +16,8 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 @SpringBootTest
 @AutoConfigureMockMvc(addFilters = false)
 class OrderCommandControllerTest {
-
     @Autowired lateinit var mockMvc: MockMvc
+
     @Autowired lateinit var objectMapper: ObjectMapper
 
     lateinit var orderCreate: OrderCreateRequest.OrderCreate
@@ -29,17 +29,17 @@ class OrderCommandControllerTest {
     fun setUp() {
         optionCreate =
             OrderCreateRequest.OptionCreate(
-                optionId = 1L
+                optionId = 1L,
             )
         optionGroupCreate = OrderCreateRequest.OptionGroupCreate(
             optionGroupId = 1L,
-            options = listOf(optionCreate)
+            options = listOf(optionCreate),
         )
         menuCreate =
             OrderCreateRequest.MenuCreate(
                 menuId = 1L,
                 menuCount = 2,
-                optionGroups = listOf(optionGroupCreate)
+                optionGroups = listOf(optionGroupCreate),
             )
         orderCreate =
             OrderCreateRequest.OrderCreate(
@@ -47,7 +47,7 @@ class OrderCommandControllerTest {
                 menus = listOf(menuCreate),
                 orderPrice = 10000L,
                 payment = "CARD",
-                addressId = 1L
+                addressId = 1L,
             )
     }
 
@@ -58,7 +58,7 @@ class OrderCommandControllerTest {
         mockMvc.perform(
             post("/api/v1/order")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(asString)
+                .content(asString),
         )
             .andExpect(status().isOk)
             .andDo(MockMvcResultHandlers.print())

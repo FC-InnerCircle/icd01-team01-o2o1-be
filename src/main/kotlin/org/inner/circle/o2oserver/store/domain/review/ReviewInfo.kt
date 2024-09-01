@@ -3,7 +3,7 @@ package org.inner.circle.o2oserver.store.domain.review
 import java.time.LocalDateTime
 
 class ReviewInfo(
-    review: Review
+    review: Review,
 ) {
     val reviewId: Int? = review.reviewId
     val contents: String? = review.contents

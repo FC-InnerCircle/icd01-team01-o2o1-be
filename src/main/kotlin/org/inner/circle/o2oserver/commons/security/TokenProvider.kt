@@ -24,7 +24,7 @@ import java.util.Date
 
 @Component
 class TokenProvider(
-    private val redisTemplate: RedisTemplate<String, String>
+    private val redisTemplate: RedisTemplate<String, String>,
 ) {
     @Value("\${jwt.key}")
     private lateinit var secretKey: String
@@ -43,14 +43,11 @@ class TokenProvider(
         val newRefreshToken = generateRefreshToken(authentication, newAccessToken, REFRESH_EXPIRES)
         return JsonWebToken(
             accessToken = newAccessToken,
-            refreshToken = newRefreshToken
+            refreshToken = newRefreshToken,
         )
     }
 
-    fun generateToken(
-        authentication: Authentication,
-        expiresIn: Long
-    ): String {
+    fun generateToken(authentication: Authentication, expiresIn: Long): String {
         val key = HS256.key().build()
         return Jwts.builder()
             .header()
@@ -62,22 +59,14 @@ class TokenProvider(
             .compact()
     }
 
-    fun generateRefreshToken(
-        authentication: Authentication,
-        accessToken: String,
-        expiresIn: Long
-    ): String {
+    fun generateRefreshToken(authentication: Authentication, accessToken: String, expiresIn: Long): String {
         val refreshToken = generateToken(authentication, REFRESH_EXPIRES) // 1 week
         return refreshToken.also {
             saveRedisByRefreshToken(authentication, accessToken, refreshToken)
         }
     }
 
-    fun saveRedisByRefreshToken(
-        authentication: Authentication,
-        accessToken: String,
-        refreshToken: String
-    ) {
+    fun saveRedisByRefreshToken(authentication: Authentication, accessToken: String, refreshToken: String) {
         authentication.name?.let { authName ->
             redisTemplate.opsForValue().get(refreshToken)?.let { name ->
                 redisTemplate.opsForValue().set(refreshToken, name)
@@ -133,10 +122,7 @@ class TokenProvider(
         }
     }
 
-    fun resolveToken(
-        request: HttpServletRequest,
-        header: String
-    ): String? {
+    fun resolveToken(request: HttpServletRequest, header: String): String? {
         val bearerToken: String = request.getHeader(header)
         return if (header == "refreshToken") {
             bearerToken

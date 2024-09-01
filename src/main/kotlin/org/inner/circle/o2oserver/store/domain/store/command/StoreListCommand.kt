@@ -7,5 +7,5 @@ class StoreListCommand(
     val category: String?,
     val keyword: String?,
     val page: Int?,
-    val size: Int?
+    val size: Int?,
 )

@@ -10,7 +10,8 @@ import org.springframework.stereotype.Component
 
 @Component
 class LoginFacade(
-    private val loginService: LoginService, private val tokenProvider: TokenProvider
+    private val loginService: LoginService,
+    private val tokenProvider: TokenProvider,
 ) {
     private val log = LoggerFactory.getLogger(this::class.java)
 

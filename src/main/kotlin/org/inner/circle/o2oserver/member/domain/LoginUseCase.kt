@@ -6,5 +6,5 @@ interface LoginUseCase {
 
 data class MemberCreationResult(
     val member: Member,
-    val isSignup: Boolean
+    val isSignup: Boolean,
 )

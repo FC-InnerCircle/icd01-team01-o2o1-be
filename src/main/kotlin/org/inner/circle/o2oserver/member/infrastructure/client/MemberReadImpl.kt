@@ -7,9 +7,8 @@ import org.springframework.stereotype.Component
 
 @Component
 class MemberReadImpl(
-    private val memberRepository: MemberRepository
+    private val memberRepository: MemberRepository,
 ) : MemberReader {
-
     override fun getMemberById(memberId: String): Member? {
         return memberRepository.findById(memberId).orElse(null)
     }

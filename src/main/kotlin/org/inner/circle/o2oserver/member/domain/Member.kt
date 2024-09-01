@@ -14,5 +14,5 @@ data class Member(
     val contact: String? = null,
     val status: String? = null,
     val loginStatus: Boolean? = null,
-    val addressIds: List<String>? = null
+    val addressIds: List<String>? = null,
 )

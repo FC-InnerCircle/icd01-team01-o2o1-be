@@ -7,21 +7,16 @@ import org.springframework.stereotype.Component
 
 @Component
 class OrderQueryFacade(
-    private val orderService: OrderUseCase
+    private val orderService: OrderUseCase,
 ) {
-    fun getOrderDetail(
-        orderId: Long,
-        userName: String
-    ): OrderDetailResponse.OrderInfoDetail {
-        //get member
+    fun getOrderDetail(orderId: Long, userName: String): OrderDetailResponse.OrderInfoDetail {
+        // get member
         val order = orderService.getOrderDetail(orderId)
         return OrderDetailResponse.OrderInfoDetail.toResponse(order)
     }
 
-    fun getOrderList(
-        userName: String
-    ): OrderListResponse.OrderListResponse {
-        //get member
+    fun getOrderList(userName: String): OrderListResponse.OrderListResponse {
+        // get member
         val memberId = 0L
         val orderList = orderService.getOrderList(memberId)
         return OrderListResponse.OrderListResponse.toResponse(orderList)

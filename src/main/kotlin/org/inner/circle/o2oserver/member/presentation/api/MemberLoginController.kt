@@ -16,13 +16,14 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/api/v1/login")
 class MemberLoginController(
-    private val loginFacade: LoginFacade
+    private val loginFacade: LoginFacade,
 ) {
     private val log = LoggerFactory.getLogger(this::class.java)
 
-
     @PostMapping
-    fun loginMember(@RequestBody loginRequest: LoginRequest.Login): ResponseEntity<LoginResponse> {
+    fun loginMember(
+        @RequestBody loginRequest: LoginRequest.Login,
+    ): ResponseEntity<LoginResponse> {
         log.info("login 요청")
         val member = LoginRequest.Login.toMember(loginRequest)
         val (jwtToken, isSignup) = loginFacade.login(member)
@@ -35,7 +36,7 @@ class MemberLoginController(
         val responseBody = LoginResponse(
             response = ResponseData(isSignup = isSignup),
             statusCode = HttpStatus.OK.value(),
-            msg = "회원 로그인 완료"
+            msg = "회원 로그인 완료",
         )
 
         return ResponseEntity(responseBody, headers, HttpStatus.OK)

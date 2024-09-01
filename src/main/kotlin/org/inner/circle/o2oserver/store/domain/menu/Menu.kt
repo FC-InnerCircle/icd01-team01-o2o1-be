@@ -5,5 +5,5 @@ class Menu(
     val menuName: String,
     val description: String?,
     val menuPrice: Int?,
-    val optionGroups: List<MenuOptionGroup>?
+    val optionGroups: List<MenuOptionGroup>?,
 )

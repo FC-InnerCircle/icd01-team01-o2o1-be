@@ -9,9 +9,8 @@ import org.springframework.stereotype.Component
 
 @Component
 class OrderStorage(
-    private val orderRepository: OrderRepository
-): OrderReader, OrderStore {
-
+    private val orderRepository: OrderRepository,
+) : OrderReader, OrderStore {
     override fun findOrderDetailByOrderId(orderId: Long): Order {
         val orderEntity = orderRepository.findByOrderId(orderId)
             ?: throw Exceptions.BadRequestException(ErrorDetails.ORDER_NOT_FOUND.message)

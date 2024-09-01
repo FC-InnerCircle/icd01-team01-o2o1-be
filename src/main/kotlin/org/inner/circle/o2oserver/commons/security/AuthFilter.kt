@@ -13,7 +13,7 @@ import org.springframework.web.filter.OncePerRequestFilter
 
 @Component
 class AuthFilter(
-    private val jwtTokenProvider: TokenProvider
+    private val jwtTokenProvider: TokenProvider,
 ) : OncePerRequestFilter() {
     private val log = LoggerFactory.getLogger(this::class.java)
 
@@ -28,11 +28,7 @@ class AuthFilter(
         const val REFRESH_TOKEN = "RefreshToken"
     }
 
-    override fun doFilterInternal(
-        request: HttpServletRequest,
-        response: HttpServletResponse,
-        filterChain: FilterChain
-    ) {
+    override fun doFilterInternal(request: HttpServletRequest, response: HttpServletResponse, filterChain: FilterChain) {
         try {
             val accessToken = jwtTokenProvider.resolveToken(request, AUTHORIZATION)
             if (jwtTokenProvider.validateToken(accessToken!!)) {
@@ -49,10 +45,7 @@ class AuthFilter(
         filterChain.doFilter(request, response)
     }
 
-    private fun handleExpiredToken(
-        request: HttpServletRequest,
-        response: HttpServletResponse
-    ) {
+    private fun handleExpiredToken(request: HttpServletRequest, response: HttpServletResponse) {
         try {
             val refreshToken = jwtTokenProvider.resolveToken(request, REFRESH_TOKEN)
             if (jwtTokenProvider.validateToken(refreshToken!!)) {

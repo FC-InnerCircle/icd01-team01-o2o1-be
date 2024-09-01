@@ -7,9 +7,8 @@ import org.springframework.stereotype.Component
 
 @Component
 class MemberStoreImpl(
-    private val memberRepository: MemberRepository
+    private val memberRepository: MemberRepository,
 ) : MemberStore {
-
     override fun save(member: Member): Member {
         return memberRepository.save(member)
     }
