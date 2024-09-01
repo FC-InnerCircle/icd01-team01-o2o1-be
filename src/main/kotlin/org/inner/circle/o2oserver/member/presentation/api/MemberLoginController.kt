@@ -1,8 +1,13 @@
 package org.inner.circle.o2oserver.member.presentation.api
 
-import io.github.oshai.kotlinlogging.KotlinLogging
 import org.inner.circle.o2oserver.member.application.LoginFacade
 import org.inner.circle.o2oserver.member.presentation.dto.LoginRequest
+import org.inner.circle.o2oserver.member.presentation.dto.LoginResponse
+import org.inner.circle.o2oserver.member.presentation.dto.ResponseData
+import org.slf4j.LoggerFactory
+import org.springframework.http.HttpHeaders
+import org.springframework.http.HttpStatus
+import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
@@ -13,11 +18,26 @@ import org.springframework.web.bind.annotation.RestController
 class MemberLoginController(
     private val loginFacade: LoginFacade
 ) {
-    private val log = KotlinLogging.logger {}
+    private val log = LoggerFactory.getLogger(this::class.java)
+
 
     @PostMapping
-    fun loginMember(@RequestBody requestDto: LoginRequest): String {
-        log.info { "loginMember requestDto: $requestDto" }
-        return loginFacade.login(requestDto)
+    fun loginMember(@RequestBody loginRequest: LoginRequest.Login): ResponseEntity<LoginResponse> {
+        log.info("login 요청")
+        val member = LoginRequest.Login.toMember(loginRequest)
+        val (jwtToken, isSignup) = loginFacade.login(member)
+
+        val headers = HttpHeaders().apply {
+            set("Authorization", jwtToken.accessToken)
+            set("RefreshAuth", jwtToken.refreshToken)
+        }
+
+        val responseBody = LoginResponse(
+            response = ResponseData(isSignup = isSignup),
+            statusCode = HttpStatus.OK.value(),
+            msg = "회원 로그인 완료"
+        )
+
+        return ResponseEntity(responseBody, headers, HttpStatus.OK)
     }
 }

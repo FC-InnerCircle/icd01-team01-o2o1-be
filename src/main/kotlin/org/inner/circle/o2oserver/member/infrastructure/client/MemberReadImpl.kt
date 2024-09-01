@@ -1,5 +1,6 @@
 package org.inner.circle.o2oserver.member.infrastructure.client
 
+import org.inner.circle.o2oserver.member.domain.Member
 import org.inner.circle.o2oserver.member.domain.MemberReader
 import org.inner.circle.o2oserver.member.infrastructure.repository.MemberRepository
 import org.springframework.stereotype.Component
@@ -8,7 +9,12 @@ import org.springframework.stereotype.Component
 class MemberReadImpl(
     private val memberRepository: MemberRepository
 ) : MemberReader {
-    fun getMember() {
-        //
+
+    override fun getMemberById(memberId: String): Member? {
+        return memberRepository.findById(memberId).orElse(null)
+    }
+
+    override fun findBySnsTypeAndSubId(snsType: String, subId: String): Member? {
+        return memberRepository.findBySnsTypeAndSubId(snsType, subId)
     }
 }
