@@ -7,7 +7,6 @@ import org.springframework.data.mongodb.core.mapping.Document
 data class Member(
     @Id val memberId: String? = null,
     val name: String,
-    val email: String,
     val snsType: String,
     val subId: String,
     val nickName: String? = null,

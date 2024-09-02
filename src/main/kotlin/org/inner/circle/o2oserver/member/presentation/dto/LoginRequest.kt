@@ -6,7 +6,6 @@ class LoginRequest {
     data class Login(
         val snsType: String,
         val subId: String,
-        val email: String,
         val name: String,
     ) {
         companion object {
@@ -14,7 +13,6 @@ class LoginRequest {
                 return Member(
                     snsType = login.snsType,
                     subId = login.subId,
-                    email = login.email,
                     name = login.name,
                 )
             }
