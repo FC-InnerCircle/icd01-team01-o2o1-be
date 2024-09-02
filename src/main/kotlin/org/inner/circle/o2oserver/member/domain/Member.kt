@@ -15,3 +15,9 @@ data class Member(
     val loginStatus: Boolean? = null,
     val addressIds: List<String>? = null,
 )
+
+data class MemberDetail(
+    val nickName: String? = null,
+    val contact: String? = null,
+    val addressIds: List<String>? = null,
+)
