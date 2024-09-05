@@ -7,13 +7,21 @@ class LoginService(
     private val memberReader: MemberReader,
     private val memberStore: MemberStore,
     private val memberOutPort: MemberOutPort,
+    private val sequenceGenerator: SequenceGenerator,
 ) : LoginUseCase {
     override fun findOrCreateMember(member: Member): MemberCreationResult {
         val existingMember = memberReader.findBySnsTypeAndSubId(member.snsType, member.subId)
         return if (existingMember != null) {
             MemberCreationResult(existingMember, false)
         } else {
-            val newMember = memberStore.save(member)
+            val memberId = sequenceGenerator.generate("memberSequence")
+            val memberInfo = Member(
+                memberId = memberId,
+                name = member.name,
+                snsType = member.snsType,
+                subId = member.subId,
+            )
+            val newMember = memberStore.save(memberInfo)
 
             try {
                 memberOutPort.sendMemberData(newMember)

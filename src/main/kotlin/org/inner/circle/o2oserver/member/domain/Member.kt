@@ -5,7 +5,8 @@ import org.springframework.data.mongodb.core.mapping.Document
 
 @Document(collection = "members")
 data class Member(
-    @Id val memberId: String? = null,
+    @Id val id: String? = null,
+    val memberId: Long? = 0,
     val name: String,
     val snsType: String,
     val subId: String,

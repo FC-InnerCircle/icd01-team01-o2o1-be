@@ -13,8 +13,7 @@ class MemberRequest {
                 )
             }
 
-
-            fun toAddress(memberInfo: MemberInfo, memberId: String): Address {
+            fun toAddress(memberInfo: MemberInfo, memberId: Long): Address {
                 return Address(
                     memberId = memberId,
                     address = memberInfo.address.address,

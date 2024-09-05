@@ -18,7 +18,7 @@ class LoginFacade(
     fun login(member: Member): Pair<JsonWebToken, Boolean> {
         val result = loginService.findOrCreateMember(member)
         val authentication =
-            UsernamePasswordAuthenticationToken(result.member.memberId, null, emptyList())
+            UsernamePasswordAuthenticationToken(result.member.id, null, emptyList())
         val jwtToken = tokenProvider.generateToken(authentication)
 
         return jwtToken to result.isSignup
