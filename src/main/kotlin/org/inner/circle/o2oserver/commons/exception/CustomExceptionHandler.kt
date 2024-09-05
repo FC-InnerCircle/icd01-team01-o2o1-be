@@ -3,7 +3,8 @@ package org.inner.circle.o2oserver.commons.exception
 import io.jsonwebtoken.ExpiredJwtException
 import io.jsonwebtoken.MalformedJwtException
 import org.apache.catalina.connector.ClientAbortException
-import org.inner.circle.o2oserver.commons.models.BaseResponse
+import org.inner.circle.o2oserver.commons.response.ApiResponse
+import org.inner.circle.o2oserver.commons.response.BaseResponse
 import org.slf4j.LoggerFactory
 import org.springframework.http.ResponseEntity
 import org.springframework.security.core.AuthenticationException
@@ -24,10 +25,9 @@ class CustomExceptionHandler {
         log.error("NotFound error response !!! : ${e.message}")
         e.printStackTrace()
         return ResponseEntity.status(e.status).body(
-            BaseResponse(
+            BaseResponse.error(
                 response = e.message,
                 statusCode = e.status,
-                msg = "fail",
             ),
         )
     }
@@ -37,10 +37,9 @@ class CustomExceptionHandler {
         log.error("BadRequest error response !!! : ${e.message}")
         e.printStackTrace()
         return ResponseEntity.status(e.status).body(
-            BaseResponse(
+            BaseResponse.error(
                 response = e.message,
                 statusCode = e.status,
-                msg = "fail",
             ),
         )
     }
@@ -50,10 +49,9 @@ class CustomExceptionHandler {
         log.error("Unauthorized error response !!! : ${e.message}")
         e.printStackTrace()
         return ResponseEntity.status(e.status).body(
-            BaseResponse(
+            BaseResponse.error(
                 response = e.message,
                 statusCode = e.status,
-                msg = "fail",
             ),
         )
     }
@@ -63,10 +61,9 @@ class CustomExceptionHandler {
         log.error("UnValidToken error response !!! : ${e.message}")
         e.printStackTrace()
         return ResponseEntity.status(e.status).body(
-            BaseResponse(
+            BaseResponse.error(
                 response = e.message,
                 statusCode = e.status,
-                msg = "fail",
             ),
         )
     }
@@ -76,10 +73,9 @@ class CustomExceptionHandler {
         log.error("ExpiredToken error response !!! : ${e.message}")
         e.printStackTrace()
         return ResponseEntity.status(e.status).body(
-            BaseResponse(
+            BaseResponse.error(
                 response = e.message,
                 statusCode = e.status,
-                msg = "fail",
             ),
         )
     }
@@ -89,10 +85,9 @@ class CustomExceptionHandler {
         log.error("NotSupportToken error response !!! : ${e.message}")
         e.printStackTrace()
         return ResponseEntity.status(e.status).body(
-            BaseResponse(
+            BaseResponse.error(
                 response = e.message,
                 statusCode = e.status,
-                msg = "fail",
             ),
         )
     }
@@ -102,10 +97,9 @@ class CustomExceptionHandler {
         log.error("AccessDenied error response !!! : ${e.message}")
         e.printStackTrace()
         return ResponseEntity.status(e.status).body(
-            BaseResponse(
+            BaseResponse.error(
                 response = e.message,
                 statusCode = e.status,
-                msg = "fail",
             ),
         )
     }
@@ -115,10 +109,9 @@ class CustomExceptionHandler {
         log.error("FailToVerityToken error response !!! : ${e.message}")
         e.printStackTrace()
         return ResponseEntity.status(e.status).body(
-            BaseResponse(
+            BaseResponse.error(
                 response = e.message,
                 statusCode = e.status,
-                msg = "fail",
             ),
         )
     }
@@ -128,10 +121,9 @@ class CustomExceptionHandler {
         log.error("AlreadyExists error response !!! : ${e.message}")
         e.printStackTrace()
         return ResponseEntity.status(e.status).body(
-            BaseResponse(
+            BaseResponse.error(
                 response = e.message,
                 statusCode = e.status,
-                msg = "fail",
             ),
         )
     }
@@ -141,10 +133,9 @@ class CustomExceptionHandler {
         log.error("File Upload error response !!! : ${e.message}")
         e.printStackTrace()
         return ResponseEntity.status(e.status).body(
-            BaseResponse(
+            BaseResponse.error(
                 response = e.message,
                 statusCode = e.status,
-                msg = "fail",
             ),
         )
     }
@@ -156,10 +147,9 @@ class CustomExceptionHandler {
         log.error("excepion : ${e.message}")
         e.printStackTrace()
         return ResponseEntity.status(401).body(
-            BaseResponse(
+            BaseResponse.error(
                 response = e.message ?: message,
                 statusCode = 401,
-                msg = "fail",
             ),
         )
     }
@@ -170,10 +160,9 @@ class CustomExceptionHandler {
         log.error("error response : $message")
         e.printStackTrace()
         return ResponseEntity.status(401).body(
-            BaseResponse(
+            BaseResponse.error(
                 response = e.message ?: message,
                 statusCode = 401,
-                msg = "fail",
             ),
         )
     }
@@ -184,10 +173,9 @@ class CustomExceptionHandler {
         log.error("error response : $message")
         e.printStackTrace()
         return ResponseEntity.status(401).body(
-            BaseResponse(
+            BaseResponse.error(
                 response = e.message ?: message,
                 statusCode = 401,
-                msg = "fail",
             ),
         )
     }
@@ -197,10 +185,9 @@ class CustomExceptionHandler {
         log.error("error response : ${e.message}")
         e.printStackTrace()
         return ResponseEntity.status(401).body(
-            BaseResponse(
+            BaseResponse.error(
                 response = e.message ?: "인증에 실패했습니다. 다시 로그인해 주세요",
                 statusCode = 401,
-                msg = "fail",
             ),
         )
     }
@@ -211,10 +198,9 @@ class CustomExceptionHandler {
         log.error("error response : $message")
         e.printStackTrace()
         return ResponseEntity.status(500).body(
-            BaseResponse(
+            BaseResponse.error(
                 response = e.message ?: message,
                 statusCode = 500,
-                msg = "fail",
             ),
         )
     }
@@ -225,10 +211,9 @@ class CustomExceptionHandler {
         log.error("error response : $message")
         e.printStackTrace()
         return ResponseEntity.status(415).body(
-            BaseResponse(
+            BaseResponse.error(
                 response = e.message ?: message,
                 statusCode = 415,
-                msg = "fail",
             ),
         )
     }
@@ -239,10 +224,9 @@ class CustomExceptionHandler {
         log.error("error response : $message")
         e.printStackTrace()
         return ResponseEntity.status(400).body(
-            BaseResponse(
+            BaseResponse.error(
                 response = e.message ?: message,
                 statusCode = 400,
-                msg = "fail",
             ),
         )
     }
@@ -253,10 +237,9 @@ class CustomExceptionHandler {
         log.error("error response : $message")
         e.printStackTrace()
         return ResponseEntity.status(400).body(
-            BaseResponse(
+            BaseResponse.error(
                 response = e.message ?: message,
                 statusCode = 400,
-                msg = "fail",
             ),
         )
     }
@@ -267,10 +250,9 @@ class CustomExceptionHandler {
         log.error("error response : $message")
         e.printStackTrace()
         return ResponseEntity.status(400).body(
-            BaseResponse(
+            BaseResponse.error(
                 response = e.message ?: message,
                 statusCode = 400,
-                msg = "fail",
             ),
         )
     }
@@ -280,10 +262,9 @@ class CustomExceptionHandler {
         log.error("error response : ${e.message}")
         e.printStackTrace()
         return ResponseEntity.status(400).body(
-            BaseResponse(
+            BaseResponse.error(
                 response = e.message ?: "지원하지 않는 미디어 타입입니다.",
                 statusCode = 400,
-                msg = "fail",
             ),
         )
     }
@@ -293,10 +274,9 @@ class CustomExceptionHandler {
         log.error("error response : ${e.message}")
         e.printStackTrace()
         return ResponseEntity.status(400).body(
-            BaseResponse(
+            BaseResponse.error(
                 response = e.message ?: "클라이언트 연결이 끊겼습니다.",
                 statusCode = 400,
-                msg = "fail",
             ),
         )
     }
@@ -306,10 +286,9 @@ class CustomExceptionHandler {
         log.error("error response : ${e.message}")
         e.printStackTrace()
         return ResponseEntity.status(400).body(
-            BaseResponse(
+            BaseResponse.error(
                 response = e.message ?: "요청 시간이 초과되었습니다.",
                 statusCode = 400,
-                msg = "fail",
             ),
         )
     }
@@ -319,10 +298,9 @@ class CustomExceptionHandler {
         log.error("error response : ${e.message}")
         e.printStackTrace()
         return ResponseEntity.status(400).body(
-            BaseResponse(
+            BaseResponse.error(
                 response = e.message ?: "데이터가 유효하지 않습니다.",
                 statusCode = 400,
-                msg = "fail",
             ),
         )
     }

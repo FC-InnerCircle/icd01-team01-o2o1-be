@@ -1,11 +1,13 @@
 package org.inner.circle.o2oserver.order.presentation.api
 
-import org.inner.circle.o2oserver.commons.models.BaseResponse
+import org.inner.circle.o2oserver.commons.response.BaseResponse
 import org.inner.circle.o2oserver.order.application.OrderCommandFacade
 import org.inner.circle.o2oserver.order.presentation.dto.OrderCreateRequest
 import org.slf4j.LoggerFactory
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.security.core.userdetails.UserDetails
+import org.springframework.web.bind.annotation.DeleteMapping
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
@@ -29,10 +31,16 @@ class OrderCommandController(
     ): BaseResponse {
         log.info("order 생성 요청")
         val createOrderResult = orderCommandFacade.createOrder(orderCreate, userDetails.username)
-        return BaseResponse(
-            response = createOrderResult,
-            statusCode = 200,
-            msg = "success",
-        )
+        return BaseResponse.success(createOrderResult)
+    }
+
+    @DeleteMapping("/{orderId}")
+    fun cancelOrder(
+        @PathVariable orderId: Long,
+        @AuthenticationPrincipal userDetails: UserDetails,
+    ): BaseResponse {
+        log.info("order 취소 요청")
+        val cancelOrderResult = orderCommandFacade.cancelOrder(orderId, userDetails.username)
+        return BaseResponse.success(cancelOrderResult)
     }
 }

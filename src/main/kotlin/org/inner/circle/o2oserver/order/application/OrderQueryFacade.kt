@@ -1,6 +1,7 @@
 package org.inner.circle.o2oserver.order.application
 
 import org.inner.circle.o2oserver.order.domain.OrderUseCase
+import org.inner.circle.o2oserver.order.presentation.dto.OrderDeliveryResponse
 import org.inner.circle.o2oserver.order.presentation.dto.OrderDetailResponse
 import org.inner.circle.o2oserver.order.presentation.dto.OrderListResponse
 import org.springframework.stereotype.Component
@@ -20,5 +21,14 @@ class OrderQueryFacade(
         val memberId = 0L
         val orderList = orderService.getOrderList(memberId)
         return OrderListResponse.OrderListResponse.toResponse(orderList)
+    }
+
+    fun deliverySubscribe(
+        orderId: Long,
+        username: String
+    ): OrderDeliveryResponse.OrderDelivery {
+        val memberId = 1L
+        val order = orderService.getOrderDetail(orderId)
+        return OrderDeliveryResponse.OrderDelivery.toResponse(order)
     }
 }

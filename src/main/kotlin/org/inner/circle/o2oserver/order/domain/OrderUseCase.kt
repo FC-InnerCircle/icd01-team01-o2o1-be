@@ -6,4 +6,6 @@ interface OrderUseCase {
     fun getOrderDetail(orderId: Long): Order
 
     fun getOrderList(memberId: Long): List<Order>
+
+    fun cancelOrder(orderId: Long, memberId: Long): Long
 }
