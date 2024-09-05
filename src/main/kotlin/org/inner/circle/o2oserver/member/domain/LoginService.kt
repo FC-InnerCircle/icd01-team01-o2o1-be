@@ -1,6 +1,7 @@
 package org.inner.circle.o2oserver.member.domain
 
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
 class LoginService(
@@ -9,6 +10,8 @@ class LoginService(
     private val memberOutPort: MemberOutPort,
     private val sequenceGenerator: SequenceGenerator,
 ) : LoginUseCase {
+
+    @Transactional
     override fun findOrCreateMember(member: Member): MemberCreationResult {
         val existingMember = memberReader.findBySnsTypeAndSubId(member.snsType, member.subId)
         return if (existingMember != null) {
@@ -26,8 +29,6 @@ class LoginService(
             try {
                 memberOutPort.sendMemberData(newMember)
             } catch (e: Exception) {
-                // 외부 서버와 전송 실패시 DB에서 정보 삭제
-                memberStore.delete(newMember)
                 throw RuntimeException(
                     "External server communication failed, rolling back transaction",
                     e,
