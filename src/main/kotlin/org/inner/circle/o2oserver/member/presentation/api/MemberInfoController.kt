@@ -9,6 +9,7 @@ import org.inner.circle.o2oserver.member.presentation.dto.MemberResponseData
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -60,6 +61,21 @@ class MemberInfoController(
             msg = "가입 완료 되었습니다.",
         )
 
+        return ResponseEntity(responseBody, HttpStatus.OK)
+    }
+
+    @DeleteMapping()
+    fun deleteMember(request: HttpServletRequest): ResponseEntity<MemberResponse> {
+        val token = tokenProvider.resolveToken(request, "Authorization")
+        val authentication = tokenProvider.getAuthentication(token!!)
+        val memberId = authentication.name
+        log.info("Delete member ID: $memberId")
+        memberInfoFacade.deleteMember(memberId)
+        val responseBody = MemberResponse(
+            response = null,
+            statusCode = HttpStatus.OK.value(),
+            msg = "회원 탈퇴가 완료되었습니다.",
+        )
         return ResponseEntity(responseBody, HttpStatus.OK)
     }
 }

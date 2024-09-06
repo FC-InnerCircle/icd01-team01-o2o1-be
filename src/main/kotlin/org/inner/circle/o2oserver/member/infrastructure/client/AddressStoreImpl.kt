@@ -12,4 +12,8 @@ class AddressStoreImpl(
     override fun save(address: Address): Address {
         return addressRepository.save(address)
     }
+
+    override fun remove(memberId: String) {
+        addressRepository.deleteByMemberId(memberId)
+    }
 }

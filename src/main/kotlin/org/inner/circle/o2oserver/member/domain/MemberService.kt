@@ -38,6 +38,14 @@ class MemberService(
         memberStore.save(updatedMember)
     }
 
+    @Transactional
+    override fun deleteMember(id: String) {
+        val existingMember = memberReader.getMemberById(id)
+        memberStore.remove(id)
+        addressStore.remove(id)
+        sendDeleteRequestToExternalServer(existingMember.memberId!!)
+    }
+
     private fun createAddress(addressId: Long, address: Address): Address {
         return Address(
             addressId = addressId,
@@ -56,6 +64,15 @@ class MemberService(
         } catch (e: Exception) {
             log.error("External server communication failed, rolling back transaction", e)
             throw RuntimeException("External server communication failed, rolling back transaction", e)
+        }
+    }
+
+    private fun sendDeleteRequestToExternalServer(memberId: Long) {
+        try {
+            memberOutPort.sendDeleteMemberRequest(memberId)
+        } catch (e: Exception) {
+            log.error("Failed to send delete request to external server, rolling back transaction", e)
+            throw RuntimeException("Failed to send delete request, rolling back transaction", e)
         }
     }
 }

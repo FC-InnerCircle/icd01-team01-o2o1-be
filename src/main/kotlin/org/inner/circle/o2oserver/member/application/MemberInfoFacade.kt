@@ -17,4 +17,8 @@ class MemberInfoFacade(
     fun createMemberInfo(member: MemberDetail, address: Address) {
         memberService.createMemberInfo(member, address)
     }
+
+    fun deleteMember(id: String) {
+        memberService.deleteMember(id)
+    }
 }

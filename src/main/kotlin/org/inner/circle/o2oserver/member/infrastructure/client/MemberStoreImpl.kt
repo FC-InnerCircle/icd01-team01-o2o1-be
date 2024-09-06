@@ -13,7 +13,7 @@ class MemberStoreImpl(
         return memberRepository.save(member)
     }
 
-    override fun delete(member: Member) {
-        memberRepository.delete(member)
+    override fun remove(id: String) {
+        memberRepository.deleteById(id)
     }
 }

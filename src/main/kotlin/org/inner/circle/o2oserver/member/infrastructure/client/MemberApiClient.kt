@@ -22,4 +22,10 @@ class MemberApiClient() : MemberOutPort {
         // 우선 true로 처리
         return true
     }
+
+    override fun sendDeleteMemberRequest(memberId: Long): Boolean {
+        // 2팀 서버에 멤버 삭제 데이터 전송 결과에 따라 롤백 처리해야 함 (통신 미구현)
+        // 우선 true로 처리
+        return true
+    }
 }

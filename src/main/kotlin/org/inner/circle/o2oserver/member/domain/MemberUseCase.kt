@@ -6,4 +6,6 @@ interface MemberUseCase {
     fun createMemberInfo(memberDetail: MemberDetail, address: Address)
 
     fun updateMemberInfo(id: String, memberDetail: MemberDetail)
+
+    fun deleteMember(id: String)
 }

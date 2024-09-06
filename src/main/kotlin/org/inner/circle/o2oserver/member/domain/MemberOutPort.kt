@@ -4,4 +4,6 @@ interface MemberOutPort {
     fun sendMemberData(member: Member): Boolean
 
     fun sendMemberInfo(memberDetail: MemberDetail, address: Address): Boolean
+
+    fun sendDeleteMemberRequest(id: Long): Boolean
 }
