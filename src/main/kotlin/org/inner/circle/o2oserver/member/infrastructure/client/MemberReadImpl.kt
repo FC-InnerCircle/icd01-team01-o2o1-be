@@ -9,8 +9,10 @@ import org.springframework.stereotype.Component
 class MemberReadImpl(
     private val memberRepository: MemberRepository,
 ) : MemberReader {
-    override fun getMemberById(id: String): Member? {
-        return memberRepository.findById(id).orElse(null)
+    override fun getMemberById(id: String): Member {
+        return memberRepository.findById(id).orElseThrow {
+            throw IllegalArgumentException("Member not found")
+        }
     }
 
     override fun findBySnsTypeAndSubId(snsType: String, subId: String): Member? {

@@ -7,17 +7,16 @@ import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.header
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
-import org.springframework.http.MediaType
-import org.springframework.test.web.servlet.result.MockMvcResultHandlers
 
 @SpringBootTest
 @AutoConfigureMockMvc(addFilters = false)
 class MemberLoginControllerTest {
-
     @Autowired
     lateinit var mockMvc: MockMvc
 
@@ -42,13 +41,11 @@ class MemberLoginControllerTest {
         mockMvc.perform(
             post("/api/v1/login")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(asString)
+                .content(asString),
         )
-
             .andExpect(status().isOk)
-            .andExpect(header().exists("Authorization"))  // Authorization 헤더가 존재하는지 확인
-            .andExpect(header().exists("RefreshAuth"))    // RefreshAuth 헤더가 존재하는지 확인
+            .andExpect(header().exists("Authorization")) // Authorization 헤더가 존재하는지 확인
+            .andExpect(header().exists("RefreshAuth")) // RefreshAuth 헤더가 존재하는지 확인
             .andDo(MockMvcResultHandlers.print())
     }
-
 }

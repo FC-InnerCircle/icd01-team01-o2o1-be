@@ -14,6 +14,7 @@ class MongoSequenceGenerator(
             Sequence(id = sequenceName, seq = 0),
         )
         val newSeq = sequence.seq + 1
+
         sequenceRepository.save(sequence.copy(seq = newSeq)) // 시퀀스 값 업데이트
         return newSeq
     }
