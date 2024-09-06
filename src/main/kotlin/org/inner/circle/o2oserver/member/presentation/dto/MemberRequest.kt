@@ -6,14 +6,15 @@ import org.inner.circle.o2oserver.member.domain.MemberDetail
 class MemberRequest {
     data class MemberInfo(val nickName: String, val contact: String, val address: AddressRequest) {
         companion object {
-            fun toMemberDetail(memberInfo: MemberInfo): MemberDetail {
+            fun toMemberDetail(memberInfo: MemberInfo, memberId: String): MemberDetail {
                 return MemberDetail(
+                    id = memberId,
                     nickName = memberInfo.nickName,
                     contact = memberInfo.contact,
                 )
             }
 
-            fun toAddress(memberInfo: MemberInfo, memberId: Long): Address {
+            fun toAddress(memberInfo: MemberInfo, memberId: String): Address {
                 return Address(
                     memberId = memberId,
                     address = memberInfo.address.address,

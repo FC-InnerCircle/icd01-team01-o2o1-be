@@ -14,11 +14,10 @@ data class Member(
     val contact: String? = null,
     val status: String? = null,
     val loginStatus: Boolean? = null,
-    val addressIds: List<String>? = null,
 )
 
 data class MemberDetail(
-    val nickName: String? = null,
-    val contact: String? = null,
-    val addressIds: List<String>? = null,
+    val id: String,
+    val nickName: String,
+    val contact: String,
 )

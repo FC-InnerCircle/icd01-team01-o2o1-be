@@ -1,7 +1,7 @@
 package org.inner.circle.o2oserver.member.presentation.dto
 
 data class MemberResponse(
-    val response: MemberResponseData,
+    val response: MemberResponseData?,
     val statusCode: Int,
     val msg: String,
 )
