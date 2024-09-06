@@ -7,6 +7,7 @@ import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.Jwts.SIG.HS256
 import io.jsonwebtoken.MalformedJwtException
 import io.jsonwebtoken.UnsupportedJwtException
+import io.jsonwebtoken.security.Keys
 import jakarta.servlet.http.HttpServletRequest
 import org.inner.circle.o2oserver.commons.exception.Exceptions
 import org.slf4j.LoggerFactory
@@ -48,14 +49,15 @@ class TokenProvider(
     }
 
     fun generateToken(authentication: Authentication, expiresIn: Long): String {
-        val key = HS256.key().build()
+        val key = Keys.hmacShaKeyFor(secretKey.toByteArray()) // secretKey를 바이트 배열로 변환
+
         return Jwts.builder()
             .header()
             .keyId(secretKey)
             .and()
             .expiration(Date(ZonedDateTime.now(ZoneId.of("Asia/Seoul")).toInstant().toEpochMilli() + expiresIn))
             .subject(authentication.name)
-            .signWith(key)
+            .signWith(key, HS256)
             .compact()
     }
 
@@ -75,7 +77,7 @@ class TokenProvider(
     }
 
     fun getAuthentication(token: String): Authentication {
-        val key = HS256.key().build()
+        val key = Keys.hmacShaKeyFor(secretKey.toByteArray())
         val claims: Jws<Claims>? =
             Jwts.parser()
                 .verifyWith(key)
