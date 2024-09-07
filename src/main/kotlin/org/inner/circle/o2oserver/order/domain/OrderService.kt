@@ -1,5 +1,7 @@
 package org.inner.circle.o2oserver.order.domain
 
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import org.inner.circle.o2oserver.commons.exception.Exceptions.UnCancellableStatusException
 import org.inner.circle.o2oserver.commons.enums.OrderStatus.*
 import org.springframework.stereotype.Service
@@ -45,8 +47,11 @@ class OrderService(
         return orderStore.cancelOrder(orderId)
     }
 
-    override fun deliverySubscribe(orderId: Long, memberId: Long): Order {
-        orderReader.subscribeDelivery(orderId, memberId)
-        TODO("Not yet implemented")
+    override fun deliverySubscribe(orderId: Long, memberId: Long): Flow<Delivery> = flow {
+        orderReader.subscribeDelivery(orderId, memberId).let {
+            it.collect { delivery ->
+                emit(delivery)
+            }
+        }
     }
 }

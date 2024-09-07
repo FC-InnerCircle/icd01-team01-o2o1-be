@@ -14,7 +14,6 @@ spring:
 #          scope: profile_nickname, profile_image, account_email # 동의 항목
 #          clientName: kakao
 
-
   data:
     redis:
       host: 127.0.0.1
@@ -22,8 +21,13 @@ spring:
       timeout: 6000
 
     mongodb:
-      uri: mongodb+srv://o2o:innercircle@o2o.vbztozb.mongodb.net/?retryWrites=true&w=majority&appName=o2o
+      uri: mongodb+srv://o2oadmin:inner123!@o2o.o3yxh.mongodb.net/?retryWrites=true&w=majority&appName=o2o
       database: o2o
+
+jasypt:
+  encryptor:
+    bean: jasyptEncryptor
+    password: ${JASYPT_ENCRYPTOR_PASSWORD:o2o-secret-key}
 
 logging:
   level:

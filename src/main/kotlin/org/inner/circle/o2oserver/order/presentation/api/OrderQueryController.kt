@@ -1,7 +1,10 @@
 package org.inner.circle.o2oserver.order.presentation.api
 
-import org.inner.circle.o2oserver.commons.models.BaseResponse
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import org.inner.circle.o2oserver.commons.response.BaseResponse
 import org.inner.circle.o2oserver.order.application.OrderQueryFacade
+import org.springframework.http.MediaType
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.web.bind.annotation.GetMapping
@@ -19,11 +22,7 @@ class OrderQueryController(
         @AuthenticationPrincipal userDetails: UserDetails,
     ): BaseResponse {
         val orderList = orderQueryFacade.getOrderList(userDetails.username)
-        return BaseResponse(
-            response = orderList,
-            statusCode = 200,
-            msg = "success",
-        )
+        return BaseResponse.success(orderList)
     }
 
     @GetMapping("/{orderId}")
@@ -32,10 +31,15 @@ class OrderQueryController(
         @AuthenticationPrincipal userDetails: UserDetails,
     ): BaseResponse {
         val orderDetail = orderQueryFacade.getOrderDetail(orderId, userDetails.username)
-        return BaseResponse(
-            response = orderDetail,
-            statusCode = 200,
-            msg = "success",
-        )
+        return BaseResponse.success(orderDetail)
+    }
+
+    @GetMapping("/cancel/{orderId}", produces = [MediaType.TEXT_EVENT_STREAM_VALUE])
+    fun deliverySubscribe(
+        @PathVariable orderId: Long,
+        @AuthenticationPrincipal userDetails: UserDetails,
+    ): Flow<BaseResponse> = flow {
+        val cancelOrderResult = orderQueryFacade.deliverySubscribe(orderId, userDetails.username)
+        emit(BaseResponse.success(cancelOrderResult))
     }
 }
