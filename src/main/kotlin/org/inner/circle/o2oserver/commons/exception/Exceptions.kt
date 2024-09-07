@@ -4,10 +4,10 @@ import org.springframework.http.HttpStatusCode
 import org.springframework.web.server.ResponseStatusException
 
 class Exceptions {
-    sealed class SetExceptionHandler(
+    open class SetExceptionHandler(
         val status: Int,
-        override val message: String = "",
-    ) : ResponseStatusException(HttpStatusCode.valueOf(status), message)
+        val errorMessage: String = "",
+    ) : ResponseStatusException(HttpStatusCode.valueOf(status), errorMessage)
 
     data class NotFoundException(
         val errorDetails: ErrorDetails,
@@ -48,4 +48,9 @@ class Exceptions {
     data class FileUploadException(
         val errorDetails: ErrorDetails,
     ) : SetExceptionHandler(413, errorDetails.message)
+
+    data class UnCancellableStatusException(
+        val messages: String,
+    ) : SetExceptionHandler(400, messages)
+
 }

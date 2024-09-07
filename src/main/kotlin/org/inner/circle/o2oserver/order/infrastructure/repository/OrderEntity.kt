@@ -1,7 +1,7 @@
 package org.inner.circle.o2oserver.order.infrastructure.repository
 
 import org.bson.types.ObjectId
-import org.inner.circle.o2oserver.commons.models.OrderStatus
+import org.inner.circle.o2oserver.commons.enums.OrderStatus
 import org.inner.circle.o2oserver.order.domain.Order
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document
@@ -14,7 +14,7 @@ class OrderEntity(
     val id: ObjectId = ObjectId.get(),
     val orderId: Long,
     val orderTime: LocalDateTime,
-    val orderStatus: OrderStatus,
+    var orderStatus: OrderStatus,
     val orderPrice: Long,
     val memberId: Long,
     val store: StoreField,
@@ -125,6 +125,12 @@ class OrderEntity(
                     zipCode = order.orderAddress.zipCode ?: "",
                 ),
             )
+        }
+
+        fun cancelOrder(orderEntity: OrderEntity): OrderEntity {
+            return orderEntity.apply {
+                orderStatus = OrderStatus.CANCELED
+            }
         }
     }
 

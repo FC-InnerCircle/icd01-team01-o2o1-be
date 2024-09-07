@@ -1,6 +1,6 @@
 package org.inner.circle.o2oserver.order.domain
 
-import org.inner.circle.o2oserver.commons.models.OrderStatus
+import org.inner.circle.o2oserver.commons.enums.OrderStatus
 import java.time.LocalDateTime
 
 class Order(
