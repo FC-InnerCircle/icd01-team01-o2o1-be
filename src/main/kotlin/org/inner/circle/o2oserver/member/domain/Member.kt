@@ -5,14 +5,19 @@ import org.springframework.data.mongodb.core.mapping.Document
 
 @Document(collection = "members")
 data class Member(
-    @Id val memberId: String? = null,
+    @Id val id: String? = null,
+    val memberId: Long? = 0,
     val name: String,
-    val email: String,
     val snsType: String,
     val subId: String,
     val nickName: String? = null,
     val contact: String? = null,
     val status: String? = null,
     val loginStatus: Boolean? = null,
-    val addressIds: List<String>? = null,
+)
+
+data class MemberDetail(
+    val id: String,
+    val nickName: String,
+    val contact: String,
 )

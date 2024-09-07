@@ -6,11 +6,13 @@ import org.inner.circle.o2oserver.member.infrastructure.repository.MemberReposit
 import org.springframework.stereotype.Component
 
 @Component
-class MemberReadImpl(
+class MemberReaderImpl(
     private val memberRepository: MemberRepository,
 ) : MemberReader {
-    override fun getMemberById(memberId: String): Member? {
-        return memberRepository.findById(memberId).orElse(null)
+    override fun getMemberById(id: String): Member {
+        return memberRepository.findById(id).orElseThrow {
+            throw IllegalArgumentException("Member not found")
+        }
     }
 
     override fun findBySnsTypeAndSubId(snsType: String, subId: String): Member? {

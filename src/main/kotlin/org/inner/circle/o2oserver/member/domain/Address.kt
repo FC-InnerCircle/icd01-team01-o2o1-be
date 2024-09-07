@@ -5,11 +5,12 @@ import org.springframework.data.mongodb.core.mapping.Document
 
 @Document(collection = "addresses")
 data class Address(
-    @Id val addressId: String? = null,
+    @Id val addressId: Long? = 0,
     val memberId: String,
     val address: String,
     val detail: String,
     val latitude: Double,
     val longitude: Double,
+    val zipCode: String,
     val isDefault: Boolean,
 )

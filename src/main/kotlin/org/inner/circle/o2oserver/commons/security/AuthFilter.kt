@@ -25,7 +25,7 @@ class AuthFilter(
      */
     companion object {
         const val AUTHORIZATION = "Authorization"
-        const val REFRESH_TOKEN = "RefreshToken"
+        const val REFRESH_TOKEN = "RefreshAuth"
     }
 
     override fun doFilterInternal(request: HttpServletRequest, response: HttpServletResponse, filterChain: FilterChain) {

@@ -3,7 +3,7 @@ package org.inner.circle.o2oserver.member.presentation.api
 import org.inner.circle.o2oserver.member.application.LoginFacade
 import org.inner.circle.o2oserver.member.presentation.dto.LoginRequest
 import org.inner.circle.o2oserver.member.presentation.dto.LoginResponse
-import org.inner.circle.o2oserver.member.presentation.dto.ResponseData
+import org.inner.circle.o2oserver.member.presentation.dto.LoginResponseData
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
@@ -34,7 +34,7 @@ class MemberLoginController(
         }
 
         val responseBody = LoginResponse(
-            response = ResponseData(isSignup = isSignup),
+            response = LoginResponseData(isSignup = isSignup),
             statusCode = HttpStatus.OK.value(),
             msg = "회원 로그인 완료",
         )

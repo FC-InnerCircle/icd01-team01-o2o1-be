@@ -32,7 +32,7 @@ logging:
         security: debug
 
 jwt:
-  key: o2o-secret-key
+  key: veryLongSecretKeyThatIsMoreThan32BytesLongAndIsSecureEnough
 
 springdoc:
   packagesToScan: com.forall.active.wavemate
