@@ -1,9 +1,9 @@
 package org.inner.circle.o2oserver.store.presentation.api
 
+import org.inner.circle.o2oserver.store.application.StoreFacade
 import org.inner.circle.o2oserver.store.domain.review.ReviewQueryObject
 import org.inner.circle.o2oserver.store.domain.review.ReviewService
 import org.inner.circle.o2oserver.store.domain.store.Store
-import org.inner.circle.o2oserver.store.domain.store.StoreService
 import org.inner.circle.o2oserver.store.domain.store.command.StoreListCommand
 import org.inner.circle.o2oserver.store.presentation.dto.CommonListResponse
 import org.inner.circle.o2oserver.store.presentation.dto.CommonResponse
@@ -20,14 +20,14 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/api/v1/store")
 class StoreController(
-    private val storeService: StoreService,
+    private val storeFacade: StoreFacade,
     private val reviewService: ReviewService,
 ) {
     @GetMapping("/{storeId}")
     fun getStoreDetail(
         @PathVariable storeId: Long,
     ): CommonResponse<Store> {
-        val store: Store = storeService.getStoreDetail(storeId)
+        val store: Store = storeFacade.getStoreDetail(storeId)
         return CommonResponse(response = store, msg = "조회 되었습니다", statusCode = 200)
     }
 
@@ -44,7 +44,7 @@ class StoreController(
                 size = request.size,
             )
 
-        val (stores, totalCount) = storeService.getStoreList(command)
+        val (stores, totalCount) = storeFacade.getStoreList(command)
         return CommonListResponse(
             response = stores,
             totalCount = totalCount,
