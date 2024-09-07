@@ -1,9 +1,8 @@
 package org.inner.circle.o2oserver.store.presentation.api
 
+import org.inner.circle.o2oserver.store.application.ReviewFacade
 import org.inner.circle.o2oserver.store.application.StoreFacade
 import org.inner.circle.o2oserver.store.domain.review.ReviewQueryObject
-import org.inner.circle.o2oserver.store.domain.review.ReviewService
-import org.inner.circle.o2oserver.store.domain.store.Store
 import org.inner.circle.o2oserver.store.domain.store.command.StoreListCommand
 import org.inner.circle.o2oserver.store.presentation.dto.CommonListResponse
 import org.inner.circle.o2oserver.store.presentation.dto.CommonResponse
@@ -21,20 +20,20 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("/api/v1/store")
 class StoreController(
     private val storeFacade: StoreFacade,
-    private val reviewService: ReviewService,
+    private val reviewFacade: ReviewFacade,
 ) {
     @GetMapping("/{storeId}")
     fun getStoreDetail(
         @PathVariable storeId: Long,
-    ): CommonResponse<Store> {
-        val store: Store = storeFacade.getStoreDetail(storeId)
+    ): CommonResponse {
+        val store = storeFacade.getStoreDetail(storeId)
         return CommonResponse(response = store, msg = "조회 되었습니다", statusCode = 200)
     }
 
     @PostMapping("")
     fun getStoreDetail(
         @RequestBody request: StoreListRequest,
-    ): CommonListResponse<List<Store>> {
+    ): CommonListResponse {
         val command =
             StoreListCommand(
                 address = request.address.toDomain(),
@@ -44,10 +43,10 @@ class StoreController(
                 size = request.size,
             )
 
-        val (stores, totalCount) = storeFacade.getStoreList(command)
+        val storeListInfo = storeFacade.getStoreList(command)
         return CommonListResponse(
-            response = stores,
-            totalCount = totalCount,
+            response = storeListInfo.stores,
+            totalCount = storeListInfo.totalCount,
             size = request.size ?: 0,
             page = request.page,
             statusCode = 200,
@@ -60,7 +59,7 @@ class StoreController(
         @PathVariable("storeId") storeId: Int,
         @RequestParam("page") page: Int,
         @RequestParam("limit") size: Int,
-    ): CommonListResponse<StoreReviewDTO> {
+    ): CommonListResponse {
         val queryObject =
             ReviewQueryObject(
                 storeId = storeId,
@@ -68,7 +67,7 @@ class StoreController(
                 limit = size,
             )
 
-        val reviews = reviewService.getStoreReviewList(queryObject)
+        val reviews = reviewFacade.getStoreReviewList(queryObject)
         return CommonListResponse(
             response =
                 StoreReviewDTO(

@@ -1,6 +1,7 @@
 package org.inner.circle.o2oserver.store.infrastructure.client
 
 import org.inner.circle.o2oserver.store.domain.store.Store
+import org.inner.circle.o2oserver.store.domain.store.StoreListInfo
 import org.inner.circle.o2oserver.store.domain.store.StoreReader
 import org.inner.circle.o2oserver.store.domain.store.command.StoreListCommand
 import org.springframework.stereotype.Component
@@ -29,11 +30,8 @@ class StoreReadImpl(private val storeApiClient: StoreApiClient) : StoreReader {
         )
     }
 
-    override fun getStoreList(command: StoreListCommand): Pair<List<Store>, Int> {
+    override fun getStoreList(command: StoreListCommand): StoreListInfo {
         val response = storeApiClient.getStoreList()
-        return Pair(
-            response.stores.map { it.toDomain() },
-            response.totalCount,
-        )
+        return StoreListInfo(totalCount = response.totalCount, stores = response.stores.map { it.toDomain() })
     }
 }
