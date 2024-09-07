@@ -3,17 +3,17 @@ package org.inner.circle.o2oserver.store.presentation.dto
 import org.inner.circle.o2oserver.store.domain.address.Address
 import org.inner.circle.o2oserver.store.domain.review.ReviewInfo
 
-data class CommonResponse<T>(
-    val response: T,
+data class CommonResponse(
+    val response: Any,
     val statusCode: Int,
     val msg: String,
 )
 
-data class CommonListResponse<T>(
+data class CommonListResponse(
     val totalCount: Int?,
     val page: Int?,
     val size: Int,
-    val response: T,
+    val response: Any,
     val statusCode: Int,
     val msg: String,
 )

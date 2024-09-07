@@ -11,9 +11,7 @@ class StoreServiceImpl(
         return storeReader.getStoreDetail(storeId)
     }
 
-    override fun getStoreList(command: StoreListCommand): Pair<List<Store>, Int> {
-        return storeReader.getStoreList(
-            command,
-        )
+    override fun getStoreList(command: StoreListCommand): StoreListInfo {
+        return storeReader.getStoreList(command)
     }
 }

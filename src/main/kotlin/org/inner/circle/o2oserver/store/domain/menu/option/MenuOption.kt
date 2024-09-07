@@ -1,4 +1,4 @@
-package org.inner.circle.o2oserver.store.domain.menu
+package org.inner.circle.o2oserver.store.domain.menu.option
 
 class MenuOption(
     optionId: Int?,
