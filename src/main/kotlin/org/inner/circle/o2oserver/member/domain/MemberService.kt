@@ -9,6 +9,7 @@ class MemberService(
     private val memberReader: MemberReader,
     private val memberStore: MemberStore,
     private val addressStore: AddressStore,
+    private val addressReader: AddressReader,
     private val memberOutPort: MemberOutPort,
     private val sequenceGenerator: SequenceGenerator,
 ) : MemberUseCase {
@@ -21,7 +22,7 @@ class MemberService(
     @Transactional
     override fun createMemberInfo(memberDetail: MemberDetail, address: Address) {
         val addressId = sequenceGenerator.generate("addressSequence")
-        val addressInfo = createAddress(addressId, address)
+        val addressInfo = createAddressInfo(addressId, address)
 
         addressStore.save(addressInfo)
         updateMemberInfo(memberDetail.id, memberDetail)
@@ -46,7 +47,42 @@ class MemberService(
         sendDeleteRequestToExternalServer(existingMember.memberId!!)
     }
 
-    private fun createAddress(addressId: Long, address: Address): Address {
+    @Transactional
+    override fun createAddress(address: Address): Address {
+        val addressId = sequenceGenerator.generate("addressSequence")
+        val addressInfo = createAddressInfo(addressId, address)
+        val newAddress = addressStore.save(addressInfo)
+        sendCreateAddressRequestToExternalServer(addressInfo)
+
+        return newAddress
+    }
+
+    override fun getAddresses(memberId: String): List<Address> {
+        return addressReader.getAddresses(memberId)
+    }
+
+    @Transactional
+    override fun setDefaultAddress(memberId: String, addressId: Long) {
+        val addresses = addressReader.getAddresses(memberId)
+        addresses.forEach {
+            val updatedAddress = if (it.addressId == addressId) {
+                it.copy(isDefault = true)
+            } else {
+                it.copy(isDefault = false)
+            }
+            addressStore.save(updatedAddress)
+        }
+    }
+
+    @Transactional
+    override fun deleteAddress(addressId: Long): Long {
+        val removedAddressId = addressStore.removeAddress(addressId)
+        sendDeleteAddressRequestToExternalServer(removedAddressId)
+
+        return removedAddressId
+    }
+
+    private fun createAddressInfo(addressId: Long, address: Address): Address {
         return Address(
             addressId = addressId,
             memberId = address.memberId,
@@ -54,6 +90,7 @@ class MemberService(
             detail = address.detail,
             longitude = address.longitude,
             latitude = address.latitude,
+            zipCode = address.zipCode,
             isDefault = address.isDefault,
         )
     }
@@ -73,6 +110,24 @@ class MemberService(
         } catch (e: Exception) {
             log.error("Failed to send delete request to external server, rolling back transaction", e)
             throw RuntimeException("Failed to send delete request, rolling back transaction", e)
+        }
+    }
+
+    private fun sendCreateAddressRequestToExternalServer(addressInfo: Address) {
+        try {
+            memberOutPort.sendCreateAddressRequest(addressInfo)
+        } catch (e: Exception) {
+            log.error("Failed to send create address request to external server, rolling back transaction", e)
+            throw RuntimeException("Failed to send create address request, rolling back transaction", e)
+        }
+    }
+
+    private fun sendDeleteAddressRequestToExternalServer(addressId: Long) {
+        try {
+            memberOutPort.sendDeleteAddressRequest(addressId)
+        } catch (e: Exception) {
+            log.error("Failed to send delete address request to external server, rolling back transaction", e)
+            throw RuntimeException("Failed to send delete address request, rolling back transaction", e)
         }
     }
 }

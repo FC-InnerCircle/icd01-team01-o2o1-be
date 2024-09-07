@@ -16,4 +16,9 @@ class AddressStoreImpl(
     override fun remove(memberId: String) {
         addressRepository.deleteByMemberId(memberId)
     }
+
+    override fun removeAddress(addressId: Long): Long {
+        addressRepository.deleteById(addressId)
+        return addressId
+    }
 }

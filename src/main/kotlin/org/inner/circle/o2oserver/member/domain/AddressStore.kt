@@ -4,4 +4,6 @@ interface AddressStore {
     fun save(address: Address): Address
 
     fun remove(memberId: String)
+
+    fun removeAddress(addressId: Long): Long
 }

@@ -21,4 +21,20 @@ class MemberInfoFacade(
     fun deleteMember(id: String) {
         memberService.deleteMember(id)
     }
+
+    fun getAddresses(memberId: String): List<Address> {
+        return memberService.getAddresses(memberId)
+    }
+
+    fun createAddress(address: Address): Address {
+        return memberService.createAddress(address)
+    }
+
+    fun setDefaultAddress(memberId: String, addressId: Long) {
+        memberService.setDefaultAddress(memberId, addressId)
+    }
+
+    fun deleteAddress(addressId: Long) {
+        memberService.deleteAddress(addressId)
+    }
 }

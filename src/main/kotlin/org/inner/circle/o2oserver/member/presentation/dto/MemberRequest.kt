@@ -21,6 +21,7 @@ class MemberRequest {
                     detail = memberInfo.address.detailAddress,
                     latitude = memberInfo.address.latitude,
                     longitude = memberInfo.address.longitude,
+                    zipCode = memberInfo.address.zipCode,
                     isDefault = true, // 기본 주소로 설정
                 )
             }
@@ -31,6 +32,7 @@ class MemberRequest {
             val detailAddress: String,
             val latitude: Double,
             val longitude: Double,
+            val zipCode: String,
         )
     }
 }

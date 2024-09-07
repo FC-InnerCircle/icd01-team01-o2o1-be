@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping("/member")
+@RequestMapping("/api/v1/member")
 class MemberInfoController(
     private val memberInfoFacade: MemberInfoFacade,
     private val tokenProvider: TokenProvider,
@@ -64,7 +64,7 @@ class MemberInfoController(
         return ResponseEntity(responseBody, HttpStatus.OK)
     }
 
-    @DeleteMapping()
+    @DeleteMapping
     fun deleteMember(request: HttpServletRequest): ResponseEntity<MemberResponse> {
         val token = tokenProvider.resolveToken(request, "Authorization")
         val authentication = tokenProvider.getAuthentication(token!!)

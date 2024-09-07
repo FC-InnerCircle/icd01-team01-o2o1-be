@@ -8,4 +8,12 @@ interface MemberUseCase {
     fun updateMemberInfo(id: String, memberDetail: MemberDetail)
 
     fun deleteMember(id: String)
+
+    fun getAddresses(memberId: String): List<Address>
+
+    fun createAddress(address: Address): Address
+
+    fun setDefaultAddress(memberId: String, addressId: Long)
+
+    fun deleteAddress(addressId: Long): Long
 }

@@ -6,7 +6,7 @@ import org.inner.circle.o2oserver.member.infrastructure.repository.MemberReposit
 import org.springframework.stereotype.Component
 
 @Component
-class MemberReadImpl(
+class MemberReaderImpl(
     private val memberRepository: MemberRepository,
 ) : MemberReader {
     override fun getMemberById(id: String): Member {
