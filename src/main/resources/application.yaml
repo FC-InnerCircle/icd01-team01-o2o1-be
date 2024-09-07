@@ -39,7 +39,7 @@ jwt:
   key: veryLongSecretKeyThatIsMoreThan32BytesLongAndIsSecureEnough
 
 springdoc:
-  packagesToScan: com.forall.active.wavemate
+  packagesToScan: org.inner.circle.o2oserver
   default-consumes-media-type: application/json
   default-produces-media-type: application/json
   swagger-ui:
