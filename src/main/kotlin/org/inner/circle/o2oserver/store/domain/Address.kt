@@ -1,4 +1,4 @@
-package org.inner.circle.o2oserver.store.domain.address
+package org.inner.circle.o2oserver.store.domain
 
 data class Address(
     val latitude: Double,

@@ -1,6 +1,6 @@
 package org.inner.circle.o2oserver.store.presentation.dto
 
-import org.inner.circle.o2oserver.store.domain.address.Address
+import org.inner.circle.o2oserver.store.domain.Address
 import org.inner.circle.o2oserver.store.domain.review.ReviewInfo
 
 data class CommonResponse(

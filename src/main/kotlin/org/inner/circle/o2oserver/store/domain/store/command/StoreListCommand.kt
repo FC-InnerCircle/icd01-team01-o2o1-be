@@ -1,6 +1,6 @@
 package org.inner.circle.o2oserver.store.domain.store.command
 
-import org.inner.circle.o2oserver.store.domain.address.Address
+import org.inner.circle.o2oserver.store.domain.Address
 
 class StoreListCommand(
     val address: Address,
