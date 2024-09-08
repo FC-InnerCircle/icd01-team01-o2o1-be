@@ -34,14 +34,16 @@ class OrderEntity(
                 store = Order.Store(
                     storeId = orderEntity.store.storeId ?: 0,
                     storeName = orderEntity.store.storeName ?: "",
-                    storeAddress = Order.Address(
-                        addressId = orderEntity.store.storeAddress.addressId ?: 0,
-                        address = orderEntity.store.storeAddress.address,
-                        detail = orderEntity.store.storeAddress.addressDetail ?: "",
-                        zipCode = orderEntity.store.storeAddress.zipCode,
-                        latitude = orderEntity.store.storeAddress.latitude,
-                        longitude = orderEntity.store.storeAddress.longitude,
-                    ),
+                    storeAddress = orderEntity.store.storeAddress?.let {
+                        Order.Address(
+                            addressId = orderEntity.store.storeAddress.addressId,
+                            address = orderEntity.store.storeAddress.address,
+                            addressDetail = orderEntity.store.storeAddress.addressDetail ?: "",
+                            zipCode = orderEntity.store.storeAddress.zipCode,
+                            latitude = orderEntity.store.storeAddress.latitude,
+                            longitude = orderEntity.store.storeAddress.longitude,
+                        )
+                    },
                 ),
                 menus = orderEntity.menus.map { menu ->
                     Order.Menu(
@@ -65,9 +67,9 @@ class OrderEntity(
                     )
                 },
                 orderAddress = Order.Address(
-                    addressId = orderEntity.address.addressId ?: 0,
+                    addressId = orderEntity.address.addressId,
                     address = orderEntity.address.address,
-                    detail = orderEntity.address.addressDetail ?: "",
+                    addressDetail = orderEntity.address.addressDetail ?: "",
                     zipCode = orderEntity.address.zipCode,
                     latitude = orderEntity.address.latitude,
                     longitude = orderEntity.address.longitude,
@@ -86,14 +88,16 @@ class OrderEntity(
                     storeId = order.store.storeId,
                     storeName = order.store.storeName,
                     storeAddress = order.store.storeAddress.let { address ->
-                        AddressField(
-                            addressId = address.addressId,
-                            latitude = address.latitude ?: 0.0,
-                            longitude = address.longitude ?: 0.0,
-                            address = address.address ?: "",
-                            addressDetail = address.detail,
-                            zipCode = address.zipCode ?: "",
-                        )
+                        address?.let {
+                            AddressField(
+                                addressId = address.addressId,
+                                latitude = address.latitude,
+                                longitude = address.longitude,
+                                address = address.address,
+                                addressDetail = address.addressDetail,
+                                zipCode = address.zipCode,
+                            )
+                        }
                     },
                 ),
                 menus = order.menus.map {
@@ -118,11 +122,11 @@ class OrderEntity(
                 },
                 address = AddressField(
                     addressId = order.orderAddress.addressId,
-                    latitude = order.orderAddress.latitude ?: 0.0,
-                    longitude = order.orderAddress.longitude ?: 0.0,
-                    address = order.orderAddress.address ?: "",
-                    addressDetail = order.orderAddress.detail,
-                    zipCode = order.orderAddress.zipCode ?: "",
+                    latitude = order.orderAddress.latitude,
+                    longitude = order.orderAddress.longitude,
+                    address = order.orderAddress.address,
+                    addressDetail = order.orderAddress.addressDetail,
+                    zipCode = order.orderAddress.zipCode,
                 ),
             )
         }
@@ -166,6 +170,6 @@ class OrderEntity(
     data class StoreField(
         val storeId: Long? = 0,
         val storeName: String? = "",
-        val storeAddress: AddressField,
+        val storeAddress: AddressField?,
     )
 }

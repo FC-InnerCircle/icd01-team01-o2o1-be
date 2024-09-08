@@ -16,11 +16,11 @@ class Order(
 ) {
     class Address(
         val addressId: Long,
-        val address: String? = "",
-        val detail: String? = "",
-        val zipCode: String? = "",
-        val latitude: Double? = 0.0,
-        val longitude: Double? = 0.0,
+        val address: String,
+        val addressDetail: String,
+        val zipCode: String,
+        val latitude: Double,
+        val longitude: Double,
     )
 
     class Menu(
@@ -41,11 +41,12 @@ class Order(
     class MenuOption(
         val optionId: Long,
         val optionName: String? = "",
+        val optionPrice: Long? = 0,
     )
 
     class Store(
-        val storeId: Long,
+        val storeId: Long?,
         val storeName: String,
-        val storeAddress: Address,
+        val storeAddress: Address?,
     )
 }

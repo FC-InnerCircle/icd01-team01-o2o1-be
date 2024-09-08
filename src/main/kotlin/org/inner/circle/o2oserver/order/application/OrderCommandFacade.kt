@@ -1,6 +1,6 @@
 package org.inner.circle.o2oserver.order.application
 
-import org.inner.circle.o2oserver.order.domain.Order
+import org.inner.circle.o2oserver.member.domain.MemberUseCase
 import org.inner.circle.o2oserver.order.domain.OrderUseCase
 import org.inner.circle.o2oserver.order.presentation.dto.OrderCancelResponse
 import org.inner.circle.o2oserver.order.presentation.dto.OrderCreateRequest
@@ -9,24 +9,13 @@ import org.springframework.stereotype.Component
 
 @Component
 class OrderCommandFacade(
-    private val orderService: OrderUseCase,
+    private val orderUseCase: OrderUseCase,
+    private val memberUseCase: MemberUseCase,
 ) {
     fun createOrder(orderCreate: OrderCreateRequest.OrderCreate, userName: String): OrderCreateResponse.OrderCreateResult {
-        val memberId = 1L // get member id : userName -> memberId
-        val store = Order.Store(
-            storeId = orderCreate.storeId,
-            storeName = "storeName",
-            storeAddress = Order.Address(
-                addressId = 1L,
-                latitude = 0.0,
-                longitude = 0.0,
-                address = "address",
-                detail = "detail",
-                zipCode = "zipCode",
-            ),
-        )
-        val toOrder = OrderCreateRequest.OrderCreate.toOrder(orderCreate, memberId, store)
-        val createOrder = orderService.createOrder(toOrder)
+        val member = memberUseCase.getMemberInfo(userName)
+        val toOrder = OrderCreateRequest.OrderCreate.toOrder(orderCreate, member.memberId!!)
+        val createOrder = orderUseCase.createOrder(toOrder)
         return OrderCreateResponse.OrderCreateResult.toResponse(createOrder)
     }
 
@@ -35,7 +24,7 @@ class OrderCommandFacade(
         username: String
     ): OrderCancelResponse.OrderCancel {
         val memberId = 1L
-        val cancelOrder = orderService.cancelOrder(orderId, memberId)
+        val cancelOrder = orderUseCase.cancelOrder(orderId, memberId)
         return OrderCancelResponse.OrderCancel.toResponse(cancelOrder)
     }
 }
