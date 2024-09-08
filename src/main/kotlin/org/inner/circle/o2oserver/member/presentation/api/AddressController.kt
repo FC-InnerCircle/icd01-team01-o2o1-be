@@ -1,14 +1,14 @@
 package org.inner.circle.o2oserver.member.presentation.api
 
-import jakarta.servlet.http.HttpServletRequest
 import org.inner.circle.o2oserver.commons.response.BaseResponse
-import org.inner.circle.o2oserver.commons.security.TokenProvider
 import org.inner.circle.o2oserver.member.application.MemberInfoFacade
 import org.inner.circle.o2oserver.member.presentation.dto.AddressRequest
 import org.inner.circle.o2oserver.member.presentation.dto.AddressResponseItem
 import org.inner.circle.o2oserver.member.presentation.dto.GetAddressResponseData
 import org.inner.circle.o2oserver.member.presentation.dto.PostAddressResponseData
 import org.slf4j.LoggerFactory
+import org.springframework.security.core.annotation.AuthenticationPrincipal
+import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -22,17 +22,13 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("/api/v1/address")
 class AddressController(
     private val memberInfoFacade: MemberInfoFacade,
-    private val tokenProvider: TokenProvider,
 ) {
     private val log = LoggerFactory.getLogger(this::class.java)
 
     @GetMapping
-    fun getAddresses(request: HttpServletRequest): BaseResponse {
-        val token = tokenProvider.resolveToken(request, "Authorization")
-        val authentication = tokenProvider.getAuthentication(token!!)
-        log.info("Get Addresses Member ID: ${authentication.name}")
-
-        val addresses = memberInfoFacade.getAddresses(authentication.name)
+    fun getAddresses(@AuthenticationPrincipal userDetails: UserDetails): BaseResponse {
+        log.info("Get Addresses Member ID: ${userDetails.username}")
+        val addresses = memberInfoFacade.getAddresses(userDetails.username)
         val addressResponseData = GetAddressResponseData(
             addresses = addresses.map { address ->
                 AddressResponseItem(
@@ -53,11 +49,9 @@ class AddressController(
     @PostMapping
     fun createAddress(
         @RequestBody createRequest: AddressRequest.CreateAddress,
-        request: HttpServletRequest,
+        @AuthenticationPrincipal userDetails: UserDetails,
     ): BaseResponse {
-        val token = tokenProvider.resolveToken(request, "Authorization")
-        val authentication = tokenProvider.getAuthentication(token!!)
-        val memberId = authentication.name
+        val memberId = userDetails.username
         val addressInfo = AddressRequest.CreateAddress.toAddress(createRequest, memberId)
         val newAddress = memberInfoFacade.createAddress(addressInfo)
         val response = newAddress.addressId?.let { PostAddressResponseData(it) } ?: PostAddressResponseData(-1)
@@ -68,11 +62,9 @@ class AddressController(
     @PutMapping("/{addressId}")
     fun setMainAddress(
         @PathVariable addressId: Long,
-        request: HttpServletRequest,
+        @AuthenticationPrincipal userDetails: UserDetails,
     ): BaseResponse {
-        val token = tokenProvider.resolveToken(request, "Authorization")
-        val authentication = tokenProvider.getAuthentication(token!!)
-        val memberId = authentication.name
+        val memberId = userDetails.username
         log.info("Setting main address for member ID: $memberId, address ID: $addressId")
 
         memberInfoFacade.setDefaultAddress(memberId, addressId)
@@ -83,7 +75,7 @@ class AddressController(
     @DeleteMapping("/{addressId}")
     fun deleteAddress(
         @PathVariable addressId: Long,
-        request: HttpServletRequest,
+        @AuthenticationPrincipal userDetails: UserDetails,
     ): BaseResponse {
         log.info("Delete address for address ID: $addressId")
         memberInfoFacade.deleteAddress(addressId)

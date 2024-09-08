@@ -1,4 +1,4 @@
-package org.inner.circle.o2oserver.member.presentaion.api
+package org.inner.circle.o2oserver.member.presentation.api
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.inner.circle.o2oserver.member.presentation.dto.LoginRequest
