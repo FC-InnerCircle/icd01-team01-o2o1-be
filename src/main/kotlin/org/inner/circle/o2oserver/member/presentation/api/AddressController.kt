@@ -1,16 +1,14 @@
 package org.inner.circle.o2oserver.member.presentation.api
 
 import jakarta.servlet.http.HttpServletRequest
+import org.inner.circle.o2oserver.commons.response.BaseResponse
 import org.inner.circle.o2oserver.commons.security.TokenProvider
 import org.inner.circle.o2oserver.member.application.MemberInfoFacade
 import org.inner.circle.o2oserver.member.presentation.dto.AddressRequest
-import org.inner.circle.o2oserver.member.presentation.dto.AddressResponse
 import org.inner.circle.o2oserver.member.presentation.dto.AddressResponseItem
 import org.inner.circle.o2oserver.member.presentation.dto.GetAddressResponseData
 import org.inner.circle.o2oserver.member.presentation.dto.PostAddressResponseData
 import org.slf4j.LoggerFactory
-import org.springframework.http.HttpStatus
-import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -29,7 +27,7 @@ class AddressController(
     private val log = LoggerFactory.getLogger(this::class.java)
 
     @GetMapping
-    fun getAddresses(request: HttpServletRequest): ResponseEntity<AddressResponse<GetAddressResponseData>> {
+    fun getAddresses(request: HttpServletRequest): BaseResponse {
         val token = tokenProvider.resolveToken(request, "Authorization")
         val authentication = tokenProvider.getAuthentication(token!!)
         log.info("Get Addresses Member ID: ${authentication.name}")
@@ -48,39 +46,30 @@ class AddressController(
                 )
             },
         )
-        val responseBody = AddressResponse(
-            response = addressResponseData,
-            statusCode = HttpStatus.OK.value(),
-            msg = "주소 정보를 조회하였습니다.",
-        )
 
-        return ResponseEntity(responseBody, HttpStatus.OK)
+        return BaseResponse.success(addressResponseData)
     }
 
     @PostMapping
     fun createAddress(
         @RequestBody createRequest: AddressRequest.CreateAddress,
         request: HttpServletRequest,
-    ): ResponseEntity<AddressResponse<PostAddressResponseData>> {
+    ): BaseResponse {
         val token = tokenProvider.resolveToken(request, "Authorization")
         val authentication = tokenProvider.getAuthentication(token!!)
         val memberId = authentication.name
         val addressInfo = AddressRequest.CreateAddress.toAddress(createRequest, memberId)
         val newAddress = memberInfoFacade.createAddress(addressInfo)
-        val responseBody = AddressResponse(
-            response = newAddress.addressId?.let { PostAddressResponseData(it) } ?: PostAddressResponseData(-1),
-            statusCode = HttpStatus.OK.value(),
-            msg = "주소를 성공적으로 추가했습니다.",
-        )
+        val response = newAddress.addressId?.let { PostAddressResponseData(it) } ?: PostAddressResponseData(-1)
 
-        return ResponseEntity(responseBody, HttpStatus.OK)
+        return BaseResponse.success(response)
     }
 
     @PutMapping("/{addressId}")
     fun setMainAddress(
         @PathVariable addressId: Long,
         request: HttpServletRequest,
-    ): ResponseEntity<AddressResponse<Map<String, Long>>> {
+    ): BaseResponse {
         val token = tokenProvider.resolveToken(request, "Authorization")
         val authentication = tokenProvider.getAuthentication(token!!)
         val memberId = authentication.name
@@ -88,29 +77,17 @@ class AddressController(
 
         memberInfoFacade.setDefaultAddress(memberId, addressId)
 
-        val responseBody = AddressResponse(
-            response = mapOf("addressId" to addressId),
-            statusCode = HttpStatus.OK.value(),
-            msg = "메인 주소 설정 완료",
-        )
-
-        return ResponseEntity(responseBody, HttpStatus.OK)
+        return BaseResponse.success(mapOf("addressId" to addressId))
     }
 
     @DeleteMapping("/{addressId}")
     fun deleteAddress(
         @PathVariable addressId: Long,
         request: HttpServletRequest,
-    ): ResponseEntity<AddressResponse<Map<String, Long>>> {
+    ): BaseResponse {
         log.info("Delete address for address ID: $addressId")
         memberInfoFacade.deleteAddress(addressId)
 
-        val responseBody = AddressResponse(
-            response = mapOf("addressId" to addressId),
-            statusCode = HttpStatus.OK.value(),
-            msg = "주소를 성공적으로 삭제했습니다.",
-        )
-
-        return ResponseEntity(responseBody, HttpStatus.OK)
+        return BaseResponse.success(mapOf("addressId" to addressId))
     }
 }

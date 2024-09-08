@@ -24,7 +24,7 @@ class MemberService(
 
     override fun updateMemberInfo(id: String, memberDetail: MemberDetail) {
         val existingMember = memberReader.getMemberById(id)
-        val updatedMember = existingMember.copy(
+        val updatedMember = existingMember.updateMemberInfo(
             nickName = memberDetail.nickName,
             contact = memberDetail.contact,
         )
@@ -50,15 +50,12 @@ class MemberService(
 
     override fun setDefaultAddress(memberId: String, addressId: Long) {
         val addresses = addressReader.getAddresses(memberId)
-        addresses.forEach {
-            val updatedAddress = if (it.addressId == addressId) {
-                it.copy(isDefault = true)
-            } else {
-                it.copy(isDefault = false)
-            }
+        addresses.forEach { address ->
+            val updatedAddress = address.withDefaultStatus(address.addressId == addressId)
             addressStore.save(updatedAddress)
         }
     }
+
 
     override fun deleteAddress(addressId: Long): Long {
         val removedAddressId = addressStore.removeAddress(addressId)
