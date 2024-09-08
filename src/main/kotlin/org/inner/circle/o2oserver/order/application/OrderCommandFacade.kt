@@ -11,7 +11,10 @@ import org.springframework.stereotype.Component
 class OrderCommandFacade(
     private val orderService: OrderUseCase,
 ) {
-    fun createOrder(orderCreate: OrderCreateRequest.OrderCreate, userName: String): OrderCreateResponse.OrderCreateResult {
+    fun createOrder(
+        orderCreate: OrderCreateRequest.OrderCreate,
+        userName: String
+    ): OrderCreateResponse.OrderCreateResult {
         val memberId = 1L // get member id : userName -> memberId
         val store = Order.Store(
             storeId = orderCreate.storeId,
