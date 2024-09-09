@@ -2,8 +2,8 @@ package org.inner.circle.o2oserver.member.presentation.api
 
 import org.inner.circle.o2oserver.commons.response.BaseResponse
 import org.inner.circle.o2oserver.member.application.MemberInfoFacade
+import org.inner.circle.o2oserver.member.presentation.dto.MemberInfoResponse
 import org.inner.circle.o2oserver.member.presentation.dto.MemberRequest
-import org.inner.circle.o2oserver.member.presentation.dto.MemberResponseData
 import org.slf4j.LoggerFactory
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.security.core.userdetails.UserDetails
@@ -18,14 +18,14 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("/api/v1/member")
 class MemberInfoController(
     private val memberInfoFacade: MemberInfoFacade,
-) {
+): MemberInfoDoc {
     private val log = LoggerFactory.getLogger(this::class.java)
 
     @GetMapping
-    fun getMemberInfo(@AuthenticationPrincipal userDetails: UserDetails): BaseResponse {
+    override fun getMemberInfo(@AuthenticationPrincipal userDetails: UserDetails): BaseResponse {
         log.info("User ID: ${userDetails.username}")
         val member = memberInfoFacade.getMemberInfo(userDetails.username)
-        val response = MemberResponseData(
+        val response = MemberInfoResponse(
             memberId = member.memberId!!,
             name = member.name,
             contact = member.contact ?: "No contract info",
@@ -36,7 +36,7 @@ class MemberInfoController(
     }
 
     @PostMapping
-    fun createMemberInfo(
+    override fun createMemberInfo(
         @RequestBody createRequest: MemberRequest.MemberInfo,
         @AuthenticationPrincipal userDetails: UserDetails,
     ): BaseResponse {
@@ -49,7 +49,7 @@ class MemberInfoController(
     }
 
     @DeleteMapping
-    fun deleteMember(@AuthenticationPrincipal userDetails: UserDetails): BaseResponse {
+    override fun deleteMember(@AuthenticationPrincipal userDetails: UserDetails): BaseResponse {
         val memberId = userDetails.username
         log.info("Delete member ID: $memberId")
         memberInfoFacade.deleteMember(memberId)

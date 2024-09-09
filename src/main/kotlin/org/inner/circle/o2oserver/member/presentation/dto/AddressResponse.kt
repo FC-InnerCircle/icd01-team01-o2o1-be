@@ -1,6 +1,6 @@
 package org.inner.circle.o2oserver.member.presentation.dto
 
-data class GetAddressResponseData(
+data class GetAddressResponse(
     val addresses: List<AddressResponseItem>,
 )
 
@@ -14,6 +14,6 @@ data class AddressResponseItem(
     val addressStatus: String,
 )
 
-data class PostAddressResponseData(
-    val addressId: Long,
+data class AddressIdResponse(
+    val addressId: Long
 )
