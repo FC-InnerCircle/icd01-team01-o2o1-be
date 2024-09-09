@@ -41,11 +41,11 @@ class StoreReadImpl(private val storeApiClient: StoreApiClient, private val mong
 
     override fun getStoreListWithLocationAndName(command: StoreListCommand): StoreListInfo {
         val keyword = command.keyword ?: ""
-        val (latitude, longitude) = command.address;
+        val (latitude, longitude) = command.address
 
         val point = Point(longitude, latitude)
         val distance = Distance(5.0, Metrics.KILOMETERS)
-        val mongo =  mongoRepository.findByStoreNameContainingAndLocationNear(keyword, point, distance)
+        val mongo = mongoRepository.findByStoreNameContainingAndLocationNear(keyword, point, distance)
         return StoreListInfo(totalCount = mongo.size, stores = mongo.map { it.toDomain() })
     }
 }
