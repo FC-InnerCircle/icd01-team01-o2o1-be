@@ -34,6 +34,7 @@ class TokenProvider(
         private val log = LoggerFactory.getLogger(this::class.java)
         const val ACCESS_EXPIRES: Long = 30 * 60 * 1000 // 30분을 밀리초로
         const val REFRESH_EXPIRES: Long = 7 * 24 * 60 * 60 * 1000 // 1주일을 밀리초로
+        const val REFRESH_TOKEN = "RefreshAuth"
     }
 
     /**
@@ -126,7 +127,7 @@ class TokenProvider(
 
     fun resolveToken(request: HttpServletRequest, header: String): String? {
         val bearerToken: String = request.getHeader(header)
-        return if (header == "refreshToken") {
+        return if (header == REFRESH_TOKEN) {
             bearerToken
         } else if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
             bearerToken.substring(7)
