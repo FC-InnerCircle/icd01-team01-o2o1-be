@@ -6,10 +6,10 @@ import org.springframework.stereotype.Service
 @Service
 class ExternalService(
     private val memberOutPort: MemberOutPort,
-) {
+):ExternalUseCase {
     private val log = LoggerFactory.getLogger(this::class.java)
 
-    fun sendMemberData(member: Member): Boolean {
+    override fun sendMemberData(member: Member): Boolean {
         return try {
             memberOutPort.sendMemberData(member)
         } catch (e: Exception) {
@@ -18,7 +18,7 @@ class ExternalService(
         }
     }
 
-    fun sendMemberInfo(memberDetail: MemberDetail, address: Address): Boolean {
+    override fun sendMemberInfo(memberDetail: MemberDetail, address: Address): Boolean {
         return try {
             memberOutPort.sendMemberInfo(memberDetail, address)
         } catch (e: Exception) {
@@ -27,7 +27,7 @@ class ExternalService(
         }
     }
 
-    fun sendDeleteMemberRequest(id: Long): Boolean {
+    override fun sendDeleteMemberRequest(id: Long): Boolean {
         return try {
             memberOutPort.sendDeleteMemberRequest(id)
         } catch (e: Exception) {
@@ -36,7 +36,7 @@ class ExternalService(
         }
     }
 
-    fun sendCreateAddressRequest(address: Address): Boolean {
+    override fun sendCreateAddressRequest(address: Address): Boolean {
         return try {
             memberOutPort.sendCreateAddressRequest(address)
         } catch (e: Exception) {
@@ -45,7 +45,7 @@ class ExternalService(
         }
     }
 
-    fun sendDeleteAddressRequest(addressId: Long): Boolean {
+    override fun sendDeleteAddressRequest(addressId: Long): Boolean {
         return try {
             memberOutPort.sendDeleteAddressRequest(addressId)
         } catch (e: Exception) {
