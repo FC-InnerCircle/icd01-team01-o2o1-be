@@ -4,17 +4,20 @@ import org.inner.circle.o2oserver.store.domain.store.Store
 import org.inner.circle.o2oserver.store.domain.store.StoreListInfo
 import org.inner.circle.o2oserver.store.domain.store.StoreService
 import org.inner.circle.o2oserver.store.domain.store.command.StoreListCommand
+import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 
 @Service
 class StoreFacade(
     private val storeService: StoreService,
 ) {
+    private val log = LoggerFactory.getLogger(this::class.java)
+
     fun getStoreDetail(storeId: Long): Store {
         return storeService.getStoreDetail(storeId)
     }
 
     fun getStoreList(storeListCommand: StoreListCommand): StoreListInfo {
-        return storeService.getStoreList(storeListCommand)
+        return storeService.getStoreListWithLocationAndName(storeListCommand)
     }
 }
