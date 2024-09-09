@@ -14,7 +14,7 @@ class Address(
     val zipCode: String,
     val isDefault: Boolean,
 ) {
-    fun withDefaultStatus(isDefault: Boolean): Address {
+    fun updateDefaultStatus(isDefault: Boolean): Address {
         return Address(
             addressId = this.addressId,
             memberId = this.memberId,

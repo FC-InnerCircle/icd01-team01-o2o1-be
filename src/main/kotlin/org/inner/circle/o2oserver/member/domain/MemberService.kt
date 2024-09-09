@@ -51,7 +51,7 @@ class MemberService(
     override fun setDefaultAddress(memberId: String, addressId: Long) {
         val addresses = addressReader.getAddresses(memberId)
         addresses.forEach { address ->
-            val updatedAddress = address.withDefaultStatus(address.addressId == addressId)
+            val updatedAddress = address.updateDefaultStatus(address.addressId == addressId)
             addressStore.save(updatedAddress)
         }
     }
