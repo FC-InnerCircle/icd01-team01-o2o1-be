@@ -32,25 +32,36 @@ class OrderCommandControllerTest {
         optionCreate =
             OrderCreateRequest.OptionCreate(
                 optionId = 1L,
+                optionName = "optionName",
+                optionPrice = 1000L,
             )
         optionGroupCreate = OrderCreateRequest.OptionGroupCreate(
             optionGroupId = 1L,
             options = listOf(optionCreate),
+            optionName = "optionGroupName",
         )
-        menuCreate =
-            OrderCreateRequest.MenuCreate(
-                menuId = 1L,
-                menuCount = 2,
-                optionGroups = listOf(optionGroupCreate),
-            )
-        orderCreate =
-            OrderCreateRequest.OrderCreate(
-                storeId = 1L,
-                menus = listOf(menuCreate),
-                orderPrice = 10000L,
-                payment = "CARD",
+        menuCreate = OrderCreateRequest.MenuCreate(
+            menuId = 1L,
+            menuCount = 2,
+            optionGroups = listOf(optionGroupCreate),
+            menuName = "menuName",
+            menuPrice = 1000L,
+        )
+        orderCreate = OrderCreateRequest.OrderCreate(
+            storeId = 1L,
+            storeName = "storeName",
+            menus = listOf(menuCreate),
+            orderPrice = 10000L,
+            payment = "CARD",
+            address = OrderCreateRequest.AddressCreate(
                 addressId = 1L,
-            )
+                address = "address",
+                addressDetail = "addressDetail",
+                zipCode = "01234",
+                latitude = 1.0,
+                longitude = 1.0,
+            ),
+        )
     }
 
     @Test

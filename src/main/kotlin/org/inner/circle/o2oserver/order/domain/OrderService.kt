@@ -54,4 +54,12 @@ class OrderService(
             }
         }
     }
+
+    override fun orderStatusSubscribe(orderId: Long, memberId: Long): Flow<Order> = flow {
+        orderReader.subscribeOrder(orderId, memberId).let {
+            it.collect { order ->
+                emit(order)
+            }
+        }
+    }
 }

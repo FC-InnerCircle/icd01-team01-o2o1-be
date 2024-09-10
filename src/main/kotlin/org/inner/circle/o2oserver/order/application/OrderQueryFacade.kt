@@ -35,4 +35,14 @@ class OrderQueryFacade(
             emit(OrderDeliveryResponse.OrderDelivery.toResponse(it))
         }
     }
+
+    fun orderStatusSubscribe(
+        orderId: Long,
+        username: String
+    ): Flow<OrderDetailResponse.OrderInfoDetail> = flow {
+        val memberId = 1L
+        orderUseCase.orderStatusSubscribe(orderId, memberId).map {
+            emit(OrderDetailResponse.OrderInfoDetail.toResponse(it))
+        }
+    }
 }

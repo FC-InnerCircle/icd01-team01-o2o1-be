@@ -7,20 +7,20 @@ class Order(
     val orderId: Long? = 0,
     val orderTime: LocalDateTime? = LocalDateTime.now(),
     val orderStatus: OrderStatus? = OrderStatus.PENDING,
-    val orderPrice: Long,
-    val memberId: Long,
-    val store: Store,
-    val menus: List<Menu>,
+    val orderPrice: Long = 0,
+    val memberId: Long = 0,
+    val store: Store? = null,
+    val menus: List<Menu>? = null,
     val payment: String = "CARD",
-    val orderAddress: Address,
+    val orderAddress: Address? = null,
 ) {
     class Address(
         val addressId: Long,
-        val address: String? = "",
-        val detail: String? = "",
-        val zipCode: String? = "",
-        val latitude: Double? = 0.0,
-        val longitude: Double? = 0.0,
+        val address: String,
+        val addressDetail: String,
+        val zipCode: String,
+        val latitude: Double,
+        val longitude: Double,
     )
 
     class Menu(
@@ -41,11 +41,12 @@ class Order(
     class MenuOption(
         val optionId: Long,
         val optionName: String? = "",
+        val optionPrice: Long? = 0,
     )
 
     class Store(
-        val storeId: Long,
+        val storeId: Long?,
         val storeName: String,
-        val storeAddress: Address,
+        val storeAddress: Address?,
     )
 }

@@ -34,7 +34,7 @@ class DeliveryEntity(
             )
         }
 
-        fun toEntity(document: BsonDocument): DeliveryEntity {
+        fun watchToEntity(document: BsonDocument): DeliveryEntity {
             return DeliveryEntity(
                 orderId = document.getInt64("orderId")?.longValue() ?: 0,
                 courierId = document.getInt64("courierId")?.longValue() ?: 0,

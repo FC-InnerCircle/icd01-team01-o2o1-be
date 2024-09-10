@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component
 @Component
 class OrderStorage(
     private val orderRepository: OrderRepository,
-    private val orderDeliveryListener: OrderDeliveryListener
+    private val orderListener: OrderListener
 ) : OrderReader, OrderStore {
     override fun findOrderDetailByOrderId(orderId: Long): Order {
         val orderEntity =  findByOrderId(orderId)
@@ -28,8 +28,13 @@ class OrderStorage(
     }
 
     override fun subscribeDelivery(orderId: Long, memberId: Long): Flow<Delivery> = flow {
-        orderDeliveryListener.watchDelivery(orderId)
+        orderListener.subscribeDelivery(orderId)
             .map { emit(DeliveryEntity.toDomain(it)) }
+    }
+
+    override fun subscribeOrder(orderId: Long, memberId: Long): Flow<Order> = flow {
+        orderListener.subscribeOrderStatus(orderId)
+            .map { emit(OrderStatusEntity.toDomain(it)) }
     }
 
     override fun saveOrder(order: Order): Order {

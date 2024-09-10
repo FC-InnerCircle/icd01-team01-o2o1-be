@@ -7,9 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.mock.mockito.MockBean
+import org.springframework.http.MediaType
 import org.springframework.security.test.context.support.WithMockUser
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
 @SpringBootTest
@@ -50,5 +52,23 @@ class OrderQueryControllerTest {
             )
         println(mockRequest.andReturn().response.contentAsString)
         mockRequest.andExpect(status().isOk)
+    }
+
+    @Test
+    @WithMockUser(username = "hello@gmail.com", password = "1234", roles = ["USER"])
+    fun `주문 상태를 구독한다`() {
+        val mvcResult = mockMvc.perform(get("/api/v1/order/status/1")
+            .accept(MediaType.TEXT_EVENT_STREAM_VALUE))
+            .andExpect(status().isOk)
+            .andReturn()
+
+        val response = mvcResult.response
+        val content = response.contentAsString
+
+        val events = content.split("\n\n")
+            .filter { it.isNotBlank() }
+            .map { it.substringAfter("data:").trim() }
+
+        events.forEach { println(it) }
     }
 }
