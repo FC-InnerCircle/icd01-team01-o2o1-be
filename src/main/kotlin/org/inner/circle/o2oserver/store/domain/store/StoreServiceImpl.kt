@@ -14,4 +14,8 @@ class StoreServiceImpl(
     override fun getStoreList(command: StoreListCommand): StoreListInfo {
         return storeReader.getStoreList(command)
     }
+
+    override fun getStoreListWithLocationAndName(command: StoreListCommand): StoreListInfo {
+        return storeReader.getStoreListWithLocationAndName(command)
+    }
 }

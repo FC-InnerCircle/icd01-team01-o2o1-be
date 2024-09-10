@@ -7,4 +7,6 @@ interface StoreService {
     fun getStoreDetail(storeId: Long): Store
 
     fun getStoreList(command: StoreListCommand): StoreListInfo
+
+    fun getStoreListWithLocationAndName(command: StoreListCommand): StoreListInfo
 }
