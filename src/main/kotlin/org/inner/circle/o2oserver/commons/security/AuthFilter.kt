@@ -45,6 +45,11 @@ class AuthFilter(
         filterChain.doFilter(request, response)
     }
 
+    override fun shouldNotFilter(request: HttpServletRequest): Boolean {
+        val uri = request.requestURI
+        return uri.contains("/api/v1/login") || uri.startsWith("/api/v1/store")
+    }
+
     private fun handleExpiredToken(request: HttpServletRequest, response: HttpServletResponse) {
         try {
             val refreshToken = jwtTokenProvider.resolveToken(request, REFRESH_TOKEN)
