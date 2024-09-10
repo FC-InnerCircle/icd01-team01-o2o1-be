@@ -45,6 +45,7 @@ class SecurityConfig(
                         "/error",
                         "/notification/**",
                         "/api/v1/login",
+                        "/api/v1/store/**",
                     ).permitAll()
                     .requestMatchers(
                         HttpMethod.GET,

@@ -46,7 +46,8 @@ class AuthFilter(
     }
 
     override fun shouldNotFilter(request: HttpServletRequest): Boolean {
-        return request.requestURI.contains("/api/v1/login")
+        val uri = request.requestURI
+        return uri.contains("/api/v1/login") || uri.startsWith("/api/v1/store")
     }
 
     private fun handleExpiredToken(request: HttpServletRequest, response: HttpServletResponse) {
