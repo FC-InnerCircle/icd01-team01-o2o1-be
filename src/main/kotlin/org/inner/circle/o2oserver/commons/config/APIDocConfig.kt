@@ -19,8 +19,8 @@ class APIDocConfig {
 
     private fun apiInfo(): Info =
         Info()
-            .title("Wavemate API 문서")
-            .description("API 문서 종류 , Auth, Post, Comment, Mate, Member, Reaction")
+            .title("O2O 1조 API 문서")
+            .description("API 문서 종류 : 주문, 회원, 가게 등")
             .version("v1.0.0")
 
     private fun securityScheme() =

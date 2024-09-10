@@ -15,8 +15,7 @@ class OrderCommandFacade(
     fun createOrder(orderCreate: OrderCreateRequest.OrderCreate, userName: String): OrderCreateResponse.OrderCreateResult {
         val member = memberUseCase.getMemberInfo(userName)
         val toOrder = OrderCreateRequest.OrderCreate.toOrder(orderCreate, member.memberId!!)
-        val createOrder = orderUseCase.createOrder(toOrder)
-        return OrderCreateResponse.OrderCreateResult.toResponse(createOrder)
+        val createOrder = orderUseCase.createOrder(toOrder)        return OrderCreateResponse.OrderCreateResult.toResponse(createOrder)
     }
 
     fun cancelOrder(

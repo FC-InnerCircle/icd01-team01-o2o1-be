@@ -21,11 +21,11 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("/api/v1/order")
 class OrderCommandController(
     private val orderCommandFacade: OrderCommandFacade,
-) {
+): OrderCommandDoc {
     private val log = LoggerFactory.getLogger(this::class.java)
 
     @PostMapping
-    fun createOrder(
+    override fun createOrder(
         @RequestBody orderCreate: OrderCreateRequest.OrderCreate,
         @AuthenticationPrincipal userDetails: UserDetails,
     ): BaseResponse {
@@ -35,7 +35,7 @@ class OrderCommandController(
     }
 
     @DeleteMapping("/{orderId}")
-    fun cancelOrder(
+    override fun cancelOrder(
         @PathVariable orderId: Long,
         @AuthenticationPrincipal userDetails: UserDetails,
     ): BaseResponse {
