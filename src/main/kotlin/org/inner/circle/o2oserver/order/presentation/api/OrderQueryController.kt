@@ -42,4 +42,13 @@ class OrderQueryController(
         val cancelOrderResult = orderQueryFacade.deliverySubscribe(orderId, userDetails.username)
         emit(BaseResponse.success(cancelOrderResult))
     }
+
+    @GetMapping("/status/{orderId}", produces = [MediaType.TEXT_EVENT_STREAM_VALUE])
+    fun orderStatusSubscribe(
+        @PathVariable orderId: Long,
+        @AuthenticationPrincipal userDetails: UserDetails,
+    ): Flow<BaseResponse> = flow {
+        val orderStatusResult = orderQueryFacade.orderStatusSubscribe(orderId, userDetails.username)
+        emit(BaseResponse.success(orderStatusResult))
+    }
 }

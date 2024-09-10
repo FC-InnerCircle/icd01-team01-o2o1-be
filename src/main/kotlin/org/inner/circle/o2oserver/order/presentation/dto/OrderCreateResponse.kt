@@ -11,7 +11,7 @@ class OrderCreateResponse {
             fun toResponse(order: Order): OrderCreateResult {
                 return OrderCreateResult(
                     orderId = order.orderId ?: 0,
-                    storeId = order.store.storeId,
+                    storeId = order.store?.storeId ?: 0,
                 )
                 TODO("응답 객체에 대한 핸들링 수정필요")
             }

@@ -15,9 +15,9 @@ class OrderListResponse {
                             orderTime = it.orderTime.toString(),
                             orderStatus = it.orderStatus.toString(),
                             orderPrice = it.orderPrice,
-                            storeId = it.store.storeId,
-                            storeName = it.store.storeName,
-                            menus = it.menus.map { menu ->
+                            storeId = it.store!!.storeId!!,
+                            storeName = it.store!!.storeName,
+                            menus = it.menus!!.map { menu ->
                                 MenuInfo(
                                     menuId = menu.menuId,
                                     menuName = menu.menuName ?: "",

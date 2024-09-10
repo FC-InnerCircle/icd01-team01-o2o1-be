@@ -7,12 +7,12 @@ class Order(
     val orderId: Long? = 0,
     val orderTime: LocalDateTime? = LocalDateTime.now(),
     val orderStatus: OrderStatus? = OrderStatus.PENDING,
-    val orderPrice: Long,
-    val memberId: Long,
-    val store: Store,
-    val menus: List<Menu>,
+    val orderPrice: Long = 0,
+    val memberId: Long = 0,
+    val store: Store? = null,
+    val menus: List<Menu>? = null,
     val payment: String = "CARD",
-    val orderAddress: Address,
+    val orderAddress: Address? = null,
 ) {
     class Address(
         val addressId: Long,

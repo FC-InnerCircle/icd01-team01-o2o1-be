@@ -77,7 +77,7 @@ class OrderEntity(
             )
         }
 
-        fun toEntity(order: Order): OrderEntity {
+        fun  toEntity(order: Order): OrderEntity {
             return OrderEntity(
                 orderId = order.orderId ?: 0,
                 orderTime = order.orderTime ?: LocalDateTime.now(),
@@ -85,9 +85,9 @@ class OrderEntity(
                 orderPrice = order.orderPrice,
                 memberId = order.memberId,
                 store = StoreField(
-                    storeId = order.store.storeId,
-                    storeName = order.store.storeName,
-                    storeAddress = order.store.storeAddress.let { address ->
+                    storeId = order.store?.storeId,
+                    storeName = order.store?.storeName,
+                    storeAddress = order.store?.storeAddress.let { address ->
                         address?.let {
                             AddressField(
                                 addressId = address.addressId,
@@ -100,33 +100,35 @@ class OrderEntity(
                         }
                     },
                 ),
-                menus = order.menus.map {
-                    MenuField(
-                        menuId = it.menuId,
-                        menuName = it.menuName,
-                        menuCount = it.menuCount,
-                        menuPrice = it.menuPrice,
-                        menuGroup = it.menuOptionGroups.map { group ->
-                            MenuGroupField(
-                                menuGroupId = group.menuOptionGroupId,
-                                name = group.menuOptionName,
-                                menuOptions = group.menuOptions.map { option ->
-                                    MenuOptionField(
-                                        menuOptionId = option.optionId,
-                                        name = option.optionName,
-                                    )
-                                },
-                            )
-                        },
-                    )
-                },
+                menus = order.menus?.let { menus ->
+                    menus.map { menu ->
+                        MenuField(
+                            menuId = menu.menuId,
+                            menuName = menu.menuName,
+                            menuCount = menu.menuCount,
+                            menuPrice = menu.menuPrice,
+                            menuGroup = menu.menuOptionGroups.map { group ->
+                                MenuGroupField(
+                                    menuGroupId = group.menuOptionGroupId,
+                                    name = group.menuOptionName,
+                                    menuOptions = group.menuOptions.map { option ->
+                                        MenuOptionField(
+                                            menuOptionId = option.optionId,
+                                            name = option.optionName,
+                                        )
+                                    },
+                                )
+                            },
+                        )
+                    }
+                } ?: emptyList(),
                 address = AddressField(
-                    addressId = order.orderAddress.addressId,
-                    latitude = order.orderAddress.latitude,
-                    longitude = order.orderAddress.longitude,
-                    address = order.orderAddress.address,
-                    addressDetail = order.orderAddress.addressDetail,
-                    zipCode = order.orderAddress.zipCode,
+                    addressId = order.orderAddress?.addressId ?: 0,
+                    latitude = order.orderAddress?.latitude ?: 0.0,
+                    longitude = order.orderAddress?.longitude ?: 0.0,
+                    address = order.orderAddress?.address ?: "",
+                    addressDetail = order.orderAddress?.addressDetail ?: "",
+                    zipCode = order.orderAddress?.zipCode ?: "",
                 ),
             )
         }

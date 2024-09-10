@@ -19,11 +19,11 @@ class OrderDetailResponse {
                     orderTime = order.orderTime.toString(),
                     orderStatus = order.orderStatus.toString(),
                     orderPrice = order.orderPrice,
-                    store = StoreInfo.toResponse(order.store),
-                    menus = order.menus.map { menu ->
+                    store = StoreInfo.toResponse(order.store!!),
+                    menus = order.menus!!.map { menu ->
                         MenuInfo.toResponse(menu)
                     },
-                    orderAddress = AddressInfo.toResponse(order.orderAddress),
+                    orderAddress = AddressInfo.toResponse(order.orderAddress!!),
                 )
             }
         }
@@ -37,9 +37,9 @@ class OrderDetailResponse {
         companion object {
             fun toResponse(store: Order.Store): StoreInfo {
                 return StoreInfo(
-                    storeId = store.storeId,
+                    storeId = store.storeId!!,
                     storeName = store.storeName,
-                    storeAddress = AddressInfo.toResponse(store.storeAddress),
+                    storeAddress = AddressInfo.toResponse(store.storeAddress!!),
                 )
             }
         }
@@ -59,9 +59,9 @@ class OrderDetailResponse {
                     addressId = address.addressId,
                     latitude = address.latitude.toString(),
                     longitude = address.longitude.toString(),
-                    address = address.address ?: "",
-                    addressDetail = address.detail ?: "",
-                    zipCode = address.zipCode ?: "",
+                    address = address.address,
+                    addressDetail = address.addressDetail,
+                    zipCode = address.zipCode,
                 )
             }
         }
