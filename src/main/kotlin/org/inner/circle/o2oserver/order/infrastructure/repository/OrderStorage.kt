@@ -14,10 +14,10 @@ import org.springframework.stereotype.Component
 @Component
 class OrderStorage(
     private val orderRepository: OrderRepository,
-    private val orderListener: OrderListener
+    private val orderListener: OrderListener,
 ) : OrderReader, OrderStore {
     override fun findOrderDetailByOrderId(orderId: Long): Order {
-        val orderEntity =  findByOrderId(orderId)
+        val orderEntity = findByOrderId(orderId)
         return OrderEntity.toDomain(orderEntity)
     }
 
@@ -27,15 +27,17 @@ class OrderStorage(
         } ?: throw Exceptions.BadRequestException(ErrorDetails.ORDER_NOT_FOUND.message)
     }
 
-    override fun subscribeDelivery(orderId: Long, memberId: Long): Flow<Delivery> = flow {
-        orderListener.subscribeDelivery(orderId)
-            .map { emit(DeliveryEntity.toDomain(it)) }
-    }
+    override fun subscribeDelivery(orderId: Long, memberId: Long): Flow<Delivery> =
+        flow {
+            orderListener.subscribeDelivery(orderId)
+                .map { emit(DeliveryEntity.toDomain(it)) }
+        }
 
-    override fun subscribeOrder(orderId: Long, memberId: Long): Flow<Order> = flow {
-        orderListener.subscribeOrderStatus(orderId)
-            .map { emit(OrderStatusEntity.toDomain(it)) }
-    }
+    override fun subscribeOrder(orderId: Long, memberId: Long): Flow<Order> =
+        flow {
+            orderListener.subscribeOrderStatus(orderId)
+                .map { emit(OrderStatusEntity.toDomain(it)) }
+        }
 
     override fun saveOrder(order: Order): Order {
         val orderEntity = OrderEntity.toEntity(order)

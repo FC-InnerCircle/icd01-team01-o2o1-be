@@ -26,23 +26,19 @@ class OrderQueryFacade(
         return OrderListResponse.OrderListResponse.toResponse(orderList)
     }
 
-    fun deliverySubscribe(
-        orderId: Long,
-        username: String
-    ): Flow<OrderDeliveryResponse.OrderDelivery> = flow {
-        val memberId = 1L
-        orderUseCase.deliverySubscribe(orderId, memberId).map {
-            emit(OrderDeliveryResponse.OrderDelivery.toResponse(it))
+    fun deliverySubscribe(orderId: Long, username: String): Flow<OrderDeliveryResponse.OrderDelivery> =
+        flow {
+            val memberId = 1L
+            orderUseCase.deliverySubscribe(orderId, memberId).map {
+                emit(OrderDeliveryResponse.OrderDelivery.toResponse(it))
+            }
         }
-    }
 
-    fun orderStatusSubscribe(
-        orderId: Long,
-        username: String
-    ): Flow<OrderDetailResponse.OrderInfoDetail> = flow {
-        val memberId = 1L
-        orderUseCase.orderStatusSubscribe(orderId, memberId).map {
-            emit(OrderDetailResponse.OrderInfoDetail.toResponse(it))
+    fun orderStatusSubscribe(orderId: Long, username: String): Flow<OrderDetailResponse.OrderInfoDetail> =
+        flow {
+            val memberId = 1L
+            orderUseCase.orderStatusSubscribe(orderId, memberId).map {
+                emit(OrderDetailResponse.OrderInfoDetail.toResponse(it))
+            }
         }
-    }
 }

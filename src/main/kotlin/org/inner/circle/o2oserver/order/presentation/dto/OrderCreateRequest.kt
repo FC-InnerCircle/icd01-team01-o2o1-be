@@ -50,7 +50,6 @@ class OrderCreateRequest {
                         zipCode = orderCreate.address.zipCode,
                         latitude = orderCreate.address.latitude,
                         longitude = orderCreate.address.longitude,
-
                     ),
                 )
             }

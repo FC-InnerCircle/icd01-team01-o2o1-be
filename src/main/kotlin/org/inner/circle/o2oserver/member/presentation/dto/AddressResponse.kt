@@ -15,5 +15,5 @@ data class AddressResponseItem(
 )
 
 data class AddressIdResponse(
-    val addressId: Long
+    val addressId: Long,
 )

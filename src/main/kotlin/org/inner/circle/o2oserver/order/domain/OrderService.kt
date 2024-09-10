@@ -3,7 +3,6 @@ package org.inner.circle.o2oserver.order.domain
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import org.inner.circle.o2oserver.commons.exception.Exceptions.UnCancellableStatusException
-import org.inner.circle.o2oserver.commons.enums.OrderStatus.*
 import org.springframework.stereotype.Service
 
 @Service
@@ -34,32 +33,28 @@ class OrderService(
             throw IllegalArgumentException("주문자가 아닙니다.")
         }
 
-        when (order.orderStatus) {
-            PENDING -> PENDING.name
-            ACCEPTED -> ACCEPTED.name
-            PREPARING -> throw UnCancellableStatusException("조리 중인 주문입니다.")
-            DELIVERING -> throw UnCancellableStatusException("배송 중인 주문입니다.")
-            DELIVERED -> throw UnCancellableStatusException("이미 배송된 주문입니다.")
-            CANCELED -> throw UnCancellableStatusException("이미 취소된 주문입니다.")
-            null -> throw UnCancellableStatusException("주문 상태가 없습니다.")
+        if (order.orderStatus?.isStatus() == true) {
+            throw UnCancellableStatusException("취소할 수 없는 주문입니다.")
         }
 
         return orderStore.cancelOrder(orderId)
     }
 
-    override fun deliverySubscribe(orderId: Long, memberId: Long): Flow<Delivery> = flow {
-        orderReader.subscribeDelivery(orderId, memberId).let {
-            it.collect { delivery ->
-                emit(delivery)
+    override fun deliverySubscribe(orderId: Long, memberId: Long): Flow<Delivery> =
+        flow {
+            orderReader.subscribeDelivery(orderId, memberId).let {
+                it.collect { delivery ->
+                    emit(delivery)
+                }
             }
         }
-    }
 
-    override fun orderStatusSubscribe(orderId: Long, memberId: Long): Flow<Order> = flow {
-        orderReader.subscribeOrder(orderId, memberId).let {
-            it.collect { order ->
-                emit(order)
+    override fun orderStatusSubscribe(orderId: Long, memberId: Long): Flow<Order> =
+        flow {
+            orderReader.subscribeOrder(orderId, memberId).let {
+                it.collect { order ->
+                    emit(order)
+                }
             }
         }
-    }
 }

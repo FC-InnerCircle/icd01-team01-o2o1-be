@@ -10,7 +10,6 @@ import org.springframework.context.annotation.Configuration
 @Configuration
 @EnableEncryptableProperties
 class JasyptConfig {
-
     @Bean("jasyptEncryptor")
     fun stringEncryptor(): StringEncryptor {
         val config = SimpleStringPBEConfig().apply {

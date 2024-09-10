@@ -56,7 +56,6 @@ class MemberService(
         }
     }
 
-
     override fun deleteAddress(addressId: Long): Long {
         val removedAddressId = addressStore.removeAddress(addressId)
 

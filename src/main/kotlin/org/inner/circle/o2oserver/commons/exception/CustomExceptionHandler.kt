@@ -3,7 +3,6 @@ package org.inner.circle.o2oserver.commons.exception
 import io.jsonwebtoken.ExpiredJwtException
 import io.jsonwebtoken.MalformedJwtException
 import org.apache.catalina.connector.ClientAbortException
-import org.inner.circle.o2oserver.commons.response.ApiResponse
 import org.inner.circle.o2oserver.commons.response.BaseResponse
 import org.slf4j.LoggerFactory
 import org.springframework.http.ResponseEntity

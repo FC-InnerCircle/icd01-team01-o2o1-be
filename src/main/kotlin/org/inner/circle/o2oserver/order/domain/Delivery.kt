@@ -11,8 +11,4 @@ class Delivery(
     val longitude: Double,
     val deliveryStatus: DeliveryStatus,
     val timestamp: LocalDateTime = LocalDateTime.now(),
-) {
-
-
-
-}
+)

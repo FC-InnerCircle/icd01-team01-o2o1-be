@@ -18,11 +18,13 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("/api/v1/member")
 class MemberInfoController(
     private val memberInfoFacade: MemberInfoFacade,
-): MemberInfoDoc {
+) : MemberInfoDoc {
     private val log = LoggerFactory.getLogger(this::class.java)
 
     @GetMapping
-    override fun getMemberInfo(@AuthenticationPrincipal userDetails: UserDetails): BaseResponse {
+    override fun getMemberInfo(
+        @AuthenticationPrincipal userDetails: UserDetails,
+    ): BaseResponse {
         log.info("User ID: ${userDetails.username}")
         val member = memberInfoFacade.getMemberInfo(userDetails.username)
         val response = MemberInfoResponse(
@@ -49,7 +51,9 @@ class MemberInfoController(
     }
 
     @DeleteMapping
-    override fun deleteMember(@AuthenticationPrincipal userDetails: UserDetails): BaseResponse {
+    override fun deleteMember(
+        @AuthenticationPrincipal userDetails: UserDetails,
+    ): BaseResponse {
         val memberId = userDetails.username
         log.info("Delete member ID: $memberId")
         memberInfoFacade.deleteMember(memberId)

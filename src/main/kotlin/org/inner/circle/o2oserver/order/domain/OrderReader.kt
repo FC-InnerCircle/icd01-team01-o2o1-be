@@ -2,7 +2,6 @@ package org.inner.circle.o2oserver.order.domain
 
 import kotlinx.coroutines.flow.Flow
 
-
 interface OrderReader {
     fun findOrderDetailByOrderId(orderId: Long): Order
 

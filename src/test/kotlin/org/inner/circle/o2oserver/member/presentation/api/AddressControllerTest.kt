@@ -5,21 +5,25 @@ import org.inner.circle.o2oserver.member.application.MemberInfoFacade
 import org.inner.circle.o2oserver.member.domain.Address
 import org.inner.circle.o2oserver.member.presentation.dto.AddressRequest
 import org.junit.jupiter.api.Test
-import org.mockito.Mockito.*
+import org.mockito.Mockito.verify
+import org.mockito.Mockito.`when`
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.mock.mockito.MockBean
+import org.springframework.http.MediaType
 import org.springframework.security.test.context.support.WithMockUser
 import org.springframework.test.web.servlet.MockMvc
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
-import org.springframework.http.MediaType
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
 @SpringBootTest
 @AutoConfigureMockMvc
 class AddressControllerTest {
-
     @Autowired
     private lateinit var mockMvc: MockMvc
 
@@ -39,7 +43,7 @@ class AddressControllerTest {
             latitude = 37.5665,
             longitude = 126.9780,
             zipCode = "12345",
-            isDefault = true
+            isDefault = true,
         )
 
         `when`(memberInfoFacade.getAddresses("605c72b8f9a5b812dcd81458")).thenReturn(listOf(mockAddress))
@@ -59,7 +63,7 @@ class AddressControllerTest {
             detail = "Some detail",
             latitude = 37.5665,
             longitude = 126.9780,
-            zipCode = "12345"
+            zipCode = "12345",
         )
 
         val requestBody = objectMapper.writeValueAsString(createAddressRequest)
@@ -67,7 +71,7 @@ class AddressControllerTest {
         mockMvc.perform(
             post("/api/v1/address")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(requestBody)
+                .content(requestBody),
         )
             .andExpect(status().isOk)
     }

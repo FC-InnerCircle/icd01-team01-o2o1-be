@@ -5,7 +5,6 @@ import org.jasypt.iv.RandomIvGenerator
 import org.junit.jupiter.api.Test
 
 class EncryptionTest {
-
     @Test
     fun encryptValues() {
         val username = "o2oadmin"

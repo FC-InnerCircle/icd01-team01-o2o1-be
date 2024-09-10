@@ -26,7 +26,9 @@ class AddressController(
     private val log = LoggerFactory.getLogger(this::class.java)
 
     @GetMapping
-    override fun getAddresses(@AuthenticationPrincipal userDetails: UserDetails): BaseResponse {
+    override fun getAddresses(
+        @AuthenticationPrincipal userDetails: UserDetails,
+    ): BaseResponse {
         log.info("Get Addresses Member ID: ${userDetails.username}")
         val addresses = memberInfoFacade.getAddresses(userDetails.username)
         val addressResponseData = GetAddressResponse(

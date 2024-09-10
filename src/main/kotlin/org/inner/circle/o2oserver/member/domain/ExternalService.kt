@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service
 @Service
 class ExternalService(
     private val memberOutPort: MemberOutPort,
-):ExternalUseCase {
+) : ExternalUseCase {
     private val log = LoggerFactory.getLogger(this::class.java)
 
     override fun sendMemberData(member: Member): Boolean {

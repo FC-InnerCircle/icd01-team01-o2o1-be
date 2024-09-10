@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("/api/v1/login")
 class MemberLoginController(
     private val loginFacade: LoginFacade,
-): MemberLoginDoc {
+) : MemberLoginDoc {
     private val log = LoggerFactory.getLogger(this::class.java)
 
     @PostMapping

@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestBody
 
 @Tag(name = "회원", description = "회원 정보 API")
 interface MemberInfoDoc {
-
     @Operation(summary = "회원 정보 조회", description = "회원 정보를 조회하는 API")
     @ApiResponses(
         ApiResponse(
@@ -30,7 +29,9 @@ interface MemberInfoDoc {
             description = "회원 정보 조회 성공",
         ),
     )
-    fun getMemberInfo(@AuthenticationPrincipal userDetails: UserDetails): BaseResponse
+    fun getMemberInfo(
+        @AuthenticationPrincipal userDetails: UserDetails,
+    ): BaseResponse
 
     @Operation(summary = "회원 정보 생성", description = "회원 정보를 생성하는 API")
     @ApiResponses(
@@ -63,5 +64,7 @@ interface MemberInfoDoc {
             description = "회원 정보 삭제 성공",
         ),
     )
-    fun deleteMember(@AuthenticationPrincipal userDetails: UserDetails): BaseResponse
+    fun deleteMember(
+        @AuthenticationPrincipal userDetails: UserDetails,
+    ): BaseResponse
 }

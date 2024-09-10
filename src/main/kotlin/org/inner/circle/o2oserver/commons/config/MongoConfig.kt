@@ -13,7 +13,7 @@ import org.springframework.data.mongodb.core.SimpleMongoClientDatabaseFactory
 
 @Configuration
 class MongoConfig(
-    private val jasyptEncryptor: StringEncryptor
+    private val jasyptEncryptor: StringEncryptor,
 ) {
     @Value("\${spring.data.mongodb.uri}")
     private lateinit var uri: String

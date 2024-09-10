@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("/api/v1/order")
 class OrderQueryController(
     private val orderQueryFacade: OrderQueryFacade,
-): OrderQueryDoc {
+) : OrderQueryDoc {
     @GetMapping
     override fun getOrders(
         @AuthenticationPrincipal userDetails: UserDetails,
@@ -38,17 +38,19 @@ class OrderQueryController(
     override fun deliverySubscribe(
         @PathVariable orderId: Long,
         @AuthenticationPrincipal userDetails: UserDetails,
-    ): Flow<BaseResponse> = flow {
-        val cancelOrderResult = orderQueryFacade.deliverySubscribe(orderId, userDetails.username)
-        emit(BaseResponse.success(cancelOrderResult))
-    }
+    ): Flow<BaseResponse> =
+        flow {
+            val cancelOrderResult = orderQueryFacade.deliverySubscribe(orderId, userDetails.username)
+            emit(BaseResponse.success(cancelOrderResult))
+        }
 
     @GetMapping("/status/{orderId}", produces = [MediaType.TEXT_EVENT_STREAM_VALUE])
     fun orderStatusSubscribe(
         @PathVariable orderId: Long,
         @AuthenticationPrincipal userDetails: UserDetails,
-    ): Flow<BaseResponse> = flow {
-        val orderStatusResult = orderQueryFacade.orderStatusSubscribe(orderId, userDetails.username)
-        emit(BaseResponse.success(orderStatusResult))
-    }
+    ): Flow<BaseResponse> =
+        flow {
+            val orderStatusResult = orderQueryFacade.orderStatusSubscribe(orderId, userDetails.username)
+            emit(BaseResponse.success(orderStatusResult))
+        }
 }

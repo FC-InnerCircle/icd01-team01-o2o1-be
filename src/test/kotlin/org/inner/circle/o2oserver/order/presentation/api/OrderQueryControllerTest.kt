@@ -44,7 +44,6 @@ class OrderQueryControllerTest {
     @Test
     @WithMockUser(username = "hello@gmail.com", password = "1234", roles = ["USER"])
     fun `회원의 주문 상세정보를 조회한다`() {
-
         val mockRequest =
             mockMvc.perform(
                 get("/api/v1/order/1")
@@ -57,8 +56,10 @@ class OrderQueryControllerTest {
     @Test
     @WithMockUser(username = "hello@gmail.com", password = "1234", roles = ["USER"])
     fun `주문 상태를 구독한다`() {
-        val mvcResult = mockMvc.perform(get("/api/v1/order/status/1")
-            .accept(MediaType.TEXT_EVENT_STREAM_VALUE))
+        val mvcResult = mockMvc.perform(
+            get("/api/v1/order/status/1")
+                .accept(MediaType.TEXT_EVENT_STREAM_VALUE),
+        )
             .andExpect(status().isOk)
             .andReturn()
 

@@ -42,11 +42,11 @@ class DeliveryEntity(
                 longitude = document.getDouble("longitude")?.value ?: 0.0,
                 deliveryStatus = DeliveryStatus.valueOf(document.getString("deliveryStatus").value),
                 createdAt = getLongToDateTime(document.getInt64("createdAt").value),
-                updatedAt = getLongToDateTime(document.getInt64("updatedAt").value)
+                updatedAt = getLongToDateTime(document.getInt64("updatedAt").value),
             )
         }
 
-        private fun getLongToDateTime(dateTime : Long): LocalDateTime {
+        private fun getLongToDateTime(dateTime: Long): LocalDateTime {
             val zoneId = ZoneId.of("Asia/Seoul")
             return LocalDateTime.ofInstant(Instant.ofEpochMilli(dateTime), zoneId)
         }

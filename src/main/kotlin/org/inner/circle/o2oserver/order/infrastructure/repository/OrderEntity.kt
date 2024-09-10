@@ -77,7 +77,7 @@ class OrderEntity(
             )
         }
 
-        fun  toEntity(order: Order): OrderEntity {
+        fun toEntity(order: Order): OrderEntity {
             return OrderEntity(
                 orderId = order.orderId ?: 0,
                 orderTime = order.orderTime ?: LocalDateTime.now(),

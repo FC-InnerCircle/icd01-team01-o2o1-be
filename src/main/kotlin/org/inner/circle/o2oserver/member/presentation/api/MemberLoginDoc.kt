@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestBody
 
 @Tag(name = "회원", description = "회원 로그인, 가입 API")
 interface MemberLoginDoc {
-
     @Operation(summary = "로그인", description = "회원 로그인, 가입 API")
     @ApiResponses(
         ApiResponse(

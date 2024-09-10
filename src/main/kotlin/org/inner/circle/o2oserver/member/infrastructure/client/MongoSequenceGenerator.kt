@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component
 
 @Component
 class MongoSequenceGenerator(
-    private val mongoTemplate: MongoTemplate
+    private val mongoTemplate: MongoTemplate,
 ) : SequenceGenerator {
     override fun generate(sequenceName: String): Long {
         val query = Query(Criteria.where("_id").`is`(sequenceName))

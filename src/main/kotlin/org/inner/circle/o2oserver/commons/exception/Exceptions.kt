@@ -52,5 +52,4 @@ class Exceptions {
     data class UnCancellableStatusException(
         val messages: String,
     ) : SetExceptionHandler(400, messages)
-
 }

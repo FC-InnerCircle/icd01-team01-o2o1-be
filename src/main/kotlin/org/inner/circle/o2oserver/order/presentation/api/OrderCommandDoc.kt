@@ -17,17 +17,18 @@ import org.springframework.web.bind.annotation.RequestBody
 
 @Tag(name = "주문", description = "주문 생성, 취소, 조회 API")
 interface OrderCommandDoc {
-
     @Operation(summary = "주문 생성", description = "주문을 생성하는 API")
     @ApiResponses(
-        ApiResponse(responseCode = "200",
+        ApiResponse(
+            responseCode = "200",
             content = [
                 io.swagger.v3.oas.annotations.media.Content(
                     mediaType = APPLICATION_JSON_VALUE,
-                    schema = Schema(implementation = OrderCreateResponse.OrderCreateResult::class)
-                )
+                    schema = Schema(implementation = OrderCreateResponse.OrderCreateResult::class),
+                ),
             ],
-            description = "주문 생성 성공"),
+            description = "주문 생성 성공",
+        ),
     )
     fun createOrder(
         @RequestBody orderCreate: OrderCreateRequest.OrderCreate,
@@ -36,14 +37,16 @@ interface OrderCommandDoc {
 
     @Operation(summary = "주문 취소", description = "주문을 취소하는 API")
     @ApiResponses(
-        ApiResponse(responseCode = "200",
+        ApiResponse(
+            responseCode = "200",
             content = [
                 io.swagger.v3.oas.annotations.media.Content(
                     mediaType = APPLICATION_JSON_VALUE,
-                    schema = Schema(implementation = OrderCancelResponse.OrderCancel::class)
-                )
+                    schema = Schema(implementation = OrderCancelResponse.OrderCancel::class),
+                ),
             ],
-            description = "주문 생성 성공"),
+            description = "주문 생성 성공",
+        ),
     )
     fun cancelOrder(
         @PathVariable orderId: Long,

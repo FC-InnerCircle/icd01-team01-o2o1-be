@@ -19,7 +19,7 @@ class OrderStatusEntity(
                 orderStatus = OrderStatus.valueOf(document.getString("orderStatus").value),
                 orderTime = Instant.ofEpochMilli(document.getTimestamp("orderTime").value)
                     .atZone(ZoneId.systemDefault())
-                    .toLocalDateTime()
+                    .toLocalDateTime(),
             )
         }
 
@@ -27,9 +27,8 @@ class OrderStatusEntity(
             return Order(
                 orderId = orderStatusEntity.orderId,
                 orderTime = orderStatusEntity.orderTime,
-                orderStatus = orderStatusEntity.orderStatus
+                orderStatus = orderStatusEntity.orderStatus,
             )
         }
     }
-
 }
