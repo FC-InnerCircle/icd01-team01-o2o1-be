@@ -12,6 +12,7 @@ class OrderCommandFacade(
     private val orderUseCase: OrderUseCase,
     private val memberUseCase: MemberUseCase,
 ) {
+
     fun createOrder(orderCreate: OrderCreateRequest.OrderCreate, userName: String): OrderCreateResponse.OrderCreateResult {
         val member = memberUseCase.getMemberInfo(userName)
         val toOrder = OrderCreateRequest.OrderCreate.toOrder(orderCreate, member.memberId!!)
@@ -20,8 +21,8 @@ class OrderCommandFacade(
     }
 
     fun cancelOrder(orderId: Long, username: String): OrderCancelResponse.OrderCancel {
-        val memberId = 1L
-        val cancelOrder = orderUseCase.cancelOrder(orderId, memberId)
+        val member = memberUseCase.getMemberInfo(username)
+        val cancelOrder = orderUseCase.cancelOrder(orderId, member.memberId!!)
         return OrderCancelResponse.OrderCancel.toResponse(cancelOrder)
     }
 }

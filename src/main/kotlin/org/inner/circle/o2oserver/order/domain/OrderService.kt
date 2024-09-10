@@ -4,6 +4,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import org.inner.circle.o2oserver.commons.exception.Exceptions.UnCancellableStatusException
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
 class OrderService(
@@ -11,22 +12,34 @@ class OrderService(
     private val orderReader: OrderReader,
 //    private val orderCaller: OrderCaller,
 ) : OrderUseCase {
-    override fun createOrder(order: Order): Order {
+
+    @Transactional
+    override fun createOrder(
+        order: Order
+    ): Order {
 //        orderCaller.saveOrderCall(order)
         return orderStore.saveOrder(order)
     }
 
-    override fun getOrderDetail(orderId: Long): Order {
+    override fun getOrderDetail(
+        orderId: Long
+    ): Order {
         // cache or mongodb 후 없다면 api 호출
         // 만약 api 호출했다면 cache or mongodb에 저장
         return orderReader.findOrderDetailByOrderId(orderId)
     }
 
-    override fun getOrderList(memberId: Long): List<Order> {
+    override fun getOrderList(
+        memberId: Long
+    ): List<Order> {
         return orderReader.findOrderListByMemberId(memberId)
     }
 
-    override fun cancelOrder(orderId: Long, memberId: Long): Long {
+    @Transactional
+    override fun cancelOrder(
+        orderId: Long,
+        memberId: Long
+    ): Long {
         val order = orderReader.findOrderDetailByOrderId(orderId)
 
         if (order.memberId != memberId) {
@@ -40,21 +53,25 @@ class OrderService(
         return orderStore.cancelOrder(orderId)
     }
 
-    override fun deliverySubscribe(orderId: Long, memberId: Long): Flow<Delivery> =
-        flow {
-            orderReader.subscribeDelivery(orderId, memberId).let {
-                it.collect { delivery ->
-                    emit(delivery)
-                }
+    override fun deliverySubscribe(
+        orderId: Long,
+        memberId: Long
+    ): Flow<Delivery> = flow {
+        orderReader.subscribeDelivery(orderId, memberId).let {
+            it.collect { delivery ->
+                emit(delivery)
             }
         }
+    }
 
-    override fun orderStatusSubscribe(orderId: Long, memberId: Long): Flow<Order> =
-        flow {
-            orderReader.subscribeOrder(orderId, memberId).let {
-                it.collect { order ->
-                    emit(order)
-                }
+    override fun orderStatusSubscribe(
+        orderId: Long,
+        memberId: Long
+    ): Flow<Order> = flow {
+        orderReader.subscribeOrder(orderId, memberId).let {
+            it.collect { order ->
+                emit(order)
             }
         }
+    }
 }
