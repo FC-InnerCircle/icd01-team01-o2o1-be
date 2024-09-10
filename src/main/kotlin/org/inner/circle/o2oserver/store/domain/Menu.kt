@@ -7,4 +7,5 @@ class Menu(
     val menuCount: Int?,
     val menuOptionGroups: List<MenuOptionGroup>?,
     val description: String?,
+    val menuImages: List<String>?,
 )

@@ -1,5 +1,8 @@
 package org.inner.circle.o2oserver.store.infrastructure.client
 
+import org.inner.circle.o2oserver.store.domain.Menu
+import org.inner.circle.o2oserver.store.domain.MenuOption
+import org.inner.circle.o2oserver.store.domain.MenuOptionGroup
 import org.inner.circle.o2oserver.store.domain.store.Store
 import org.inner.circle.o2oserver.store.domain.store.StoreListInfo
 import org.inner.circle.o2oserver.store.domain.store.StoreReader
@@ -32,6 +35,35 @@ class StoreReadImpl(private val storeApiClient: StoreApiClient, private val mong
             reviewCount = 10,
             reviewRate = 4.5,
             thumbnails = listOf("www.google.com"),
+            menus = listOf(
+                Menu(
+                    menuId = 101,
+                    menuName = "비빔밥",
+                    menuPrice = 8000,
+                    menuImages = listOf(),
+                    description = "신선한 야채와 고소한 참기름이 어우러진 전통 비빔밥",
+                    menuCount = 0,
+                    menuOptionGroups = listOf(
+                        MenuOptionGroup(
+                            menuOptionGroupId = 201,
+                            menuOptionGroupName = "추가 토핑",
+                            menuOptions = listOf(
+                                MenuOption(
+                                    optionId = 301,
+                                    optionName = "계란 추가",
+                                    optionPrice = 1000,
+                                ),
+                                MenuOption(
+                                    optionId = 302,
+                                    optionName = "고기 추가",
+                                    optionPrice = 2000,
+                                ),
+                            ),
+                            isRequired = true,
+                        ),
+                    ),
+                ),
+            ),
         )
     }
 
@@ -41,7 +73,6 @@ class StoreReadImpl(private val storeApiClient: StoreApiClient, private val mong
     }
 
     override fun getStoreListWithLocationAndName(command: StoreListCommand): StoreListInfo {
-
         val pageable = PageRequest.of(command.page, command.size)
 
         val keyword = command.keyword ?: ""
