@@ -10,7 +10,7 @@ data class CommonResponse(
 )
 
 data class CommonListResponse(
-    val totalCount: Int?,
+    val totalCount: Long,
     val page: Int?,
     val size: Int,
     val response: Any,
@@ -21,9 +21,9 @@ data class CommonListResponse(
 data class StoreListRequest(
     val address: AddressDTO,
     val category: String?,
-    val page: Int? = 1,
-    val size: Int? = 10,
-    val keyword: String?,
+    val page: Int = 1,
+    val size: Int = 10,
+    val keyword: String = "",
 )
 
 data class AddressDTO(

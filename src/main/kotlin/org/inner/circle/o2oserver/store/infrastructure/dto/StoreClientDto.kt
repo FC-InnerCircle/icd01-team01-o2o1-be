@@ -21,7 +21,7 @@ data class Address(
 
 data class StoreListResponse(
     val stores: List<BriefStoreInfo>,
-    val totalCount: Int,
+    val totalCount: Long,
     val page: Int,
     val size: Int,
     val statusCode: Int,
