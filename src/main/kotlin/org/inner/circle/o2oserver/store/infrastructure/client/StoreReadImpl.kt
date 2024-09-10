@@ -5,6 +5,7 @@ import org.inner.circle.o2oserver.store.domain.store.StoreListInfo
 import org.inner.circle.o2oserver.store.domain.store.StoreReader
 import org.inner.circle.o2oserver.store.domain.store.command.StoreListCommand
 import org.inner.circle.o2oserver.store.infrastructure.repository.mongo.MongoRepository
+import org.springframework.data.domain.PageRequest
 import org.springframework.data.geo.Distance
 import org.springframework.data.geo.Metrics
 import org.springframework.data.geo.Point
@@ -40,12 +41,16 @@ class StoreReadImpl(private val storeApiClient: StoreApiClient, private val mong
     }
 
     override fun getStoreListWithLocationAndName(command: StoreListCommand): StoreListInfo {
+
+        val pageable = PageRequest.of(command.page, command.size)
+
         val keyword = command.keyword ?: ""
         val (latitude, longitude) = command.address
 
         val point = Point(longitude, latitude)
         val distance = Distance(5.0, Metrics.KILOMETERS)
-        val mongo = mongoRepository.findByStoreNameContainingAndLocationNear(keyword, point, distance)
-        return StoreListInfo(totalCount = mongo.size, stores = mongo.map { it.toDomain() })
+        val mongo = mongoRepository.findByStoreNameContainingAndLocationNear(keyword, point, distance, pageable)
+
+        return StoreListInfo(totalCount = mongo.totalElements, stores = mongo.content.map { it.toDomain() })
     }
 }
