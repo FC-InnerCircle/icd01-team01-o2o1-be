@@ -6,15 +6,15 @@ on:
   pull_request:
     branches: [ "stage" ]
 env:
-  BUCKET_NAME: budi-codedeploy-bucket
-  CODE_DEPLOY_APP_NAME: budi-codedeploy-app
-  DEPLOYMENT_GROUP_NAME: codedeploy_group
+  BUCKET_NAME: o2o-ci-cd
+  CODE_DEPLOY_APP_NAME: o2o-be
+  DEPLOYMENT_GROUP_NAME: o2o-be
 
 jobs:
   deploy:
     env:
-      S3_BUCKET_DIR_NAME: o2o-ci-cd
-      DEPLOYMENT_GROUP_NAME: backend
+      S3_BUCKET_DIR_NAME: backend
+      DEPLOYMENT_GROUP_NAME: o2o-be
     # environment: stage
     runs-on: ubuntu-latest
     steps:
@@ -42,11 +42,11 @@ jobs:
           aws-region: ap-northeast-2
           
       - name: 🚛 Upload to S3
-        run: aws s3 cp --region ap-northeast-2 ./$GITHUB_SHA.zip s3://${{ secrets.S3_BUCKET_NAME }}/${{ env.S3_BUCKET_DIR_NAME }}/$GITHUB_SHA.zip
+        run: aws s3 cp --region ap-northeast-2 ./$GITHUB_SHA.zip s3://${{ env.BUCKET_NAME }}/${{ env.S3_BUCKET_DIR_NAME }}/$GITHUB_SHA.zip
          
       - name: 🚀 Deploy to EC2 with CodeDeploy
         run: aws deploy create-deployment
              --application-name codedeploy-app
              --deployment-config-name CodeDeployDefault.AllAtOnce
              --deployment-group-name ${{ env.DEPLOYMENT_GROUP_NAME }}
-             --s3-location bucket=${{ secrets.S3_BUCKET_NAME }},bundleType=zip,key=${{ env.S3_BUCKET_DIR_NAME }}/$GITHUB_SHA.zip
+             --s3-location bucket=${{ env.BUCKET_NAME }},bundleType=zip,key=${{ env.S3_BUCKET_DIR_NAME }}/$GITHUB_SHA.zip
