@@ -11,12 +11,18 @@ enum class OrderStatus {
     CANCELED,
     ;
 
-    fun isStatus(): Boolean =
+    fun isStatusByThrowException(): Boolean =
         when (this) {
             PENDING, ACCEPTED -> true
             PREPARING -> throw UnCancellableStatusException("조리 중인 주문입니다.")
             DELIVERING -> throw UnCancellableStatusException("배송 중인 주문입니다.")
             DELIVERED -> throw UnCancellableStatusException("이미 배송된 주문입니다.")
             CANCELED -> throw UnCancellableStatusException("이미 취소된 주문입니다.")
+        }
+
+    fun isStatus(): Boolean =
+        when (this) {
+            PENDING, ACCEPTED -> true
+            PREPARING, DELIVERING, DELIVERED, CANCELED -> false
         }
 }

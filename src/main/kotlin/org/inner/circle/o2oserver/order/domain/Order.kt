@@ -13,6 +13,7 @@ class Order(
     val menus: List<Menu>? = null,
     val payment: String = "CARD",
     val orderAddress: Address? = null,
+    val isReviewed: Boolean? = false,
 ) {
     class Address(
         val addressId: Long,

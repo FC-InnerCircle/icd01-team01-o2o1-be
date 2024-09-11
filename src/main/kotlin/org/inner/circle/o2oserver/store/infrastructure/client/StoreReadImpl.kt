@@ -41,7 +41,6 @@ class StoreReadImpl(private val storeApiClient: StoreApiClient, private val mong
     }
 
     override fun getStoreListWithLocationAndName(command: StoreListCommand): StoreListInfo {
-
         val pageable = PageRequest.of(command.page, command.size)
 
         val keyword = command.keyword ?: ""
