@@ -7,7 +7,7 @@ services:
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
     container_name: nginx
-  o2o-b2:
+  o2o-be:
     build:
       context: .
       dockerfile: Dockerfile
