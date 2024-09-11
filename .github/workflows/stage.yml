@@ -21,6 +21,12 @@ jobs:
       - name: ✅ Checkout branch
         uses: actions/checkout@v3
 
+      - name: Build the Docker image
+        run: docker build -t o2o-backend:latest .
+
+      - name: docker image to zip file
+        run: docker save -o o2o-backend.tar.gz o2o-backend:latest
+
       # - name: 🗂️ Make config folder
       #   run: mkdir -p config
 
@@ -30,7 +36,7 @@ jobs:
       #       echo DOMAIN_FIR=${{ secrets.DOMAIN_FIR }} >> ${{ env.ENV_PATH }}
       #       echo SOCKET_PORT_PROD=${{ secrets.SOCKET_PORT_PROD }} >> ${{ env.ENV_PATH }}
       #       echo SOCKET_PORT_TEST=${{ secrets.SOCKET_PORT_TEST }} >> ${{ env.ENV_PATH }}
-      
+
       - name: 📦 Zip project files
         run: zip -r ./$GITHUB_SHA.zip .
 
@@ -40,10 +46,10 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ap-northeast-2
-          
+
       - name: 🚛 Upload to S3
         run: aws s3 cp --region ap-northeast-2 ./$GITHUB_SHA.zip s3://${{ env.BUCKET_NAME }}/${{ env.S3_BUCKET_DIR_NAME }}/$GITHUB_SHA.zip
-         
+
       - name: 🚀 Deploy to EC2 with CodeDeploy
         run: aws deploy create-deployment
              --application-name o2o-be

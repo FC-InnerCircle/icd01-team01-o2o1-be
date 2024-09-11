@@ -8,7 +8,5 @@ services:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
     container_name: nginx
   o2o-be:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: o2o-backend:latest
     restart: always
