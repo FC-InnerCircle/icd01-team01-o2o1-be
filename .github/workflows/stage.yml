@@ -46,7 +46,7 @@ jobs:
          
       - name: 🚀 Deploy to EC2 with CodeDeploy
         run: aws deploy create-deployment
-             --application-name codedeploy-app
+             --application-name o2o-be
              --deployment-config-name CodeDeployDefault.AllAtOnce
              --deployment-group-name ${{ env.DEPLOYMENT_GROUP_NAME }}
              --s3-location bucket=${{ env.BUCKET_NAME }},bundleType=zip,key=${{ env.S3_BUCKET_DIR_NAME }}/$GITHUB_SHA.zip
