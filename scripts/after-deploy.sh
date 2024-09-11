@@ -1,7 +1,7 @@
 #!/bin/bash
-REPOSITORY=/home/api/
+REPOSITORY=/home/ec2-user
 
-cd $REPOSITORY/api_back
+cd $REPOSITORY/o2o-backend
 
 #echo "> 🔵 Stop & Remove docker services."
 #cd ..
