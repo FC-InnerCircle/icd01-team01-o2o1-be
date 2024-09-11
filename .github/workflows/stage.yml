@@ -1,0 +1,52 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "stage" ]
+  pull_request:
+    branches: [ "stage" ]
+env:
+  BUCKET_NAME: budi-codedeploy-bucket
+  CODE_DEPLOY_APP_NAME: budi-codedeploy-app
+  DEPLOYMENT_GROUP_NAME: codedeploy_group
+
+jobs:
+  deploy:
+    env:
+      S3_BUCKET_DIR_NAME: o2o-ci-cd
+      DEPLOYMENT_GROUP_NAME: backend
+    # environment: stage
+    runs-on: ubuntu-latest
+    steps:
+      - name: ✅ Checkout branch
+        uses: actions/checkout@v3
+
+      # - name: 🗂️ Make config folder
+      #   run: mkdir -p config
+
+      # - name: ⚙️ Create .env file
+      #   run: |
+      #       touch ${{ env.ENV_PATH }}
+      #       echo DOMAIN_FIR=${{ secrets.DOMAIN_FIR }} >> ${{ env.ENV_PATH }}
+      #       echo SOCKET_PORT_PROD=${{ secrets.SOCKET_PORT_PROD }} >> ${{ env.ENV_PATH }}
+      #       echo SOCKET_PORT_TEST=${{ secrets.SOCKET_PORT_TEST }} >> ${{ env.ENV_PATH }}
+      
+      - name: 📦 Zip project files
+        run: zip -r ./$GITHUB_SHA.zip .
+
+      - name: 🌎 Access to AWS
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-northeast-2
+          
+      - name: 🚛 Upload to S3
+        run: aws s3 cp --region ap-northeast-2 ./$GITHUB_SHA.zip s3://${{ secrets.S3_BUCKET_NAME }}/${{ env.S3_BUCKET_DIR_NAME }}/$GITHUB_SHA.zip
+         
+      - name: 🚀 Deploy to EC2 with CodeDeploy
+        run: aws deploy create-deployment
+             --application-name codedeploy-app
+             --deployment-config-name CodeDeployDefault.AllAtOnce
+             --deployment-group-name ${{ env.DEPLOYMENT_GROUP_NAME }}
+             --s3-location bucket=${{ secrets.S3_BUCKET_NAME }},bundleType=zip,key=${{ env.S3_BUCKET_DIR_NAME }}/$GITHUB_SHA.zip
