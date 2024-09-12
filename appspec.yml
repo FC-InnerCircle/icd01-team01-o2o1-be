@@ -1,0 +1,22 @@
+version: 0.0
+os: linux
+files:
+    - source: /
+      destination: /home/ec2-user/o2o-backend
+    - source: /docker/nginx.conf
+      destination: /home/ec2-user/o2o-backend/nginx
+    - source: /docker/docker-compose.yml
+      destination: /home/ec2-user/o2o-backend
+file_exists_behavior: OVERWRITE
+
+permissions:
+    - object: /home/ec2-user/o2o-backend
+      pattern: '**'
+      owner: ec2-user
+      group: ec2-user
+
+hooks:
+    AfterInstall:
+        - location: scripts/after-deploy.sh
+          timeout: 100000
+          runas: root
