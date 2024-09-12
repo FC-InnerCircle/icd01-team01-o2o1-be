@@ -38,7 +38,7 @@ class OrderService(
             throw Exceptions.BadRequestException("주문자가 아닙니다.")
         }
 
-        if (order.orderStatus?.isStatusByThrowException() == true) {
+        if (order.orderStatus?.isStatusByThrowException() == false) {
             throw UnCancellableStatusException("취소할 수 없는 주문입니다.")
         }
 
@@ -69,11 +69,11 @@ class OrderService(
             throw Exceptions.BadRequestException("주문자가 아닙니다.")
         }
 
-        order.orderStatus?.let {
-            if (!it.isStatus()) {
-                throw Exceptions.BadRequestException("주문 상태가 완료되지 않았습니다.")
-            }
-        }
+//        order.orderStatus?.let {
+//            if (!it.isStatus()) {
+//                throw Exceptions.BadRequestException("주문 상태가 완료되지 않았습니다.")
+//            }
+//        }
 
         // todo : save and get order id from api
         //    private val orderCaller: OrderCaller,

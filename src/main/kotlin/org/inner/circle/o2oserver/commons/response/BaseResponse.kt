@@ -1,25 +1,17 @@
 package org.inner.circle.o2oserver.commons.response
 
-data class BaseResponse(
-    val response: Any,
-    val statusCode: Int,
-    val msg: String,
+import com.fasterxml.jackson.databind.annotation.JsonSerialize
+import org.inner.circle.o2oserver.commons.config.BaseResponseSerializer
+
+@JsonSerialize(using = BaseResponseSerializer::class)
+data class BaseResponse<T>(
+    val response: T? = null,
+    val statusCode: Int = 200,
+    val msg: String = "",
 ) {
     companion object {
-        fun success(response: Any): BaseResponse {
-            return BaseResponse(
-                response = response,
-                statusCode = 200,
-                msg = "success",
-            )
-        }
+        fun <T> success(response: T): BaseResponse<T> = BaseResponse(response, 200, "success")
 
-        fun error(response: Any, statusCode: Int): BaseResponse {
-            return BaseResponse(
-                response = response,
-                statusCode = statusCode,
-                msg = "fail",
-            )
-        }
+        fun <T> error(message: T, statusCode: Int): BaseResponse<T> = BaseResponse(message, statusCode, "fail")
     }
 }

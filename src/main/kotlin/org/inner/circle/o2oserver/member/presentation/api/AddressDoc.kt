@@ -28,7 +28,7 @@ interface AddressDoc {
             description = "주소 목록 조회 성공",
         ),
     )
-    fun getAddresses(userDetails: UserDetails): BaseResponse
+    fun getAddresses(userDetails: UserDetails): BaseResponse<GetAddressResponse>
 
     @Operation(summary = "새 주소 생성", description = "새로운 주소를 생성합니다.")
     @ApiResponses(
@@ -43,7 +43,7 @@ interface AddressDoc {
             description = "주소 생성 성공",
         ),
     )
-    fun createAddress(createRequest: AddressRequest.CreateAddress, userDetails: UserDetails): BaseResponse
+    fun createAddress(createRequest: AddressRequest.CreateAddress, userDetails: UserDetails): BaseResponse<AddressIdResponse>
 
     @Operation(summary = "기본 주소 설정", description = "기존 주소 중 하나를 기본 주소로 설정합니다.")
     @ApiResponses(
@@ -58,7 +58,7 @@ interface AddressDoc {
             description = "기본 주소 설정 성공",
         ),
     )
-    fun setMainAddress(addressId: Long, userDetails: UserDetails): BaseResponse
+    fun setMainAddress(addressId: Long, userDetails: UserDetails): BaseResponse<AddressIdResponse>
 
     @Operation(summary = "주소 삭제", description = "지정된 주소를 삭제합니다.")
     @ApiResponses(
@@ -73,5 +73,5 @@ interface AddressDoc {
             description = "주소 삭제 성공",
         ),
     )
-    fun deleteAddress(addressId: Long, userDetails: UserDetails): BaseResponse
+    fun deleteAddress(addressId: Long, userDetails: UserDetails): BaseResponse<AddressIdResponse>
 }

@@ -24,7 +24,7 @@ class MemberInfoController(
     @GetMapping
     override fun getMemberInfo(
         @AuthenticationPrincipal userDetails: UserDetails,
-    ): BaseResponse {
+    ): BaseResponse<MemberInfoResponse> {
         log.info("User ID: ${userDetails.username}")
         val member = memberInfoFacade.getMemberInfo(userDetails.username)
         val response = MemberInfoResponse(
@@ -41,23 +41,23 @@ class MemberInfoController(
     override fun createMemberInfo(
         @RequestBody createRequest: MemberRequest.MemberInfo,
         @AuthenticationPrincipal userDetails: UserDetails,
-    ): BaseResponse {
+    ): BaseResponse<Any> {
         val memberId = userDetails.username
         val memberInfo = MemberRequest.MemberInfo.toMemberDetail(createRequest, memberId)
         val address = MemberRequest.MemberInfo.toAddress(createRequest, memberId)
         memberInfoFacade.createMemberInfo(memberInfo, address)
 
-        return BaseResponse.success(mapOf<String, Any>())
+        return BaseResponse.success(Any())
     }
 
     @DeleteMapping
     override fun deleteMember(
         @AuthenticationPrincipal userDetails: UserDetails,
-    ): BaseResponse {
+    ): BaseResponse<Any> {
         val memberId = userDetails.username
         log.info("Delete member ID: $memberId")
         memberInfoFacade.deleteMember(memberId)
 
-        return BaseResponse.success(mapOf<String, Any>())
+        return BaseResponse.success(Any())
     }
 }

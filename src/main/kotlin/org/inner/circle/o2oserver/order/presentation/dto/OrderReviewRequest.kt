@@ -5,7 +5,7 @@ import org.inner.circle.o2oserver.order.domain.Review
 class OrderReviewRequest {
     data class ReviewCreate(
         val content: String,
-        val rating: Int,
+        val rating: Double,
         val reviewImage: List<String>?,
     ) {
         companion object {
