@@ -3,6 +3,7 @@ package org.inner.circle.o2oserver.order.presentation.api
 import org.inner.circle.o2oserver.commons.response.BaseResponse
 import org.inner.circle.o2oserver.order.application.OrderCommandFacade
 import org.inner.circle.o2oserver.order.presentation.dto.OrderCreateRequest
+import org.inner.circle.o2oserver.order.presentation.dto.OrderReviewRequest
 import org.slf4j.LoggerFactory
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.security.core.userdetails.UserDetails
@@ -42,5 +43,16 @@ class OrderCommandController(
         log.info("order 취소 요청")
         val cancelOrderResult = orderCommandFacade.cancelOrder(orderId, userDetails.username)
         return BaseResponse.success(cancelOrderResult)
+    }
+
+    @PostMapping("/{orderId}/review")
+    override fun createReview(
+        @PathVariable orderId: Long,
+        @RequestBody reviewCreate: OrderReviewRequest.ReviewCreate,
+        @AuthenticationPrincipal userDetails: UserDetails,
+    ): BaseResponse {
+        log.info("review 생성 요청")
+        val createReviewResult = orderCommandFacade.createReview(orderId, reviewCreate, userDetails.username)
+        return BaseResponse.success(createReviewResult)
     }
 }

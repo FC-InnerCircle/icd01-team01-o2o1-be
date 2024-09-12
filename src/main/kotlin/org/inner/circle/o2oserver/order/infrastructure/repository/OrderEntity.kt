@@ -77,6 +77,60 @@ class OrderEntity(
             )
         }
 
+        fun toDomainByReview(orderEntity: OrderEntity, reviewEntity: ReviewEntity?): Order {
+            return Order(
+                orderId = orderEntity.orderId,
+                orderTime = orderEntity.orderTime,
+                orderStatus = orderEntity.orderStatus,
+                memberId = orderEntity.memberId,
+                orderPrice = orderEntity.orderPrice,
+                store = Order.Store(
+                    storeId = orderEntity.store.storeId ?: 0,
+                    storeName = orderEntity.store.storeName ?: "",
+                    storeAddress = orderEntity.store.storeAddress?.let {
+                        Order.Address(
+                            addressId = orderEntity.store.storeAddress.addressId,
+                            address = orderEntity.store.storeAddress.address,
+                            addressDetail = orderEntity.store.storeAddress.addressDetail ?: "",
+                            zipCode = orderEntity.store.storeAddress.zipCode,
+                            latitude = orderEntity.store.storeAddress.latitude,
+                            longitude = orderEntity.store.storeAddress.longitude,
+                        )
+                    },
+                ),
+                menus = orderEntity.menus.map { menu ->
+                    Order.Menu(
+                        menuId = menu.menuId ?: 0,
+                        menuName = menu.menuName ?: "",
+                        menuPrice = menu.menuPrice ?: 0,
+                        menuCount = menu.menuCount ?: 0,
+                        description = "",
+                        menuOptionGroups = menu.menuGroup.map { group ->
+                            Order.MenuOptionGroup(
+                                menuOptionGroupId = group.menuGroupId ?: 0,
+                                menuOptionName = group.name ?: "",
+                                menuOptions = group.menuOptions.map { option ->
+                                    Order.MenuOption(
+                                        optionId = option.menuOptionId ?: 0,
+                                        optionName = option.name ?: "",
+                                    )
+                                },
+                            )
+                        },
+                    )
+                },
+                orderAddress = Order.Address(
+                    addressId = orderEntity.address.addressId,
+                    address = orderEntity.address.address,
+                    addressDetail = orderEntity.address.addressDetail ?: "",
+                    zipCode = orderEntity.address.zipCode,
+                    latitude = orderEntity.address.latitude,
+                    longitude = orderEntity.address.longitude,
+                ),
+                isReviewed = reviewEntity != null,
+            )
+        }
+
         fun toEntity(order: Order): OrderEntity {
             return OrderEntity(
                 orderId = order.orderId ?: 0,
