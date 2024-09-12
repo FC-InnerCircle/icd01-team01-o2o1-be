@@ -60,6 +60,25 @@ class StoreReadImpl(private val storeApiClient: StoreApiClient, private val mong
                                 ),
                             ),
                             isRequired = true,
+                            isMultiple = true
+                        ),
+                        MenuOptionGroup(
+                            menuOptionGroupId = 203,
+                            menuOptionGroupName = "추가 토핑2",
+                            menuOptions = listOf(
+                                MenuOption(
+                                    optionId = 303,
+                                    optionName = "간장 추가",
+                                    optionPrice = 1000,
+                                ),
+                                MenuOption(
+                                    optionId = 304,
+                                    optionName = "고추장 추가",
+                                    optionPrice = 2000,
+                                ),
+                            ),
+                            isRequired = true,
+                            isMultiple = false
                         ),
                     ),
                 ),
