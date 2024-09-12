@@ -23,17 +23,11 @@ class SecurityConfig(
 ) {
     @Bean
     fun filterChain(http: HttpSecurity): SecurityFilterChain {
-        return http
-            .csrf { csrf -> csrf.disable() }
-            .cors { cors -> cors.configurationSource(corsConfig()) }
-            .httpBasic { httpBasic -> httpBasic.disable() }
-            .sessionManagement { sessionManagement ->
+        return http.csrf { csrf -> csrf.disable() }.cors { cors -> cors.configurationSource(corsConfig()) }
+            .httpBasic { httpBasic -> httpBasic.disable() }.sessionManagement { sessionManagement ->
                 sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-            }
-            .formLogin { formLogin -> formLogin.disable() }
-            .authorizeHttpRequests { authorizeRequests ->
-                authorizeRequests
-                    .requestMatchers(
+            }.formLogin { formLogin -> formLogin.disable() }.authorizeHttpRequests { authorizeRequests ->
+                authorizeRequests.requestMatchers(
                         "/api-docs/**",
                         "/swagger-ui/**",
                         "/swagger-ui.html",
@@ -46,50 +40,42 @@ class SecurityConfig(
                         "/notification/**",
                         "/api/v1/login",
                         "/api/v1/store/**",
-                    ).permitAll()
-                    .requestMatchers(
+                    ).permitAll().requestMatchers(
                         HttpMethod.GET,
                         "/post/**",
                         "/mate/**",
-                    ).permitAll()
-                    .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
-                    .anyRequest().authenticated()
-            }
-            .addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter::class.java)
-            .exceptionHandling { exceptionHandling ->
-                exceptionHandling
-                    .authenticationEntryPoint(entryPoint)
-                    .accessDeniedHandler(customAccessDemniedHandler)
-            }
-            .build()
+                    ).permitAll().requestMatchers(CorsUtils::isPreFlightRequest).permitAll().anyRequest().authenticated()
+            }.addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter::class.java).exceptionHandling { exceptionHandling ->
+                exceptionHandling.authenticationEntryPoint(entryPoint).accessDeniedHandler(customAccessDemniedHandler)
+            }.build()
     }
 
     /**
      * CORS 설정은 임시 보류
      */
     fun corsConfig(): CorsConfigurationSource {
-        val config =
-            CorsConfiguration().apply {
-                allowCredentials = true
-                allowedMethods = listOf("HEAD", "GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS")
-                allowedHeaders =
-                    listOf(
-                        "Content-Type",
-                        "Cache-Control",
-                        "X-Requested-With",
-                        "Accept",
-                        "Origin",
-                        "Access-Control-Request-Method",
-                        "Access-Control-Request-Headers",
-                        "Authorization",
-                        "Set-Cookie",
-                    )
-                exposedHeaders = listOf("Authorization", "Set-Cookie")
-                allowedOriginPatterns = listOf(
-                    "http://localhost:3000",
-                    "https://icd01-team01-o2o1-fe.vercel.app",
-                )
-            }
+        val config = CorsConfiguration().apply {
+            allowCredentials = true
+            allowedMethods = listOf("HEAD", "GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS")
+            allowedHeaders = listOf(
+                "Content-Type",
+                "Cache-Control",
+                "X-Requested-With",
+                "Accept",
+                "Origin",
+                "Access-Control-Request-Method",
+                "Access-Control-Request-Headers",
+                "Authorization",
+                "Set-Cookie",
+                "RefreshAuth",
+                "refreshToken",
+            )
+            exposedHeaders = listOf("Authorization", "Set-Cookie")
+            allowedOriginPatterns = listOf(
+                "http://localhost:3000",
+                "https://icd01-team01-o2o1-fe.vercel.app",
+            )
+        }
         return UrlBasedCorsConfigurationSource().apply {
             registerCorsConfiguration("/**", config)
         }
