@@ -15,7 +15,7 @@ class ReviewEntity(
     val memberId: Long,
     val orderId: Long,
     val content: String,
-    val rating: Int,
+    val rating: Double,
     val reviewImage: List<String>? = emptyList(),
     val createdAt: LocalDateTime = LocalDateTime.now(ZoneId.of("Asia/Seoul")),
 ) {

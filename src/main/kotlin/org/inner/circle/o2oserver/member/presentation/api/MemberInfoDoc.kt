@@ -31,7 +31,7 @@ interface MemberInfoDoc {
     )
     fun getMemberInfo(
         @AuthenticationPrincipal userDetails: UserDetails,
-    ): BaseResponse
+    ): BaseResponse<MemberInfoResponse>
 
     @Operation(summary = "회원 정보 생성", description = "회원 정보를 생성하는 API")
     @ApiResponses(
@@ -49,7 +49,7 @@ interface MemberInfoDoc {
     fun createMemberInfo(
         @RequestBody createRequest: MemberRequest.MemberInfo,
         @AuthenticationPrincipal userDetails: UserDetails,
-    ): BaseResponse
+    ): BaseResponse<Any>
 
     @Operation(summary = "회원 정보 삭제", description = "회원 정보를 삭제하는 API")
     @ApiResponses(
@@ -66,5 +66,5 @@ interface MemberInfoDoc {
     )
     fun deleteMember(
         @AuthenticationPrincipal userDetails: UserDetails,
-    ): BaseResponse
+    ): BaseResponse<Any>
 }

@@ -51,6 +51,7 @@ class OrderStorage(
 
     override fun saveOrder(order: Order): Order {
         val orderEntity = OrderEntity.toEntity(order)
+        // Todo : store 엔티티에서 주소가져와서 넣기
         val savedOrderEntity = orderRepository.save(orderEntity)
         return OrderEntity.toDomain(savedOrderEntity)
     }

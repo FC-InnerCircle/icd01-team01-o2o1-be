@@ -2,8 +2,11 @@ package org.inner.circle.o2oserver.order.presentation.api
 
 import org.inner.circle.o2oserver.commons.response.BaseResponse
 import org.inner.circle.o2oserver.order.application.OrderCommandFacade
+import org.inner.circle.o2oserver.order.presentation.dto.OrderCancelResponse
 import org.inner.circle.o2oserver.order.presentation.dto.OrderCreateRequest
+import org.inner.circle.o2oserver.order.presentation.dto.OrderCreateResponse
 import org.inner.circle.o2oserver.order.presentation.dto.OrderReviewRequest
+import org.inner.circle.o2oserver.order.presentation.dto.OrderReviewResponse
 import org.slf4j.LoggerFactory
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.security.core.userdetails.UserDetails
@@ -29,8 +32,8 @@ class OrderCommandController(
     override fun createOrder(
         @RequestBody orderCreate: OrderCreateRequest.OrderCreate,
         @AuthenticationPrincipal userDetails: UserDetails,
-    ): BaseResponse {
-        log.info("order 생성 요청")
+    ): BaseResponse<OrderCreateResponse.OrderCreateResult> {
+        log.info("order 생성 요청 : $orderCreate")
         val createOrderResult = orderCommandFacade.createOrder(orderCreate, userDetails.username)
         return BaseResponse.success(createOrderResult)
     }
@@ -39,7 +42,7 @@ class OrderCommandController(
     override fun cancelOrder(
         @PathVariable orderId: Long,
         @AuthenticationPrincipal userDetails: UserDetails,
-    ): BaseResponse {
+    ): BaseResponse<OrderCancelResponse.OrderCancel> {
         log.info("order 취소 요청")
         val cancelOrderResult = orderCommandFacade.cancelOrder(orderId, userDetails.username)
         return BaseResponse.success(cancelOrderResult)
@@ -50,7 +53,7 @@ class OrderCommandController(
         @PathVariable orderId: Long,
         @RequestBody reviewCreate: OrderReviewRequest.ReviewCreate,
         @AuthenticationPrincipal userDetails: UserDetails,
-    ): BaseResponse {
+    ): BaseResponse<OrderReviewResponse.ReviewCreateResult> {
         log.info("review 생성 요청")
         val createReviewResult = orderCommandFacade.createReview(orderId, reviewCreate, userDetails.username)
         return BaseResponse.success(createReviewResult)
