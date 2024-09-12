@@ -13,13 +13,13 @@ class LoginService(
 
     override fun findOrCreateMember(member: Member): MemberCreationResult {
         val existingMember = findExistingMember(member)
-        val isNewMember = existingMember?.nickName.isNullOrEmpty()
+        val isNewMember = !existingMember?.nickName.isNullOrEmpty()
 
         return existingMember?.let {
             MemberCreationResult(it, isNewMember)
         } ?: run {
             val newMember = createNewMember(member)
-            MemberCreationResult(newMember, true)
+            MemberCreationResult(newMember, false)
         }
     }
 
