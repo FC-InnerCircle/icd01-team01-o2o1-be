@@ -8,6 +8,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses
 import io.swagger.v3.oas.annotations.tags.Tag
 import kotlinx.coroutines.flow.Flow
 import org.inner.circle.o2oserver.commons.response.BaseResponse
+import org.inner.circle.o2oserver.order.presentation.dto.OrderDeliveryResponse
+import org.inner.circle.o2oserver.order.presentation.dto.OrderDetailResponse
 import org.inner.circle.o2oserver.order.presentation.dto.OrderListResponse
 import org.springframework.http.MediaType.APPLICATION_JSON_VALUE
 import org.springframework.security.core.annotation.AuthenticationPrincipal
@@ -31,7 +33,7 @@ interface OrderQueryDoc {
     )
     fun getOrders(
         @AuthenticationPrincipal userDetails: UserDetails,
-    ): BaseResponse
+    ): BaseResponse<OrderListResponse.OrderListResponse>
 
     @Operation(summary = "주문 상세 조회", description = "주문 상세를 조회하는 API")
     @ApiResponses(
@@ -49,7 +51,7 @@ interface OrderQueryDoc {
     fun getOrder(
         @PathVariable orderId: Long,
         @AuthenticationPrincipal userDetails: UserDetails,
-    ): BaseResponse
+    ): BaseResponse<OrderDetailResponse.OrderInfoDetail>
 
     @Operation(summary = "배달 상태 구독", description = "배달 상태를 구독하는 API")
     @ApiResponses(
@@ -67,5 +69,5 @@ interface OrderQueryDoc {
     fun deliverySubscribe(
         @PathVariable orderId: Long,
         @AuthenticationPrincipal userDetails: UserDetails,
-    ): Flow<BaseResponse>
+    ): Flow<BaseResponse<OrderDeliveryResponse.OrderDelivery>>
 }

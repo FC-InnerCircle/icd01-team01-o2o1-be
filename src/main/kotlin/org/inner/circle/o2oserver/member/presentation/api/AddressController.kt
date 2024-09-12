@@ -28,7 +28,7 @@ class AddressController(
     @GetMapping
     override fun getAddresses(
         @AuthenticationPrincipal userDetails: UserDetails,
-    ): BaseResponse {
+    ): BaseResponse<GetAddressResponse> {
         log.info("Get Addresses Member ID: ${userDetails.username}")
         val addresses = memberInfoFacade.getAddresses(userDetails.username)
         val addressResponseData = GetAddressResponse(
@@ -52,7 +52,7 @@ class AddressController(
     override fun createAddress(
         @RequestBody createRequest: AddressRequest.CreateAddress,
         @AuthenticationPrincipal userDetails: UserDetails,
-    ): BaseResponse {
+    ): BaseResponse<AddressIdResponse> {
         val memberId = userDetails.username
         val addressInfo = AddressRequest.CreateAddress.toAddress(createRequest, memberId)
         val newAddress = memberInfoFacade.createAddress(addressInfo)
@@ -65,7 +65,7 @@ class AddressController(
     override fun setMainAddress(
         @PathVariable addressId: Long,
         @AuthenticationPrincipal userDetails: UserDetails,
-    ): BaseResponse {
+    ): BaseResponse<AddressIdResponse> {
         val memberId = userDetails.username
         log.info("Setting main address for member ID: $memberId, address ID: $addressId")
 
@@ -78,7 +78,7 @@ class AddressController(
     override fun deleteAddress(
         @PathVariable addressId: Long,
         @AuthenticationPrincipal userDetails: UserDetails,
-    ): BaseResponse {
+    ): BaseResponse<AddressIdResponse> {
         log.info("Delete address for address ID: $addressId")
         memberInfoFacade.deleteAddress(addressId)
 

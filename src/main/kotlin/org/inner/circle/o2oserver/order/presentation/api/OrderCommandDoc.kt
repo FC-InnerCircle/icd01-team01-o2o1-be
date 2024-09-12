@@ -10,6 +10,7 @@ import org.inner.circle.o2oserver.order.presentation.dto.OrderCancelResponse
 import org.inner.circle.o2oserver.order.presentation.dto.OrderCreateRequest
 import org.inner.circle.o2oserver.order.presentation.dto.OrderCreateResponse
 import org.inner.circle.o2oserver.order.presentation.dto.OrderReviewRequest
+import org.inner.circle.o2oserver.order.presentation.dto.OrderReviewResponse
 import org.springframework.http.MediaType.APPLICATION_JSON_VALUE
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.security.core.userdetails.UserDetails
@@ -34,7 +35,7 @@ interface OrderCommandDoc {
     fun createOrder(
         @RequestBody orderCreate: OrderCreateRequest.OrderCreate,
         @AuthenticationPrincipal userDetails: UserDetails,
-    ): BaseResponse
+    ): BaseResponse<OrderCreateResponse.OrderCreateResult>
 
     @Operation(summary = "주문 취소", description = "주문을 취소하는 API")
     @ApiResponses(
@@ -52,7 +53,7 @@ interface OrderCommandDoc {
     fun cancelOrder(
         @PathVariable orderId: Long,
         @AuthenticationPrincipal userDetails: UserDetails,
-    ): BaseResponse
+    ): BaseResponse<OrderCancelResponse.OrderCancel>
 
     @Operation(summary = "리뷰 생성", description = "리뷰를 생성하는 API")
     @ApiResponses(
@@ -71,5 +72,5 @@ interface OrderCommandDoc {
         @PathVariable orderId: Long,
         @RequestBody reviewCreate: OrderReviewRequest.ReviewCreate,
         @AuthenticationPrincipal userDetails: UserDetails,
-    ): BaseResponse
+    ): BaseResponse<OrderReviewResponse.ReviewCreateResult>
 }
