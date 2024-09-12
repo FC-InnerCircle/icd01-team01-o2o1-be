@@ -9,6 +9,7 @@ import org.inner.circle.o2oserver.commons.response.BaseResponse
 import org.inner.circle.o2oserver.order.presentation.dto.OrderCancelResponse
 import org.inner.circle.o2oserver.order.presentation.dto.OrderCreateRequest
 import org.inner.circle.o2oserver.order.presentation.dto.OrderCreateResponse
+import org.inner.circle.o2oserver.order.presentation.dto.OrderReviewRequest
 import org.springframework.http.MediaType.APPLICATION_JSON_VALUE
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.security.core.userdetails.UserDetails
@@ -50,6 +51,25 @@ interface OrderCommandDoc {
     )
     fun cancelOrder(
         @PathVariable orderId: Long,
+        @AuthenticationPrincipal userDetails: UserDetails,
+    ): BaseResponse
+
+    @Operation(summary = "리뷰 생성", description = "리뷰를 생성하는 API")
+    @ApiResponses(
+        ApiResponse(
+            responseCode = "200",
+            content = [
+                io.swagger.v3.oas.annotations.media.Content(
+                    mediaType = APPLICATION_JSON_VALUE,
+                    schema = Schema(implementation = BaseResponse::class),
+                ),
+            ],
+            description = "리뷰 생성 성공",
+        ),
+    )
+    fun createReview(
+        @PathVariable orderId: Long,
+        @RequestBody reviewCreate: OrderReviewRequest.ReviewCreate,
         @AuthenticationPrincipal userDetails: UserDetails,
     ): BaseResponse
 }

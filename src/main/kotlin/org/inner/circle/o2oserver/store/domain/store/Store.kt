@@ -1,5 +1,7 @@
 package org.inner.circle.o2oserver.store.domain.store
 
+import org.inner.circle.o2oserver.store.domain.Menu
+
 class Store(
     val storeId: Long,
     val storeName: String,
@@ -18,4 +20,5 @@ class Store(
     val reviewCount: Int? = null,
     val reviewRate: Double? = null,
     val thumbnails: List<String>? = null,
+    val menus: List<Menu>,
 )
