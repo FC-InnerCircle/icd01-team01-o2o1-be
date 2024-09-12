@@ -25,7 +25,7 @@ class SecurityConfig(
     fun filterChain(http: HttpSecurity): SecurityFilterChain {
         return http
             .csrf { csrf -> csrf.disable() }
-            .cors { cors -> cors.disable() }
+            .cors { cors -> cors.configurationSource(corsConfig()) }
             .httpBasic { httpBasic -> httpBasic.disable() }
             .sessionManagement { sessionManagement ->
                 sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
@@ -85,7 +85,10 @@ class SecurityConfig(
                         "Set-Cookie",
                     )
                 exposedHeaders = listOf("Authorization", "Set-Cookie")
-                allowedOriginPatterns = listOf("http://localhost:3000")
+                allowedOriginPatterns = listOf(
+                    "http://localhost:3000",
+                    "https://icd01-team01-o2o1-fe.vercel.app",
+                )
             }
         return UrlBasedCorsConfigurationSource().apply {
             registerCorsConfiguration("/**", config)
