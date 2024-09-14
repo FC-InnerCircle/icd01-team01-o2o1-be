@@ -68,7 +68,8 @@ class SecurityConfig(
                 "Authorization",
                 "Set-Cookie",
                 "RefreshAuth",
-                "refreshToken",
+                "RefreshToken",
+                "refreshtoken",
             )
             exposedHeaders = listOf("Authorization", "Set-Cookie", "RefreshAuth")
             allowedOriginPatterns = listOf(
