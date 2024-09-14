@@ -70,7 +70,7 @@ class SecurityConfig(
                 "RefreshAuth",
                 "refreshToken",
             )
-            exposedHeaders = listOf("Authorization", "Set-Cookie")
+            exposedHeaders = listOf("Authorization", "Set-Cookie", "refreshAuth")
             allowedOriginPatterns = listOf(
                 "http://localhost:3000",
                 "https://icd01-team01-o2o1-fe.vercel.app",
