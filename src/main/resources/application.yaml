@@ -31,6 +31,8 @@ jasypt:
 
 logging:
   level:
+    org.springframework.web: DEBUG
+    com.fasterxml.jackson: TRACE
     org:
       springframework:
         security: debug
@@ -51,3 +53,4 @@ springdoc:
 server:
   port: 8080
   address: 0.0.0.0
+

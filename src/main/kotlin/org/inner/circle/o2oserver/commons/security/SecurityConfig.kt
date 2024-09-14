@@ -28,23 +28,23 @@ class SecurityConfig(
                 sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             }.formLogin { formLogin -> formLogin.disable() }.authorizeHttpRequests { authorizeRequests ->
                 authorizeRequests.requestMatchers(
-                        "/api-docs/**",
-                        "/swagger-ui/**",
-                        "/swagger-ui.html",
-                        "/v3/api-docs/**",
-                        "/queue/**",
-                        "/auth/**",
-                        "/oauth/**",
-                        "/actuator/**",
-                        "/error",
-                        "/notification/**",
-                        "/api/v1/login",
-                        "/api/v1/store/**",
-                    ).permitAll().requestMatchers(
-                        HttpMethod.GET,
-                        "/post/**",
-                        "/mate/**",
-                    ).permitAll().requestMatchers(CorsUtils::isPreFlightRequest).permitAll().anyRequest().authenticated()
+                    "/api-docs/**",
+                    "/swagger-ui/**",
+                    "/swagger-ui.html",
+                    "/v3/api-docs/**",
+                    "/queue/**",
+                    "/auth/**",
+                    "/oauth/**",
+                    "/actuator/**",
+                    "/error",
+                    "/notification/**",
+                    "/api/v1/login",
+                    "/api/v1/store/**",
+                ).permitAll().requestMatchers(
+                    HttpMethod.GET,
+                    "/post/**",
+                    "/mate/**",
+                ).permitAll().requestMatchers(CorsUtils::isPreFlightRequest).permitAll().anyRequest().authenticated()
             }.addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter::class.java).exceptionHandling { exceptionHandling ->
                 exceptionHandling.authenticationEntryPoint(entryPoint).accessDeniedHandler(customAccessDemniedHandler)
             }.build()
@@ -70,7 +70,7 @@ class SecurityConfig(
                 "RefreshAuth",
                 "refreshToken",
             )
-            exposedHeaders = listOf("Authorization", "Set-Cookie", "refreshAuth")
+            exposedHeaders = listOf("Authorization", "Set-Cookie", "RefreshAuth")
             allowedOriginPatterns = listOf(
                 "http://localhost:3000",
                 "https://icd01-team01-o2o1-fe.vercel.app",

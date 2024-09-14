@@ -7,7 +7,7 @@ class Review(
     val memberId: Long,
     val orderId: Long,
     val content: String,
-    val rating: Int,
+    val rating: Double,
     val reviewImage: List<String>? = emptyList(),
     val timestamp: LocalDateTime = LocalDateTime.now(),
 )
