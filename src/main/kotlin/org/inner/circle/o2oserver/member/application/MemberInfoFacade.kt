@@ -24,10 +24,12 @@ class MemberInfoFacade(
     }
 
     @Transactional
-    fun deleteMember(id: String) {
+    fun deleteMember(id: String): Long {
         val member = getMemberInfo(id)
         memberUseCase.deleteMember(id)
         externalUseCase.sendDeleteMemberRequest(member.memberId!!)
+
+        return member.memberId!!
     }
 
     fun getAddresses(memberId: String): List<Address> {

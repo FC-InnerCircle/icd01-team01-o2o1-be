@@ -39,7 +39,7 @@ class AddressControllerTest {
         val mockAddress = Address(
             memberId = "605c72b8f9a5b812dcd81458",
             address = "Seoul",
-            detail = "Some detail",
+            addressDetail = "Some detail",
             latitude = 37.5665,
             longitude = 126.9780,
             zipCode = "12345",
@@ -60,7 +60,7 @@ class AddressControllerTest {
     fun createAddress() {
         val createAddressRequest = AddressRequest.CreateAddress(
             address = "Seoul",
-            detail = "Some detail",
+            addressDetail = "Some detail",
             latitude = 37.5665,
             longitude = 126.9780,
             zipCode = "12345",

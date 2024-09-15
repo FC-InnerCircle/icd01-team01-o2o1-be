@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.responses.ApiResponses
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.inner.circle.o2oserver.commons.response.BaseResponse
+import org.inner.circle.o2oserver.member.presentation.dto.MemberIdResponse
 import org.inner.circle.o2oserver.member.presentation.dto.MemberInfoResponse
 import org.inner.circle.o2oserver.member.presentation.dto.MemberRequest
 import org.springframework.http.MediaType.APPLICATION_JSON_VALUE
@@ -58,7 +59,7 @@ interface MemberInfoDoc {
             content = [
                 Content(
                     mediaType = APPLICATION_JSON_VALUE,
-                    schema = Schema(implementation = Map::class),
+                    schema = Schema(implementation = MemberIdResponse::class),
                 ),
             ],
             description = "회원 정보 삭제 성공",
@@ -66,5 +67,5 @@ interface MemberInfoDoc {
     )
     fun deleteMember(
         @AuthenticationPrincipal userDetails: UserDetails,
-    ): BaseResponse<Any>
+    ): BaseResponse<MemberIdResponse>
 }

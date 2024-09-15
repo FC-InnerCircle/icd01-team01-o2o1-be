@@ -36,7 +36,7 @@ class AddressController(
                 AddressResponseItem(
                     addressId = address.addressId!!,
                     address = address.address,
-                    detail = address.detail,
+                    addressDetail = address.addressDetail,
                     latitude = address.latitude,
                     longitude = address.longitude,
                     zipCode = address.zipCode,

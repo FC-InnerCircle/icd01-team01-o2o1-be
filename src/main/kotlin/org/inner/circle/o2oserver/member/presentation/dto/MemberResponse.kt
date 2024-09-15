@@ -6,3 +6,7 @@ data class MemberInfoResponse(
     val contact: String,
     val nickName: String,
 )
+
+data class MemberIdResponse(
+    val memberId: Long,
+)
