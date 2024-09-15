@@ -29,7 +29,7 @@ class MemberLoginController(
         val (jwtToken, isSignup) = loginFacade.login(member)
 
         val headers = HttpHeaders().apply {
-            set("Authorization", jwtToken.accessToken)
+            set("Authorization", "Bearer ${jwtToken.accessToken}")
             set("RefreshAuth", jwtToken.refreshToken)
         }
 
