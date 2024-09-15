@@ -7,7 +7,7 @@ data class GetAddressResponse(
 data class AddressResponseItem(
     val addressId: Long,
     val address: String,
-    val detail: String,
+    val addressDetail: String,
     val latitude: Double,
     val longitude: Double,
     val zipCode: String,

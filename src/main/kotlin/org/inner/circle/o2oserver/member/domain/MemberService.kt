@@ -67,7 +67,7 @@ class MemberService(
             addressId = addressId,
             memberId = address.memberId,
             address = address.address,
-            detail = address.detail,
+            addressDetail = address.addressDetail,
             longitude = address.longitude,
             latitude = address.latitude,
             zipCode = address.zipCode,

@@ -63,7 +63,7 @@ class MemberInfoControllerTest {
             contact = "010-1234-5678",
             address = MemberRequest.MemberInfo.AddressRequest(
                 address = "서울시 강남구",
-                detailAddress = "테스트 주소",
+                addressDetail = "테스트 주소",
                 latitude = 37.123456,
                 longitude = 127.123456,
                 zipCode = "12345",
