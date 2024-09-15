@@ -18,7 +18,7 @@ class MemberRequest {
                 return Address(
                     memberId = memberId,
                     address = memberInfo.address.address,
-                    detail = memberInfo.address.detailAddress,
+                    addressDetail = memberInfo.address.addressDetail,
                     latitude = memberInfo.address.latitude,
                     longitude = memberInfo.address.longitude,
                     zipCode = memberInfo.address.zipCode,
@@ -29,7 +29,7 @@ class MemberRequest {
 
         data class AddressRequest(
             val address: String,
-            val detailAddress: String,
+            val addressDetail: String,
             val latitude: Double,
             val longitude: Double,
             val zipCode: String,

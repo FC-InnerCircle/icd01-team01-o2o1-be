@@ -2,6 +2,7 @@ package org.inner.circle.o2oserver.member.presentation.api
 
 import org.inner.circle.o2oserver.commons.response.BaseResponse
 import org.inner.circle.o2oserver.member.application.MemberInfoFacade
+import org.inner.circle.o2oserver.member.presentation.dto.MemberIdResponse
 import org.inner.circle.o2oserver.member.presentation.dto.MemberInfoResponse
 import org.inner.circle.o2oserver.member.presentation.dto.MemberRequest
 import org.slf4j.LoggerFactory
@@ -47,17 +48,17 @@ class MemberInfoController(
         val address = MemberRequest.MemberInfo.toAddress(createRequest, memberId)
         memberInfoFacade.createMemberInfo(memberInfo, address)
 
-        return BaseResponse.success(Any())
+        return BaseResponse.success(Unit)
     }
 
     @DeleteMapping
     override fun deleteMember(
         @AuthenticationPrincipal userDetails: UserDetails,
-    ): BaseResponse<Any> {
-        val memberId = userDetails.username
-        log.info("Delete member ID: $memberId")
-        memberInfoFacade.deleteMember(memberId)
+    ): BaseResponse<MemberIdResponse> {
+        val id = userDetails.username
+        log.info("Delete member ID: $id")
+        val memberId = memberInfoFacade.deleteMember(id)
 
-        return BaseResponse.success(Any())
+        return BaseResponse.success(MemberIdResponse(memberId))
     }
 }
