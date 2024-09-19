@@ -192,7 +192,7 @@ class CustomExceptionHandler {
     }
 
     @ExceptionHandler(Exception::class)
-    fun handleException(e: Exception): ResponseEntity<BaseResponse<Any>> {
+    fun handleException(e: Exception): ResponseEntity<BaseResponse<String>> {
         val message = "알 수 없는 오류가 발생했습니다."
         log.error("error message : $message")
         e.printStackTrace()

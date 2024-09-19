@@ -29,7 +29,7 @@ class OrderCreateRequest {
                             menuOptionGroups = menu.optionGroups.map { optionGroup ->
                                 Order.MenuOptionGroup(
                                     menuOptionGroupId = optionGroup.optionGroupId,
-                                    menuOptionName = optionGroup.optionName,
+                                    menuOptionName = optionGroup.optionGroupName,
                                     menuOptions = optionGroup.options.map { option ->
                                         Order.MenuOption(
                                             optionId = option.optionId,
@@ -66,7 +66,7 @@ class OrderCreateRequest {
 
     data class OptionGroupCreate(
         val optionGroupId: Long,
-        val optionName: String,
+        val optionGroupName: String,
         val options: List<OptionCreate>,
     )
 

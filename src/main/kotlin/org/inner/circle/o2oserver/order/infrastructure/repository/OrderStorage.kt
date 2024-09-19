@@ -1,11 +1,7 @@
 package org.inner.circle.o2oserver.order.infrastructure.repository
 
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.map
 import org.inner.circle.o2oserver.commons.exception.ErrorDetails
 import org.inner.circle.o2oserver.commons.exception.Exceptions
-import org.inner.circle.o2oserver.order.domain.Delivery
 import org.inner.circle.o2oserver.order.domain.Order
 import org.inner.circle.o2oserver.order.domain.OrderReader
 import org.inner.circle.o2oserver.order.domain.OrderStore
@@ -16,7 +12,6 @@ import org.springframework.stereotype.Component
 class OrderStorage(
     private val orderRepository: OrderRepository,
     private val reviewRepository: ReviewRepository,
-    private val orderListener: OrderListener,
 ) : OrderReader, OrderStore {
     override fun findOrderDetailByOrderId(orderId: Long): Order {
         val orderEntity = findByOrderId(orderId)
@@ -31,23 +26,6 @@ class OrderStorage(
             }
         } ?: throw Exceptions.BadRequestException(ErrorDetails.ORDER_NOT_FOUND.message)
     }
-
-    override fun subscribeDelivery(orderId: Long, memberId: Long): Flow<Delivery> =
-        flow {
-            val findByOrderId = findByOrderId(orderId)
-            if (findByOrderId.memberId != memberId) {
-                throw Exceptions.BadRequestException(ErrorDetails.ORDER_NOT_FOUND.message)
-            }
-
-            orderListener.subscribeDelivery(orderId)
-                .map { emit(DeliveryEntity.toDomain(it)) }
-        }
-
-    override fun subscribeOrder(orderId: Long, memberId: Long): Flow<Order> =
-        flow {
-            orderListener.subscribeOrderStatus(orderId)
-                .map { emit(OrderStatusEntity.toDomain(it)) }
-        }
 
     override fun saveOrder(order: Order): Order {
         val orderEntity = OrderEntity.toEntity(order)
