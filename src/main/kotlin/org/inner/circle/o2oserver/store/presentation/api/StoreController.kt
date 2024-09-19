@@ -58,13 +58,13 @@ class StoreController(
     fun getStoreDetail(
         @PathVariable("storeId") storeId: Int,
         @RequestParam("page") page: Int,
-        @RequestParam("limit") size: Int,
+        @RequestParam("limit") size: Int?,
     ): CommonListResponse {
         val queryObject =
             ReviewQueryObject(
                 storeId = storeId,
                 page = page,
-                limit = size,
+                limit = size?: 10,
             )
 
         val reviews = reviewFacade.getStoreReviewList(queryObject)
@@ -75,7 +75,7 @@ class StoreController(
                     storeName = "임시 가게 이름",
                 ),
             totalCount = 100,
-            size = size,
+            size = size ?: 10,
             page = page,
             statusCode = 200,
             msg = "목록을 조회했습니다.",
