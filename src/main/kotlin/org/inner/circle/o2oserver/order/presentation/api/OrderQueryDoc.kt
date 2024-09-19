@@ -11,10 +11,13 @@ import org.inner.circle.o2oserver.commons.response.BaseResponse
 import org.inner.circle.o2oserver.order.presentation.dto.OrderDeliveryResponse
 import org.inner.circle.o2oserver.order.presentation.dto.OrderDetailResponse
 import org.inner.circle.o2oserver.order.presentation.dto.OrderListResponse
+import org.springframework.http.MediaType
 import org.springframework.http.MediaType.APPLICATION_JSON_VALUE
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.security.core.userdetails.UserDetails
+import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.servlet.mvc.method.annotation.SseEmitter
 
 @Tag(name = "주문", description = "주문 생성, 취소, 조회 API")
 interface OrderQueryDoc {
@@ -69,5 +72,20 @@ interface OrderQueryDoc {
     fun deliverySubscribe(
         @PathVariable orderId: Long,
         @AuthenticationPrincipal userDetails: UserDetails,
-    ): Flow<BaseResponse<OrderDeliveryResponse.OrderDelivery>>
+    ): SseEmitter
+
+    @Operation(summary = "주문 상태 구독", description = "주문 상태를 구독하는 API")
+    @ApiResponses(
+        ApiResponse(
+            responseCode = "200",
+            content = [
+                Content(
+                    mediaType = APPLICATION_JSON_VALUE,
+                    schema = Schema(implementation = OrderListResponse.OrderListResponse::class),
+                ),
+            ],
+            description = "주문 상태 구독 성공",
+        ),
+    )
+    fun orderStatusSubscribe(orderId: Long, userDetails: UserDetails): SseEmitter
 }

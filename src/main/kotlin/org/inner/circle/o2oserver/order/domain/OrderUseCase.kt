@@ -11,9 +11,5 @@ interface OrderUseCase {
 
     fun cancelOrder(orderId: Long, memberId: Long): Order
 
-    fun deliverySubscribe(orderId: Long, memberId: Long): Flow<Delivery>
-
-    fun orderStatusSubscribe(orderId: Long, memberId: Long): Flow<Order>
-
     fun createReviewOrder(review: Review): Review
 }
