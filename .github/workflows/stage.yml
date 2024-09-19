@@ -2,9 +2,8 @@ name: Docker Image CI
 
 on:
   push:
-    branches: [ "stage" ]
-  pull_request:
-    branches: [ "stage" ]
+    branches: [ "main" ]
+
 env:
   BUCKET_NAME: o2o-ci-cd
   CODE_DEPLOY_APP_NAME: o2o-be
