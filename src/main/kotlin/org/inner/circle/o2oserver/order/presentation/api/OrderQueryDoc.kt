@@ -6,16 +6,12 @@ import io.swagger.v3.oas.annotations.media.Schema
 import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.responses.ApiResponses
 import io.swagger.v3.oas.annotations.tags.Tag
-import kotlinx.coroutines.flow.Flow
 import org.inner.circle.o2oserver.commons.response.BaseResponse
-import org.inner.circle.o2oserver.order.presentation.dto.OrderDeliveryResponse
 import org.inner.circle.o2oserver.order.presentation.dto.OrderDetailResponse
 import org.inner.circle.o2oserver.order.presentation.dto.OrderListResponse
-import org.springframework.http.MediaType
 import org.springframework.http.MediaType.APPLICATION_JSON_VALUE
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.security.core.userdetails.UserDetails
-import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter
 

@@ -3,17 +3,13 @@ package org.inner.circle.o2oserver.order.presentation.dto
 import org.inner.circle.o2oserver.order.domain.Delivery
 
 class OrderDeliveryResponse {
-
     data class DeliveryEvent(
         val id: Long,
         val event: String,
         val data: OrderDelivery,
     ) {
         companion object {
-            fun toResponse(
-                orderId: Long,
-                orderDelivery: OrderDelivery
-            ): DeliveryEvent {
+            fun toResponse(orderId: Long, orderDelivery: OrderDelivery): DeliveryEvent {
                 return DeliveryEvent(
                     id = orderId,
                     event = "deliveryLocationUpdate",

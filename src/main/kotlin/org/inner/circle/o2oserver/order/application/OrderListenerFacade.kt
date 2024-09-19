@@ -15,7 +15,6 @@ import java.util.concurrent.ConcurrentHashMap
 class OrderListenerFacade(
     redisMessageListenerContainer: RedisMessageListenerContainer,
 ) : RedisMessageListener(redisMessageListenerContainer) {
-
     private val chatEmitters = ConcurrentHashMap<String, ConcurrentHashMap<SseEmitter, Long>>()
     private val log = LoggerFactory.getLogger(this::class.java)
     private val objectMapper = ObjectMapper()
@@ -26,15 +25,12 @@ class OrderListenerFacade(
         return objectMapper.readValue(message.body, OrderDeliveryResponse.OrderDelivery::class.java)
     }
 
-    override fun handleMessage(
-        key: String,
-        message: Any
-    ) {
+    override fun handleMessage(key: String, message: Any) {
         val roomEmitters = chatEmitters[key] ?: return
         roomEmitters.keys.forEach { emitter ->
             try {
-                log.info("Send message to $key: $message" )
-                emitter.send(SseEmitter.event().data(message))
+                log.info("Send message to $key: $message")
+                emitter.send(SseEmitter.event().name("orderStatusUpdate").data(message))
             } catch (e: Exception) {
                 emitter.completeWithError(e)
             }
@@ -46,9 +42,7 @@ class OrderListenerFacade(
         return patternString.removePrefix(TopicType.ORDER.typeName + ":")
     }
 
-    fun orderStatusSubscribe(
-        orderId: Long,
-    ): SseEmitter {
+    fun orderStatusSubscribe(orderId: Long): SseEmitter {
         val emitter = SseEmitter(Long.MAX_VALUE)
         subscribe(":$orderId")
 
@@ -63,10 +57,7 @@ class OrderListenerFacade(
         return emitter
     }
 
-    private fun unsubscribe(
-        orderId: String,
-        emitter: SseEmitter
-    ) {
+    private fun unsubscribe(orderId: String, emitter: SseEmitter) {
         val roomEmitters = chatEmitters[orderId] ?: return
         roomEmitters.remove(emitter)
         if (roomEmitters.isEmpty()) {
@@ -74,5 +65,4 @@ class OrderListenerFacade(
             unsubscribe(orderId)
         }
     }
-
 }
