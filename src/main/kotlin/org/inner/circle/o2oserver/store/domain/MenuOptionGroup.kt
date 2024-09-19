@@ -5,5 +5,5 @@ class MenuOptionGroup(
     val menuOptionGroupName: String?,
     val menuOptions: List<MenuOption>?,
     val isRequired: Boolean?,
-    val isMultiple: Boolean?
+    val isMultiple: Boolean?,
 )

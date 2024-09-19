@@ -37,7 +37,7 @@ data class Store(
             thumbnails = listOf(
                 "https://www.adobe.com/kr/creativecloud/photography/hub/features/media_19243bf806dc1c5a3532f3e32f4c14d44f81cae9f.jpeg?width=750&format=jpeg&optimize=medium",
             ),
-            menus = listOf()
+            menus = listOf(),
         )
     }
 }

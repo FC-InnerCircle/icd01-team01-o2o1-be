@@ -34,7 +34,7 @@ class StoreReadImpl(private val storeApiClient: StoreApiClient, private val mong
             minimumPrice = 15000,
             reviewCount = 10,
             reviewRate = 4.5,
-            thumbnails = listOf("www.google.com"),
+            thumbnails = listOf(),
             menus = listOf(
                 Menu(
                     menuId = 101,
@@ -60,7 +60,7 @@ class StoreReadImpl(private val storeApiClient: StoreApiClient, private val mong
                                 ),
                             ),
                             isRequired = true,
-                            isMultiple = true
+                            isMultiple = true,
                         ),
                         MenuOptionGroup(
                             menuOptionGroupId = 203,
@@ -78,7 +78,7 @@ class StoreReadImpl(private val storeApiClient: StoreApiClient, private val mong
                                 ),
                             ),
                             isRequired = true,
-                            isMultiple = false
+                            isMultiple = false,
                         ),
                     ),
                 ),

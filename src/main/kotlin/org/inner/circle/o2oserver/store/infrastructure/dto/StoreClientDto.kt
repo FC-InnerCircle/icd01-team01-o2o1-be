@@ -47,7 +47,7 @@ data class BriefStoreInfo(
             reviewCount = reviewCount,
             thumbnails = listOf(thumbnailUrl),
             category = category,
-            menus = listOf()
+            menus = listOf(),
         )
     }
 }
@@ -89,7 +89,7 @@ data class StoreResponse(
             reviewCount = reviewCount,
             reviewRate = reviewRate,
             thumbnails = thumbnails,
-            menus = listOf()
+            menus = listOf(),
         )
     }
 }
