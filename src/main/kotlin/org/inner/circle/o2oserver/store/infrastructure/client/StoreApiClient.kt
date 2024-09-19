@@ -16,7 +16,7 @@ class StoreApiClient() {
                     deliveryPrice = 0,
                     reviewCount = 999,
                     reviewRate = 4.7,
-                    thumbnailUrl = "https://s3.amazonaws.com/your-bucket-name/images/thumbnails/thumb1_abc123.jpg",
+                    thumbnailUrl = "",
                     category = "한식",
                 ),
             )
