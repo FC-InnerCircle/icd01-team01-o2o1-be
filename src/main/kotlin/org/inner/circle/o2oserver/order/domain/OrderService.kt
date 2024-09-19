@@ -1,9 +1,8 @@
 package org.inner.circle.o2oserver.order.domain
 
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import org.inner.circle.o2oserver.commons.exception.Exceptions
 import org.inner.circle.o2oserver.commons.exception.Exceptions.UnCancellableStatusException
+import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -13,6 +12,8 @@ class OrderService(
     private val orderReader: OrderReader,
 //    private val orderCaller: OrderCaller,
 ) : OrderUseCase {
+    private val log = LoggerFactory.getLogger(this::class.java)
+
     @Transactional
     override fun createOrder(order: Order): Order {
         // todo : save and get order id from api
@@ -44,24 +45,6 @@ class OrderService(
 
         return orderStore.cancelOrder(orderId)
     }
-
-    override fun deliverySubscribe(orderId: Long, memberId: Long): Flow<Delivery> =
-        flow {
-            orderReader.subscribeDelivery(orderId, memberId).let {
-                it.collect { delivery ->
-                    emit(delivery)
-                }
-            }
-        }
-
-    override fun orderStatusSubscribe(orderId: Long, memberId: Long): Flow<Order> =
-        flow {
-            orderReader.subscribeOrder(orderId, memberId).let {
-                it.collect { order ->
-                    emit(order)
-                }
-            }
-        }
 
     override fun createReviewOrder(review: Review): Review {
         val order = orderReader.findOrderDetailByOrderId(review.orderId)

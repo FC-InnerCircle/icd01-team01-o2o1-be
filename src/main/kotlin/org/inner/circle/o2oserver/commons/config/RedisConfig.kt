@@ -9,6 +9,8 @@ import org.springframework.data.redis.cache.RedisCacheManager
 import org.springframework.data.redis.connection.RedisConnectionFactory
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory
 import org.springframework.data.redis.core.RedisTemplate
+import org.springframework.data.redis.listener.ChannelTopic
+import org.springframework.data.redis.listener.RedisMessageListenerContainer
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer
 import org.springframework.data.redis.serializer.RedisSerializationContext
@@ -47,5 +49,17 @@ class RedisConfig {
         return RedisCacheManager.builder(redisConnectionFactory)
             .cacheDefaults(redisCacheConfig)
             .build()
+    }
+
+    @Bean
+    fun listenerContainer(): RedisMessageListenerContainer {
+        val container = RedisMessageListenerContainer()
+        container.setConnectionFactory(redisConnectionFactory())
+        return container
+    }
+
+    @Bean
+    fun chatTopic(): ChannelTopic {
+        return ChannelTopic("order-status")
     }
 }
