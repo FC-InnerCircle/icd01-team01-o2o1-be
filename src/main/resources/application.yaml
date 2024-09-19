@@ -16,7 +16,7 @@ spring:
 
   data:
     redis:
-      host: 127.0.0.1
+      host: redis-o2o.d51bev.ng.0001.apn2.cache.amazonaws.com
       port: 6379
       timeout: 6000
 
