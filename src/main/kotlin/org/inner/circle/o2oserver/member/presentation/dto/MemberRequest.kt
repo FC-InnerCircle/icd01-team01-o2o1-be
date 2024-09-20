@@ -33,7 +33,7 @@ class MemberRequest {
                     address = memberInfo.address.address,
                     addressDetail = memberInfo.address.addressDetail,
                     latitude = memberInfo.address.latitude,
-                    longitude = memberInfo.address.longitude!!,
+                    longitude = memberInfo.address.longitude,
                     zipCode = memberInfo.address.zipCode,
                     isDefault = true, // 기본 주소로 설정
                 )
