@@ -1,12 +1,13 @@
 package org.inner.circle.o2oserver.member.presentation.dto
 
+import jakarta.validation.constraints.NotBlank
 import org.inner.circle.o2oserver.member.domain.Member
 
 class LoginRequest {
     data class Login(
-        val snsType: String,
-        val subId: String,
-        val name: String,
+        @field:NotBlank(message = "SNS type cannot be blank") val snsType: String,
+        @field:NotBlank(message = "Sub ID cannot be blank") val subId: String,
+        @field:NotBlank(message = "Name cannot be blank") val name: String,
     ) {
         companion object {
             fun toMember(login: Login): Member {

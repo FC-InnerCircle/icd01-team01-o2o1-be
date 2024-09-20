@@ -1,5 +1,6 @@
 package org.inner.circle.o2oserver.member.presentation.api
 
+import jakarta.validation.Valid
 import org.inner.circle.o2oserver.commons.response.BaseResponse
 import org.inner.circle.o2oserver.member.application.MemberInfoFacade
 import org.inner.circle.o2oserver.member.presentation.dto.AddressIdResponse
@@ -50,7 +51,7 @@ class AddressController(
 
     @PostMapping
     override fun createAddress(
-        @RequestBody createRequest: AddressRequest.CreateAddress,
+        @RequestBody @Valid createRequest: AddressRequest.CreateAddress,
         @AuthenticationPrincipal userDetails: UserDetails,
     ): BaseResponse<AddressIdResponse> {
         val memberId = userDetails.username

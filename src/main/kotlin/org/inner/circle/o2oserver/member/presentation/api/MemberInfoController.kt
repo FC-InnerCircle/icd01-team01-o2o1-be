@@ -1,5 +1,6 @@
 package org.inner.circle.o2oserver.member.presentation.api
 
+import jakarta.validation.Valid
 import org.inner.circle.o2oserver.commons.response.BaseResponse
 import org.inner.circle.o2oserver.member.application.MemberInfoFacade
 import org.inner.circle.o2oserver.member.presentation.dto.MemberIdResponse
@@ -40,7 +41,7 @@ class MemberInfoController(
 
     @PostMapping
     override fun createMemberInfo(
-        @RequestBody createRequest: MemberRequest.MemberInfo,
+        @RequestBody @Valid createRequest: MemberRequest.MemberInfo,
         @AuthenticationPrincipal userDetails: UserDetails,
     ): BaseResponse<Any> {
         val memberId = userDetails.username

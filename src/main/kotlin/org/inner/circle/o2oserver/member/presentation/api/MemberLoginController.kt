@@ -1,5 +1,6 @@
 package org.inner.circle.o2oserver.member.presentation.api
 
+import jakarta.validation.Valid
 import org.inner.circle.o2oserver.member.application.LoginFacade
 import org.inner.circle.o2oserver.member.presentation.dto.LoginRequest
 import org.inner.circle.o2oserver.member.presentation.dto.LoginResponse
@@ -22,7 +23,7 @@ class MemberLoginController(
 
     @PostMapping
     override fun loginMember(
-        @RequestBody loginRequest: LoginRequest.Login,
+        @RequestBody @Valid loginRequest: LoginRequest.Login,
     ): ResponseEntity<LoginResponse> {
         log.info("login 요청")
         val member = LoginRequest.Login.toMember(loginRequest)
