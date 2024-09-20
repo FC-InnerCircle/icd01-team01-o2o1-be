@@ -131,9 +131,9 @@ class OrderEntity(
             )
         }
 
-        fun toEntity(order: Order): OrderEntity {
+        fun toEntity(order: Order, addLastOrderId: Long): OrderEntity {
             return OrderEntity(
-                orderId = order.orderId ?: 0,
+                orderId = addLastOrderId,
                 orderTime = order.orderTime ?: LocalDateTime.now(),
                 orderStatus = order.orderStatus ?: OrderStatus.PENDING,
                 orderPrice = order.orderPrice,

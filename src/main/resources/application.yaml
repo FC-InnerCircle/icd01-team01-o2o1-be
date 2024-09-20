@@ -36,6 +36,10 @@ logging:
     org:
       springframework:
         security: debug
+        data:
+          mongodb:
+            core:
+              MongoTemplate: debug
 
 jwt:
   key: veryLongSecretKeyThatIsMoreThan32BytesLongAndIsSecureEnough
