@@ -32,14 +32,14 @@ class OrderDetailResponse {
     data class StoreInfo(
         private val storeId: Long,
         private val storeName: String,
-        private val storeAddress: AddressInfo,
+        private val storeAddress: AddressInfo?,
     ) {
         companion object {
             fun toResponse(store: Order.Store): StoreInfo {
                 return StoreInfo(
                     storeId = store.storeId!!,
                     storeName = store.storeName,
-                    storeAddress = AddressInfo.toResponse(store.storeAddress!!),
+                    storeAddress = AddressInfo.toResponse(store.storeAddress),
                 )
             }
         }
@@ -54,14 +54,14 @@ class OrderDetailResponse {
         private val zipCode: String,
     ) {
         companion object {
-            fun toResponse(address: Order.Address): AddressInfo {
+            fun toResponse(address: Order.Address?): AddressInfo {
                 return AddressInfo(
-                    addressId = address.addressId,
-                    latitude = address.latitude.toString(),
-                    longitude = address.longitude.toString(),
-                    address = address.address,
-                    addressDetail = address.addressDetail,
-                    zipCode = address.zipCode,
+                    addressId = address?.addressId ?: 0,
+                    latitude = address?.latitude.toString(),
+                    longitude = address?.longitude.toString(),
+                    address = address?.address ?: "",
+                    addressDetail = address?.addressDetail ?: "",
+                    zipCode = address?.zipCode ?: "",
                 )
             }
         }

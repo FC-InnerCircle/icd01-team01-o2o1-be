@@ -21,7 +21,7 @@ class OrderCommandFacade(
         val member = memberUseCase.getMemberInfo(userName)
         val toOrder = OrderCreateRequest.OrderCreate.toOrder(orderCreate, member.memberId!!)
         val createOrder = orderUseCase.createOrder(toOrder)
-        log.info("review 생성 결과 : $createOrder")
+        log.info("order 생성 결과 : ${createOrder.orderId}")
         return OrderCreateResponse.OrderCreateResult.toResponse(createOrder)
     }
 

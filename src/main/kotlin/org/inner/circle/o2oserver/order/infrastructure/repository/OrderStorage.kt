@@ -28,7 +28,9 @@ class OrderStorage(
     }
 
     override fun saveOrder(order: Order): Order {
-        val orderEntity = OrderEntity.toEntity(order)
+        val lastOrder = orderRepository.findFirstByOrderByOrderIdDesc()
+        val addLastOrderId = lastOrder?.orderId?.plus(1) ?: 1
+        val orderEntity = OrderEntity.toEntity(order, addLastOrderId)
         // Todo : store 엔티티에서 주소가져와서 넣기
         val savedOrderEntity = orderRepository.save(orderEntity)
         return OrderEntity.toDomain(savedOrderEntity)
@@ -48,7 +50,7 @@ class OrderStorage(
     }
 
     private fun findByOrderId(orderId: Long): OrderEntity {
-        return orderRepository.findByOrderId(orderId)
+        return orderRepository.findFirstByOrderByOrderId(orderId)
             ?: throw Exceptions.BadRequestException(ErrorDetails.ORDER_NOT_FOUND.message)
     }
 }
