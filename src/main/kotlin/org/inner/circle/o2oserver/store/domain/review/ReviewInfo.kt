@@ -9,5 +9,5 @@ class ReviewInfo(
     val contents: String? = review.contents
     val reviewImages: List<String>? = review.reviewImages
     val rating: Int? = review.rating
-    val reviewDate: LocalDateTime = review.reviewDate
+    val reviewDate: String = review.reviewDate.toString()
 }
