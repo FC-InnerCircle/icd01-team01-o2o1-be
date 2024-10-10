@@ -92,13 +92,12 @@ class StoreReadImpl(private val storeApiClient: StoreApiClient, private val mong
     }
 
     override fun getStoreListWithLocationAndName(command: StoreListCommand): StoreListInfo {
-        val pageable = PageRequest.of(command.page, command.size)
+        val pageable = command.pageable
+        val keyword = command.keyword
 
-        val keyword = command.keyword ?: ""
-        val (latitude, longitude) = command.address
-
-        val point = Point(longitude, latitude)
+        val point = Point(command.longitude, command.latitude)
         val distance = Distance(5.0, Metrics.KILOMETERS)
+
         val mongo = mongoRepository.findByStoreNameContainingAndLocationNear(keyword, point, distance, pageable)
 
         return StoreListInfo(totalCount = mongo.totalElements, stores = mongo.content.map { it.toDomain() })
