@@ -8,7 +8,6 @@ import org.inner.circle.o2oserver.store.domain.store.StoreListInfo
 import org.inner.circle.o2oserver.store.domain.store.StoreReader
 import org.inner.circle.o2oserver.store.domain.store.command.StoreListCommand
 import org.inner.circle.o2oserver.store.infrastructure.repository.mongo.MongoRepository
-import org.springframework.data.domain.PageRequest
 import org.springframework.data.geo.Distance
 import org.springframework.data.geo.Metrics
 import org.springframework.data.geo.Point

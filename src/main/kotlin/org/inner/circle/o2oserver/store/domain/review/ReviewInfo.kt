@@ -1,7 +1,5 @@
 package org.inner.circle.o2oserver.store.domain.review
 
-import java.time.LocalDateTime
-
 class ReviewInfo(
     review: Review,
 ) {

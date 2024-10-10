@@ -34,7 +34,7 @@ class StoreController(
     @PostMapping("")
     fun storeList(
         @Valid @RequestBody request: StoreListRequest,
-        bindingResult: BindingResult
+        bindingResult: BindingResult,
     ): CommonListResponse {
         if (bindingResult.hasErrors()) {
             throw RuntimeException(bindingResult.fieldErrors.joinToString { el -> el.defaultMessage.toString() })
@@ -61,7 +61,7 @@ class StoreController(
             ReviewQueryObject(
                 storeId = storeId,
                 page = page,
-                limit = size?: 10,
+                limit = size ?: 10,
             )
 
         val reviews = reviewFacade.getStoreReviewList(queryObject)
