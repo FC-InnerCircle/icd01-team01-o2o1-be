@@ -7,5 +7,5 @@ class StoreListCommand(
     val latitude: Double,
     val category: String?,
     val keyword: String,
-    val pageable: Pageable
+    val pageable: Pageable,
 )
