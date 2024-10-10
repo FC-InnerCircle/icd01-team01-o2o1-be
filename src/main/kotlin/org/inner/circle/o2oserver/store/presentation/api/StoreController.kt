@@ -1,13 +1,14 @@
 package org.inner.circle.o2oserver.store.presentation.api
 
+import jakarta.validation.Valid
 import org.inner.circle.o2oserver.store.application.ReviewFacade
 import org.inner.circle.o2oserver.store.application.StoreFacade
 import org.inner.circle.o2oserver.store.domain.review.ReviewQueryObject
-import org.inner.circle.o2oserver.store.domain.store.command.StoreListCommand
 import org.inner.circle.o2oserver.store.presentation.dto.CommonListResponse
 import org.inner.circle.o2oserver.store.presentation.dto.CommonResponse
 import org.inner.circle.o2oserver.store.presentation.dto.StoreListRequest
 import org.inner.circle.o2oserver.store.presentation.dto.StoreReviewDTO
+import org.springframework.validation.BindingResult
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
@@ -31,23 +32,19 @@ class StoreController(
     }
 
     @PostMapping("")
-    fun getStoreDetail(
-        @RequestBody request: StoreListRequest,
+    fun storeList(
+        @Valid @RequestBody request: StoreListRequest,
+        bindingResult: BindingResult
     ): CommonListResponse {
-        val command =
-            StoreListCommand(
-                address = request.address.toDomain(),
-                category = request.category,
-                keyword = request.keyword,
-                page = request.page,
-                size = request.size,
-            )
-
+        if (bindingResult.hasErrors()) {
+            throw RuntimeException(bindingResult.fieldErrors.joinToString { el -> el.defaultMessage.toString() })
+        }
+        val command = request.toCommand()
         val storeListInfo = storeFacade.getStoreList(command)
         return CommonListResponse(
             response = storeListInfo.stores,
             totalCount = storeListInfo.totalCount,
-            size = request.size ?: 0,
+            size = request.size,
             page = request.page,
             statusCode = 200,
             msg = "음식점 목록을 조회했습니다.",
