@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component
 
 @Component
 class ReviewApiClient {
-    fun getStoreReviewList(storeId: Int, page: Int, size: Int): ReviewResponseDto {
+    fun getStoreReviewList(storeId: Long, page: Int, size: Int): ReviewResponseDto {
         val reviews =
             listOf(
                 ReviewListResponseDto(

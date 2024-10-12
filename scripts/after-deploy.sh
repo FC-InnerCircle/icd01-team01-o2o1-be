@@ -3,9 +3,10 @@ REPOSITORY=/home/ec2-user
 
 cd $REPOSITORY/o2o-backend
 
-#echo "> 🔵 Stop & Remove docker services."
-#cd ..
-#docker compose down
+echo "> 🔵 Remove docker services."
+docker system prune --all -f
+
+
 
 echo "> 🟢 Run new docker services."
 sudo docker load -i o2o-backend.tar.gz
