@@ -22,9 +22,9 @@ data class CommonListResponse(
 )
 
 data class StoreListRequest(
-    @field:Positive(message = "위경도 값을 다시 확인해주세요") @Max(value = 38, message = "위경도 값을 다시 확인해주세요")
+    @field:Positive(message = "위도 값을 다시 확인해주세요") @Max(value = 39, message = "위도 값을 다시 확인해주세요")
     val latitude: Double,
-    @field:Positive(message = "위경도 값을 다시 확인해주세요") @Max(value = 129, message = "위경도 값을 다시 확인해주세요")
+    @field:Positive(message = "경도 값을 다시 확인해주세요") @Max(value = 129, message = "경도 값을 다시 확인해주세요")
     val longitude: Double,
     val category: String?,
     val page: Int = 0,
