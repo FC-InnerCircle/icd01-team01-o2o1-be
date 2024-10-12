@@ -1,5 +1,6 @@
 package org.inner.circle.o2oserver.commons.config
 
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.client.SimpleClientHttpRequestFactory
@@ -17,6 +18,9 @@ import javax.net.ssl.X509TrustManager
 
 @Configuration
 class RestClientConfig {
+    @Value("\${2team.base.url}")
+    lateinit var baseUrl: String
+
     @Bean
     fun createWebClient(): RestClient {
         return RestClient.create(createRestTemplate())
@@ -25,7 +29,8 @@ class RestClientConfig {
     @Bean
     fun createWebInterface(): WebInterface {
         // 2팀 url이 정해지면 넣어야합니다
-        val createWebClient = RestClient.builder().baseUrl("http://localhost:8080").build()
+        println("baseUrl: $baseUrl")
+        val createWebClient = RestClient.builder().baseUrl(baseUrl).build()
         val adapter = RestClientAdapter.create(createWebClient)
         val factory = HttpServiceProxyFactory.builderFor(adapter).build()
         return factory.createClient(WebInterface::class.java)

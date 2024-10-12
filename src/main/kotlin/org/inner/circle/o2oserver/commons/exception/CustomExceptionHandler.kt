@@ -12,6 +12,7 @@ import org.springframework.web.HttpMediaTypeNotSupportedException
 import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.RestControllerAdvice
+import org.springframework.web.client.HttpClientErrorException
 import org.springframework.web.context.request.async.AsyncRequestTimeoutException
 import org.springframework.web.multipart.MaxUploadSizeExceededException
 
@@ -300,6 +301,18 @@ class CustomExceptionHandler {
             BaseResponse.error(
                 message = e.message ?: "데이터가 유효하지 않습니다.",
                 statusCode = 400,
+            ),
+        )
+    }
+
+    @ExceptionHandler(HttpClientErrorException::class)
+    fun handleException(e: HttpClientErrorException): ResponseEntity<BaseResponse<Any>> {
+        log.error("error message : ${e.message}")
+        e.printStackTrace()
+        return ResponseEntity.status(500).body(
+            BaseResponse.error(
+                message = e.message ?: "내부 요청이 잘못되었습니다.",
+                statusCode = 500,
             ),
         )
     }

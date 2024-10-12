@@ -10,14 +10,14 @@ import org.springframework.transaction.annotation.Transactional
 class OrderService(
     private val orderStore: OrderStore,
     private val orderReader: OrderReader,
-//    private val orderCaller: OrderCaller,
+    private val orderCaller: OrderCaller,
 ) : OrderUseCase {
     private val log = LoggerFactory.getLogger(this::class.java)
 
     @Transactional
     override fun createOrder(order: Order): Order {
         // todo : save and get order id from api
-//        orderCaller.saveOrderCall(order)
+        orderCaller.saveOrderCall(order)
         return orderStore.saveOrder(order)
     }
 
