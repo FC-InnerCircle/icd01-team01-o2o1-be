@@ -1,7 +1,10 @@
 package org.inner.circle.o2oserver.store.presentation.dto
 
-import org.inner.circle.o2oserver.store.domain.Address
+import jakarta.validation.constraints.Max
+import jakarta.validation.constraints.Positive
 import org.inner.circle.o2oserver.store.domain.review.ReviewInfo
+import org.inner.circle.o2oserver.store.domain.store.command.StoreListCommand
+import org.springframework.data.domain.PageRequest
 
 data class CommonResponse(
     val response: Any,
@@ -19,22 +22,23 @@ data class CommonListResponse(
 )
 
 data class StoreListRequest(
-    val address: AddressDTO,
+    @field:Positive(message = "위도 값을 다시 확인해주세요") @Max(value = 39, message = "위도 값을 다시 확인해주세요")
+    val latitude: Double,
+    @field:Positive(message = "경도 값을 다시 확인해주세요") @Max(value = 129, message = "경도 값을 다시 확인해주세요")
+    val longitude: Double,
     val category: String?,
-    val page: Int = 1,
+    val page: Int = 0,
     val size: Int = 10,
     val keyword: String = "",
-)
-
-data class AddressDTO(
-    val latitude: Double,
-    val longitude: Double,
-    val address: String,
-    val addressDetail: String?,
-    val zipCode: String,
 ) {
-    fun toDomain(): Address {
-        return Address(latitude, longitude, address, addressDetail, zipCode)
+    fun toCommand(): StoreListCommand {
+        return StoreListCommand(
+            pageable = PageRequest.of(page, size),
+            longitude = longitude,
+            latitude = latitude,
+            category = category,
+            keyword = keyword,
+        )
     }
 }
 
