@@ -7,7 +7,7 @@ interface OrderUseCase {
 
     fun getOrderList(memberId: Long): List<Order>
 
-    fun cancelOrder(orderId: Long, memberId: Long): Order
+    fun cancelOrder(orderId: Long, memberId: Long): Long
 
     fun createReviewOrder(review: Review): Review
 }

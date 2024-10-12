@@ -13,12 +13,17 @@ class OrderStorage(
     private val orderRepository: OrderRepository,
     private val reviewRepository: ReviewRepository,
 ) : OrderReader, OrderStore {
-    override fun findOrderDetailByOrderId(orderId: Long): Order {
-        val orderEntity = findByOrderId(orderId)
+    override fun findOrderIsNullable(orderId: Long): Order? {
+        val orderEntity = findByOrderIsNullable(orderId)
         return OrderEntity.toDomain(orderEntity)
     }
 
-    override fun findOrderListByMemberId(memberId: Long): List<Order> {
+    override fun findOrder(orderId: Long): Order {
+        val orderEntity = findByOrderId(orderId)
+        return OrderEntity.toDomain(orderEntity)!!
+    }
+
+    override fun findOrdersByMember(memberId: Long): List<Order> {
         orderRepository.findByMemberId(memberId)?.let { orders ->
             return orders.map { orderEntity ->
                 val reviewEntity = reviewRepository.findByOrderId(orderEntity.orderId)
@@ -27,20 +32,17 @@ class OrderStorage(
         } ?: throw Exceptions.BadRequestException(ErrorDetails.ORDER_NOT_FOUND.message)
     }
 
-    override fun saveOrder(order: Order): Order {
-        val lastOrder = orderRepository.findFirstByOrderByOrderIdDesc()
-        val addLastOrderId = lastOrder?.orderId?.plus(1) ?: 1
-        val orderEntity = OrderEntity.toEntity(order, addLastOrderId)
-        // Todo : store 엔티티에서 주소가져와서 넣기
-        val savedOrderEntity = orderRepository.save(orderEntity)
-        return OrderEntity.toDomain(savedOrderEntity)
+    override fun saveOrder(order: Order, orderId: Long): Order {
+        val orderEntity = OrderEntity.toEntity(order, orderId)
+        orderRepository.save(orderEntity)
+        return order
     }
 
-    override fun cancelOrder(orderId: Long): Order {
+    override fun cancelOrder(orderId: Long): Long {
         val orderEntity = findByOrderId(orderId)
         val cancelOrderEntity = OrderEntity.cancelOrder(orderEntity)
-        val saveEntity = orderRepository.save(cancelOrderEntity)
-        return OrderEntity.toDomain(saveEntity)
+        orderRepository.save(cancelOrderEntity)
+        return orderId
     }
 
     override fun saveReview(review: Review): Review {
@@ -52,5 +54,9 @@ class OrderStorage(
     private fun findByOrderId(orderId: Long): OrderEntity {
         return orderRepository.findFirstByOrderByOrderId(orderId)
             ?: throw Exceptions.BadRequestException(ErrorDetails.ORDER_NOT_FOUND.message)
+    }
+
+    private fun findByOrderIsNullable(orderId: Long): OrderEntity? {
+        return orderRepository.findFirstByOrderByOrderId(orderId)
     }
 }
