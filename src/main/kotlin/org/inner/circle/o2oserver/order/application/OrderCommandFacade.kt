@@ -27,8 +27,8 @@ class OrderCommandFacade(
 
     fun cancelOrder(orderId: Long, username: String): OrderCancelResponse.OrderCancel {
         val member = memberUseCase.getMemberInfo(username)
-        val cancelOrder = orderUseCase.cancelOrder(orderId, member.memberId!!)
-        return OrderCancelResponse.OrderCancel.toResponse(cancelOrder.orderId!!)
+        val cancelOrderId = orderUseCase.cancelOrder(orderId, member.memberId!!)
+        return OrderCancelResponse.OrderCancel.toResponse(cancelOrderId)
     }
 
     fun createReview(

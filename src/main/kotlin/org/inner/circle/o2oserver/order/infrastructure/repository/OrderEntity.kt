@@ -24,7 +24,8 @@ class OrderEntity(
     val createdAt: LocalDateTime = LocalDateTime.now(ZoneId.of("Asia/Seoul")),
 ) {
     companion object {
-        fun toDomain(orderEntity: OrderEntity): Order {
+        fun toDomain(orderEntity: OrderEntity?): Order? {
+            orderEntity ?: return null
             return Order(
                 orderId = orderEntity.orderId,
                 orderTime = orderEntity.orderTime,
