@@ -1,7 +1,9 @@
 package org.inner.circle.o2oserver.order.domain
 
 interface OrderReader {
-    fun findOrderDetailByOrderId(orderId: Long): Order
+    fun findOrderIsNullable(orderId: Long): Order?
 
-    fun findOrderListByMemberId(memberId: Long): List<Order>
+    fun findOrder(orderId: Long): Order
+
+    fun findOrdersByMember(memberId: Long): List<Order>
 }

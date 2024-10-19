@@ -15,6 +15,23 @@ class Order(
     val orderAddress: Address? = null,
     val isReviewed: Boolean? = false,
 ) {
+    companion object {
+        fun addOrderId(orderId: Long, order: Order): Order {
+            return Order(
+                orderId = orderId,
+                orderTime = order.orderTime,
+                orderStatus = order.orderStatus,
+                orderPrice = order.orderPrice,
+                memberId = order.memberId,
+                store = order.store,
+                menus = order.menus,
+                payment = order.payment,
+                orderAddress = order.orderAddress,
+                isReviewed = order.isReviewed,
+            )
+        }
+    }
+
     class Address(
         val addressId: Long,
         val address: String,

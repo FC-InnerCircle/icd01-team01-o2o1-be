@@ -16,30 +16,34 @@ class OrderService(
 
     @Transactional
     override fun createOrder(order: Order): Order {
-        // todo : save and get order id from api
-        orderCaller.saveOrderCall(order)
-        return orderStore.saveOrder(order)
+        val saveOrderId = orderCaller.saveOrderCall(order)
+        log.info("주문 정보 저장 API 응답 orderId: $saveOrderId")
+        return orderStore.saveOrder(order, saveOrderId)
     }
 
     override fun getOrderDetail(orderId: Long): Order {
-        // cache or mongodb 후 없다면 api 호출
-        // 만약 api 호출했다면 cache or mongodb에 저장
-        return orderReader.findOrderDetailByOrderId(orderId)
+        return orderReader.findOrderIsNullable(orderId) ?: let {
+            val order = orderCaller.getOrderDetailCall(orderId)
+            log.info("주문 정보 조회 API 응답 orderId: $orderId")
+            orderStore.saveOrder(order, orderId)
+        }
     }
 
     override fun getOrderList(memberId: Long): List<Order> {
-        return orderReader.findOrderListByMemberId(memberId)
+        return orderReader.findOrdersByMember(memberId)
     }
 
     @Transactional
-    override fun cancelOrder(orderId: Long, memberId: Long): Order {
-        val order = orderReader.findOrderDetailByOrderId(orderId)
+    override fun cancelOrder(orderId: Long, memberId: Long): Long {
+        val order = orderReader.findOrder(orderId)
 
         if (order.memberId != memberId) {
+            log.error("주문자가 아닙니다. memberId: $memberId, order.memberId: ${order.memberId}")
             throw Exceptions.BadRequestException("주문자가 아닙니다.")
         }
 
         if (order.orderStatus?.isStatusByThrowException() == false) {
+            log.error("취소할 수 없는 주문입니다. orderId: $orderId")
             throw UnCancellableStatusException("취소할 수 없는 주문입니다.")
         }
 
@@ -47,8 +51,9 @@ class OrderService(
     }
 
     override fun createReviewOrder(review: Review): Review {
-        val order = orderReader.findOrderDetailByOrderId(review.orderId)
+        val order = orderReader.findOrder(review.orderId)
         if (order.memberId != review.memberId) {
+            log.error("주문자가 아닙니다. review.memberId: ${review.memberId}, order.memberId: ${order.memberId}")
             throw Exceptions.BadRequestException("주문자가 아닙니다.")
         }
 
@@ -58,8 +63,7 @@ class OrderService(
 //            }
 //        }
 
-        // todo : save and get order id from api
-        //    private val orderCaller: OrderCaller,
+//        val reviewCall = orderCaller.saveOrderReviewCall(review) // 2조 리뷰생성 api 일단 보류
         return orderStore.saveReview(review)
     }
 }
