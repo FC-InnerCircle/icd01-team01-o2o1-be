@@ -15,23 +15,21 @@
 
 ## 3. 아키텍처
 
-- Domain
-  - presentation
-	- api
-	 - XxxController
-	 - XxxDto
-	- dto
-	 - XxxRequest
- 	 - XxxResponse
-- application
-    - XxxFacade
-- Domain
-    - domain object
-    - XxxReader, XxxStore, XxxService
-- infrastructure
-	- client
-	    - XxxOutPort (interface)
-	    - XxxApiClient (impl)
-  - repository
-      - XxxStorage (impl)
-	  - XxxRepository (interface)
+- Domain (Order, Member, Store...)
+    - presentation
+        - api
+            - XxxController
+        - dto
+            - XxxRequest
+            - XxxResponse
+    - application
+        - XxxFacade
+    - Domain
+        - domain object
+        - XxxReader, XxxStore, XxxService
+    - infrastructure
+        - client
+	        - XxxClient
+        - repository
+            - XxxStorage (impl)
+            - XxxRepository (interface)
