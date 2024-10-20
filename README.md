@@ -20,7 +20,10 @@ docker-compose up -d o2o-be
 2. CI/CD 구조
    1. free tier 내 최소 비용을 위해, 컨테이너 저장 시 필요한 ECR, AWS CodeSeries를 통한 빌드 등 AWS 통합 서비스를 사용하지 않았습니다.  
    2. CI/CD 의 흐름은  Code push -> Gitlab Actions 에서 빌드 프로세스 이후 S3 에 업로드 / Codedeploy 호출 -> AWS Codedeploy 가 AWS EC2 에 업로드 이후 배포 실행. 배포에 대한 파일은 appspec.yaml 파일에 있습니다. 
-   3. appspec.yaml 에 정의된 폴더로 파일을 이동 후, scripts 폴더 내 after-deploy.sh 파일을 실행하여 배포합니다. 
+   3. appspec.yaml 에 정의된 폴더로 파일을 이동 후, scripts 폴더 내 after-deploy.sh 파일을 실행하여 배포합니다.
+  
+3. 구성도
+![image](https://github.com/user-attachments/assets/b655ba80-452a-4a47-944a-bec46ea17902)
 
 ## 3. 아키텍처
 
